@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        dddBug("onCreate")
         sContext = applicationContext
         SharedPreferencesUtils.context = sContext
         setContentView(R.layout.activity_main)
@@ -152,7 +153,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         moveTaskToBack(true)
     }
 
