@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/meinv1" />
+
+    <TextView
+        android:id="@+id/tv_current_ime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:scaleX="3"
+        android:scaleY="3"
+        android:text="2019-06-21 10:01"
+        android:textColor="#ff0000"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/iv_zhiwen_am"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_current_ime"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:src="@drawable/zhiwen" />
+
+    <ImageView
+        android:id="@+id/iv_zhiwen_pm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_current_ime"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/zhiwen" />
+
+    <TextView
+        android:id="@+id/tv_am"
+        android:textColor="#ff0000"
+        android:textStyle="bold"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:layout_width="wrap_content"
+        android:text="2019-06-21 10:01"
+        android:layout_above="@+id/tv_current_ime"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_pm"
+       android:textColor="#ff0000"
+        android:textStyle="bold"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:layout_below="@+id/tv_current_ime"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:layout_width="wrap_content"
+        android:text="2019-06-21 10:01"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
