@@ -18,7 +18,7 @@
         android:scaleX="3"
         android:scaleY="3"
         android:text="2019-06-21 10:01"
-        android:textColor="#ff0000"
+        android:textColor="@color/textcolor"
         android:textStyle="bold" />
 
     <ImageView
@@ -41,27 +41,28 @@
 
     <TextView
         android:id="@+id/tv_am"
-        android:textColor="#ff0000"
-        android:textStyle="bold"
-        android:scaleX="2"
-        android:scaleY="2"
         android:layout_width="wrap_content"
-        android:text="2019-06-21 10:01"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/tv_current_ime"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/tv_pm"
-       android:textColor="#ff0000"
-        android:textStyle="bold"
         android:scaleX="2"
         android:scaleY="2"
+        android:text="2019-06-21 10:01"
+        android:textColor="@color/textcolor"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_pm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tv_current_ime"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        android:layout_width="wrap_content"
+        android:scaleX="2"
+        android:scaleY="2"
         android:text="2019-06-21 10:01"
-        android:layout_height="wrap_content" />
+        android:textColor="@color/textcolor"
+        android:textStyle="bold" />
 
 </RelativeLayout>

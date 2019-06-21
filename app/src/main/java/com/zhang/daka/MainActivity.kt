@@ -1,13 +1,13 @@
 package com.zhang.daka
 
+import android.content.res.AssetFileDescriptor
+import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.LinearSnapHelper
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -25,6 +25,9 @@ class MainActivity : AppCompatActivity() {
     val yyyyMMddHHmmss = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     val HHmmss = SimpleDateFormat("HH:mm:ss")
     val linearLayoutManager = LinearLayoutManager(this@MainActivity)
+
+    val surfaceView by lazy { findViewById<SurfaceView>(R.id.surface_main) }
+    val mediaPlayer = MediaPlayer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,11 +67,14 @@ class MainActivity : AppCompatActivity() {
         mDatas.add(DakaModel(R.drawable.meinv14, "2019-06-29"))
         mDatas.add(DakaModel(R.drawable.meinv15, "2019-06-30"))
 
-        if (false) {
+        if (true) {
             try {
-                for (index in 0..20) {
-                    SharedPreferencesUtils.saveLong("${mDatas[index].time} $AM", yyyyMMddHHmmss.parse("2019-06-01 09:02:00").time)
-                    SharedPreferencesUtils.saveLong("${mDatas[index].time} $PM", yyyyMMddHHmmss.parse("2019-06-01 18:32:00").time)
+                val time = mDatas[20].time
+                SharedPreferencesUtils.saveLong("$time $AM", yyyyMMddHHmmss.parse("$time 09:02:00").time)
+                for (index in 0..19) {
+                    val time = mDatas[index].time
+                    SharedPreferencesUtils.saveLong("$time $AM", yyyyMMddHHmmss.parse("$time 09:02:00").time)
+                    SharedPreferencesUtils.saveLong("$time $PM", yyyyMMddHHmmss.parse("$time 18:32:00").time)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -90,6 +96,40 @@ class MainActivity : AppCompatActivity() {
         pagerSnapHelper.attachToRecyclerView(mRecyclerView)
 
 
+//        initPlayer()
+    }
+
+    /**
+     * 初始化播放器
+     */
+    fun initPlayer() {
+//        val openFd = assets.openFd("linyuner.mp4")
+        val openFd = assets.openFd("message.wav")
+        mediaPlayer.reset()
+        mediaPlayer.setDataSource(openFd)
+        mediaPlayer.prepareAsync()
+//        val holder = surfaceView.holder
+//        holder.addCallback(MyCallBack())
+        mediaPlayer.setOnPreparedListener {
+            mediaPlayer.start()
+            mediaPlayer.isLooping = false
+        }
+    }
+
+    inner class MyCallBack : SurfaceHolder.Callback {
+        //改变
+        override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
+        }
+
+        //销毁
+        override fun surfaceDestroyed(holder: SurfaceHolder?) {
+        }
+
+        //创建
+        override fun surfaceCreated(holder: SurfaceHolder?) {
+            mediaPlayer.setDisplay(holder)
+        }
+
     }
 
     fun initEvent() {
@@ -98,6 +138,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        //设置滑动到当天日期
         val currentDate = yyyyMMdd.format(Date())
         for ((index, date) in mDatas.withIndex()) {
             if (currentDate == date.time) {
@@ -106,6 +147,13 @@ class MainActivity : AppCompatActivity() {
                 break
             }
         }
+
+        //设置林允儿背景MV
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        moveTaskToBack(true)
     }
 
     inner class MainAdapter : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
@@ -173,6 +221,8 @@ class MainActivity : AppCompatActivity() {
                     val currentTime = Date().time
                     //当前打卡时间在范围内
                     if (currentTime in amMin..amMax) {
+                        //播放铃声
+                        initPlayer()
                         toastMsg("打卡成功!")
                         //存档
                         SharedPreferencesUtils.saveLong("${mDatas[p1].time} $AM", currentTime)
@@ -189,7 +239,6 @@ class MainActivity : AppCompatActivity() {
             }
             //长按打卡
             p0.iv_zhiwen_pm.setOnLongClickListener {
-
                 //限制最后打卡时间
                 var pmMax: Long = 0
                 //限制最前打卡时间
@@ -206,6 +255,8 @@ class MainActivity : AppCompatActivity() {
                     val currentTime = Date().time
                     //当前打卡时间在范围内
                     if (currentTime in pmMin..pmMax) {
+                        //播放铃声
+                        initPlayer()
                         toastMsg("打卡成功!")
                         //存档
                         SharedPreferencesUtils.saveLong("${mDatas[p1].time} $PM", currentTime)
