@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearSnapHelper
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import java.lang.Exception
@@ -68,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         mDatas.add(DakaModel(R.drawable.meinv14, "2019-06-29"))
         mDatas.add(DakaModel(R.drawable.meinv15, "2019-06-30"))
 
-        if (true) {
+        if (false) {
             try {
                 val time = mDatas[20].time
                 SharedPreferencesUtils.saveLong("$time $AM", yyyyMMddHHmmss.parse("$time 09:02:00").time)
@@ -76,6 +77,23 @@ class MainActivity : AppCompatActivity() {
                     val time = mDatas[index].time
                     SharedPreferencesUtils.saveLong("$time $AM", yyyyMMddHHmmss.parse("$time 09:02:00").time)
                     SharedPreferencesUtils.saveLong("$time $PM", yyyyMMddHHmmss.parse("$time 18:32:00").time)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        if (false) {
+            try {
+                for (model in mDatas) {
+                    val time = model.time
+                    val calendar = Calendar.getInstance()
+                    calendar.time = yyyyMMdd.parse(time)
+                    val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+//                    dddBug("dayOfWeek:$dayOfWeek,time:$time")
+                    if (dayOfWeek == 1) {
+                        SharedPreferencesUtils.saveLong("$time $AM", yyyyMMddHHmmss.parse("$time 09:02:00").time)
+                        SharedPreferencesUtils.saveLong("$time $PM", yyyyMMddHHmmss.parse("$time 18:32:00").time)
+                    }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -235,7 +253,7 @@ class MainActivity : AppCompatActivity() {
                     e.printStackTrace()
                 }
 
-                return@setOnLongClickListener true
+                true
             }
             //长按打卡
             p0.iv_zhiwen_pm.setOnLongClickListener {
@@ -269,8 +287,16 @@ class MainActivity : AppCompatActivity() {
                     e.printStackTrace()
                 }
 
-                return@setOnLongClickListener true
+                true
             }
+
+
+            //判断是否是星期天
+            val time = mDatas[p1].time
+            val calendar = Calendar.getInstance()
+            calendar.time = yyyyMMdd.parse(time)
+            val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+            p0.rl_zhoumo.visibility = if (dayOfWeek == 1) View.VISIBLE else View.GONE
         }
 
         inner class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -286,6 +312,8 @@ class MainActivity : AppCompatActivity() {
             val iv_zhiwen_am = view.findViewById<ImageView>(R.id.iv_zhiwen_am)
             //下午打卡指纹
             val iv_zhiwen_pm = view.findViewById<ImageView>(R.id.iv_zhiwen_pm)
+            //周末
+            val rl_zhoumo = view.findViewById<RelativeLayout>(R.id.rl_zhoumo)
 
             init {
 

@@ -10,59 +10,88 @@
         android:scaleType="fitXY"
         android:src="@drawable/meinv1" />
 
-    <TextView
-        android:id="@+id/tv_current_ime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:scaleX="3"
-        android:scaleY="3"
-        android:text="2019-06-21 10:01"
-        android:textColor="@color/textcolor"
-        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/iv_zhiwen_am"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tv_current_ime"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"
-        android:src="@drawable/zhiwen" />
+        <RelativeLayout
+            android:id="@+id/rl_zhoumo"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:scaleX="3"
+                android:scaleY="3"
+                android:text="周末愉快"
+                android:textColor="@color/textcolor"
+                android:textStyle="bold" />
 
-    <ImageView
-        android:id="@+id/iv_zhiwen_pm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_current_ime"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:src="@drawable/zhiwen" />
+        </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_am"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tv_current_ime"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"
-        android:scaleX="2"
-        android:scaleY="2"
-        android:text="2019-06-21 10:01"
-        android:textColor="@color/textcolor"
-        android:textStyle="bold" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_pm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_current_ime"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:scaleX="2"
-        android:scaleY="2"
-        android:text="2019-06-21 10:01"
-        android:textColor="@color/textcolor"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_current_ime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:scaleX="3"
+                android:scaleY="3"
+                android:text="2019-06-21 10:01"
+                android:textColor="@color/textcolor"
+                android:textStyle="bold" />
 
+            <ImageView
+                android:id="@+id/iv_zhiwen_am"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/tv_current_ime"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="100dp"
+                android:src="@drawable/zhiwen" />
+
+            <ImageView
+                android:id="@+id/iv_zhiwen_pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_current_ime"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="100dp"
+                android:src="@drawable/zhiwen" />
+
+            <TextView
+                android:id="@+id/tv_am"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/tv_current_ime"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="100dp"
+                android:scaleX="2"
+                android:scaleY="2"
+                android:text="2019-06-21 10:01"
+                android:textColor="@color/textcolor"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_current_ime"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="100dp"
+                android:scaleX="2"
+                android:scaleY="2"
+                android:text="2019-06-21 10:01"
+                android:textColor="@color/textcolor"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+    </LinearLayout>
 </RelativeLayout>
