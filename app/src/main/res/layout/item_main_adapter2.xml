@@ -15,6 +15,17 @@
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintTop_toBottomOf="parent" />
 
+    <Button
+        android:id="@+id/bt_main_daka"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="60dp"
+        android:background="@color/transparency"
+        android:textColor="@android:color/white"
+        android:text="打卡"
+        app:layout_constraintTop_toTopOf="@+id/tv_main_date"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_main_date"
+        android:layout_height="0dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
