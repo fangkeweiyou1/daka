@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -32,18 +33,19 @@ import static timber.log.Timber.d;
  * Created by zhangyuncai on 2019/10/12.
  */
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG="MainActivity";
+    private static final String TAG = "MainActivity";
 
     private RecyclerView mRecyclerView;
     private MainAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
     private Context context;
+    private Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        context=this;
+        context = this;
 
         //申请权限
         int camera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
@@ -106,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        int position = Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1;
+        final int position = Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1;
         if (position >= 0 && position < adapter.getItemCount()) {
             mRecyclerView.scrollToPosition(position);
             adapter.notifyItemChanged(position);
