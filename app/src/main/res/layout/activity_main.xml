@@ -7,7 +7,6 @@
     tools:context=".MainActivity">
 
 
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_main"
         android:layout_width="match_parent"
@@ -18,4 +17,11 @@
         android:id="@+id/surface_main"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:text="skiptest"
+        android:id="@+id/bt_main_skiptest"
+        android:onClick="skiptest"
+        android:layout_height="wrap_content" />
 </FrameLayout>

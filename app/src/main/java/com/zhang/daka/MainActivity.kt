@@ -1,5 +1,9 @@
 package com.zhang.daka
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.content.res.AssetFileDescriptor
 import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
@@ -102,10 +106,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         initView()
-
-        val person = Person()
-        val list = person.list
-        dddBug("person:${person.list == null}")
+//        initEvent()
 
     }
 
@@ -140,24 +141,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    inner class MyCallBack : SurfaceHolder.Callback {
-        //改变
-        override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
-        }
-
-        //销毁
-        override fun surfaceDestroyed(holder: SurfaceHolder?) {
-        }
-
-        //创建
-        override fun surfaceCreated(holder: SurfaceHolder?) {
-            mediaPlayer.setDisplay(holder)
-        }
-
-    }
 
     fun initEvent() {
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
 
+        val calendar = Calendar.getInstance()!!
+        // 这里时区需要设置一下，不然会有8个小时的时间差
+        calendar.setTimeZone(TimeZone.getTimeZone("GMT+8"))
+        calendar.timeInMillis = System.currentTimeMillis()
+        calendar.add(Calendar.SECOND, 10)
+
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis,5000, pendingIntent)
     }
 
     override fun onResume() {
@@ -325,6 +320,9 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    open fun skiptest(v: View) {
     }
 
     data class DakaModel(val img: Int, val time: String)
