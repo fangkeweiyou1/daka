@@ -41,4 +41,5 @@ dependencies {
         exclude group: 'com.github.fangkeweiyou1.libutils'
     }
     api ('com.github.fangkeweiyou1:libutils:1.1.1')
+    api ('com.github.fangkeweiyou1:meinv:1.0.0')
 }
