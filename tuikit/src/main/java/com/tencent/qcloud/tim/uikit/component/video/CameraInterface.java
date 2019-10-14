@@ -84,6 +84,7 @@ public class CameraInterface implements Camera.PreviewCallback {
     private int cameraAngle = 90;//摄像头角度   默认为90度
     private int rotation = 0;
     private byte[] firstFrame_data;
+    private byte[] cache_data;
 
     public static final int TYPE_RECORDER = 0x090;
     public static final int TYPE_CAPTURE = 0x091;
@@ -233,7 +234,7 @@ public class CameraInterface implements Camera.PreviewCallback {
                     mParams.setZoom(nowScaleRate);
                     mCamera.setParameters(mParams);
                 }
-                TUIKitLog.i(TAG,"setZoom = " + nowScaleRate);
+                TUIKitLog.i(TAG, "setZoom = " + nowScaleRate);
                 break;
         }
 
@@ -247,7 +248,13 @@ public class CameraInterface implements Camera.PreviewCallback {
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
         firstFrame_data = data;
+        cache_data = data;
     }
+
+    public byte[] getCacheData() {
+        return cache_data;
+    }
+
 
     public void setFlashMode(String flashMode) {
         if (mCamera == null)
@@ -317,7 +324,7 @@ public class CameraInterface implements Camera.PreviewCallback {
             SELECTED_CAMERA = CAMERA_POST_POSITION;
         }
         doDestroyCamera();
-        TUIKitLog.i(TAG,"open start");
+        TUIKitLog.i(TAG, "open start");
         openCamera(SELECTED_CAMERA);
 //        mCamera = Camera.open();
         if (Build.VERSION.SDK_INT > 17 && this.mCamera != null) {
@@ -327,7 +334,7 @@ public class CameraInterface implements Camera.PreviewCallback {
                 e.printStackTrace();
             }
         }
-        TUIKitLog.i(TAG,"open end");
+        TUIKitLog.i(TAG, "open end");
         doStartPreview(holder, screenProp);
     }
 
@@ -336,7 +343,7 @@ public class CameraInterface implements Camera.PreviewCallback {
      */
     public void doStartPreview(SurfaceHolder holder, float screenProp) {
         if (isPreviewing) {
-            TUIKitLog.i(TAG,"doStartPreview isPreviewing");
+            TUIKitLog.i(TAG, "doStartPreview isPreviewing");
         }
         if (this.screenProp < 0) {
             this.screenProp = screenProp;
@@ -470,6 +477,36 @@ public class CameraInterface implements Camera.PreviewCallback {
                 }
             }
         });
+    }
+
+    /**
+     * 获取图片
+     *
+     * @return
+     */
+    public Bitmap getPreviewBitmap() {
+        if (mCamera == null) {
+            return null;
+        }
+        final int nowAngle = (angle + 90) % 360;
+        //获取第一帧图片
+        Camera.Parameters parameters = mCamera.getParameters();
+        int width = parameters.getPreviewSize().width;
+        int height = parameters.getPreviewSize().height;
+        YuvImage yuv = new YuvImage(cache_data, parameters.getPreviewFormat(), width, height, null);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        yuv.compressToJpeg(new Rect(0, 0, width, height), 50, out);
+        byte[] bytes = out.toByteArray();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        Matrix matrix = new Matrix();
+            matrix.setRotate(90);
+//        if (SELECTED_CAMERA == CAMERA_POST_POSITION) {
+//            matrix.setRotate(nowAngle);
+//        } else if (SELECTED_CAMERA == CAMERA_FRONT_POSITION) {
+//        }
+        bitmap = createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap
+                .getHeight(), matrix, true);
+        return bitmap;
     }
 
     //启动录像
@@ -755,5 +792,9 @@ public class CameraInterface implements Camera.PreviewCallback {
 
     void isPreview(boolean res) {
         this.isPreviewing = res;
+    }
+
+    public Camera getmCamera() {
+        return mCamera;
     }
 }

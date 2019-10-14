@@ -63,24 +63,51 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         mainViewHolder.tv_main_date.setText(showCurrentDate);
         //上午
         String amImagePath = WFileUtil.getCacheImagePath(context, parseDate + "am");
-        File amFile = new File(amImagePath);
-        Glide.with(context)
-                .load(DataHelper.getMeinvImage())
-                .into(mainViewHolder.iv_img_am);
+        final File amFile = new File(amImagePath);
         if (amFile.exists()) {
             Glide.with(context)
                     .load(amFile)
+                    .skipMemoryCache(true)
                     .into(mainViewHolder.iv_img_am);
+            mainViewHolder.iv_img_am.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new PreviewImageDialog(context, amFile).show();
+                }
+            });
+        } else {
+            Glide.with(context)
+                    .load(DataHelper.getMeinvImage())
+                    .into(mainViewHolder.iv_img_am);
+            mainViewHolder.iv_img_am.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
         //下午
         String pmImagePath = WFileUtil.getCacheImagePath(context, parseDate + "pm");
-        File pamFile = new File(pmImagePath);
-        Glide.with(context)
-                .load(DataHelper.getMeinvImage())
-                .into(mainViewHolder.iv_img_pm);
+        final File pamFile = new File(pmImagePath);
         if (pamFile.exists()) {
             Glide.with(context)
                     .load(pamFile)
+                    .skipMemoryCache(true)
+                    .into(mainViewHolder.iv_img_pm);
+            mainViewHolder.iv_img_pm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new PreviewImageDialog(context, pamFile).show();
+                }
+            });
+        } else {
+            mainViewHolder.iv_img_pm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
+            Glide.with(context)
+                    .load(DataHelper.getMeinvImage())
                     .into(mainViewHolder.iv_img_pm);
         }
     }

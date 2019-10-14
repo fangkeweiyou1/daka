@@ -37,7 +37,7 @@
         <ImageView
             android:id="@+id/iv_img_am"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:src="@drawable/linyuner_1" />
     </LinearLayout>
 
@@ -52,7 +52,7 @@
         <ImageView
             android:id="@+id/iv_img_pm"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:src="@drawable/linyuner_1" />
     </LinearLayout>
 
