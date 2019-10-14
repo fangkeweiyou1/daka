@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.wushiyi.util.ToastUtilKt;
-import com.zhang.daka.camera2.Camera3Activity;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -45,7 +44,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             public void onClick(View v) {
                 int camera = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA);
                 if (camera >= 0) {
-                    context.startActivity(new Intent(context, Camera3Activity.class));
+                    context.startActivity(new Intent(context, Camera4Activity.class));
+//                    context.startActivity(new Intent(context, Camera5Activity.class));
                 } else {
                     ToastUtilKt.showToast("请赋予拍照权限");
                 }

@@ -9,7 +9,7 @@
 
     <application>
         <activity
-            android:name=".component.video.CameraActivity"
+            android:name=".component.video.Camera5Activity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".component.video.VideoViewActivity"

@@ -21,7 +21,6 @@ import com.tencent.imsdk.friendship.TIMFriendPendencyInfo;
 import com.tencent.imsdk.friendship.TIMFriendshipListener;
 import com.tencent.qcloud.tim.uikit.base.IMEventListener;
 import com.tencent.qcloud.tim.uikit.base.IUIKitCallBack;
-import com.tencent.qcloud.tim.uikit.component.face.FaceManager;
 import com.tencent.qcloud.tim.uikit.config.GeneralConfig;
 import com.tencent.qcloud.tim.uikit.config.TUIKitConfigs;
 import com.tencent.qcloud.tim.uikit.modules.conversation.ConversationManagerKit;
@@ -61,7 +60,7 @@ public class TUIKitImpl {
 
         BackgroundTasks.initInstance();
         FileUtil.initPath(); // 取决于app什么时候获取到权限，即使在application中初始化，首次安装时，存在获取不到权限，建议app端在activity中再初始化一次，确保文件目录完整创建
-        FaceManager.loadFaceFiles();
+//        FaceManager.loadFaceFiles();
     }
 
     public static void login(String userid, String usersig, final IUIKitCallBack callback) {

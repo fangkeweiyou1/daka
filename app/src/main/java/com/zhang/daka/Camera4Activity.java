@@ -1,62 +1,48 @@
-package com.tencent.qcloud.tim.uikit.component.video;
+package com.zhang.daka;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.tencent.qcloud.tim.uikit.R;
-import com.tencent.qcloud.tim.uikit.base.IUIKitCallBack;
+import com.tencent.qcloud.tim.uikit.component.video.Camera5Activity;
+import com.tencent.qcloud.tim.uikit.component.video.JCameraView;
 import com.tencent.qcloud.tim.uikit.component.video.listener.ClickListener;
 import com.tencent.qcloud.tim.uikit.component.video.listener.ErrorListener;
 import com.tencent.qcloud.tim.uikit.component.video.listener.JCameraListener;
 import com.tencent.qcloud.tim.uikit.component.video.util.DeviceUtil;
-import com.tencent.qcloud.tim.uikit.utils.FileUtil;
-import com.tencent.qcloud.tim.uikit.utils.TUIKitConstants;
 import com.tencent.qcloud.tim.uikit.utils.TUIKitLog;
 import com.tencent.qcloud.tim.uikit.utils.ToastUtil;
 
-public class CameraActivity extends Activity {
-
-    private static final String TAG = CameraActivity.class.getSimpleName();
+/**
+ * Created by zhangyuncai on 2019/10/14.
+ */
+public class Camera4Activity extends AppCompatActivity {
+    private static final String TAG = Camera5Activity.class.getSimpleName();
 
     private JCameraView jCameraView;
-    public static IUIKitCallBack mCallBack;
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //去除标题栏
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         //去除状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        setContentView(R.layout.activity_camera);
+        setContentView(R.layout.activity_camera4);
         jCameraView = findViewById(R.id.jcameraview);
-        //设置视频保存路径
-        //jCameraView.setSaveVideoPath(Environment.getExternalStorageDirectory().getPath() + File.separator + "JCamera");
-
-        int state = getIntent().getIntExtra(TUIKitConstants.CAMERA_TYPE, JCameraView.BUTTON_STATE_BOTH);
-        jCameraView.setFeatures(state);
-        if (state == JCameraView.BUTTON_STATE_ONLY_CAPTURE)
-            jCameraView.setTip("点击拍照");
-        else if (state == JCameraView.BUTTON_STATE_ONLY_RECORDER)
-            jCameraView.setTip("长按摄像");
-
+        jCameraView.setFeatures(0x101);//只拍照
+        jCameraView.setTip("点击拍照");
         jCameraView.setMediaQuality(JCameraView.MEDIA_QUALITY_MIDDLE);
+
         jCameraView.setErrorLisenter(new ErrorListener() {
             @Override
             public void onError() {
-                //错误监听
-                TUIKitLog.i(TAG, "camera error");
-                Intent intent = new Intent();
-                setResult(103, intent);
-                finish();
             }
 
             @Override
@@ -68,40 +54,17 @@ public class CameraActivity extends Activity {
         jCameraView.setJCameraLisenter(new JCameraListener() {
             @Override
             public void captureSuccess(Bitmap bitmap) {
-                //获取图片bitmap
-                String path = FileUtil.saveBitmap("JCamera", bitmap);
-               /* Intent intent = new Intent();
-                intent.putExtra(ILiveConstants.CAMERA_IMAGE_PATH, path);
-                setResult(-1, intent);*/
-                if (mCallBack != null) {
-                    mCallBack.onSuccess(path);
-                }
-                finish();
             }
 
             @Override
             public void recordSuccess(String url, Bitmap firstFrame, long duration) {
-                //获取视频路径
-                String path = FileUtil.saveBitmap("JCamera", firstFrame);
-                Intent intent = new Intent();
-                intent.putExtra(TUIKitConstants.IMAGE_WIDTH, firstFrame.getWidth());
-                intent.putExtra(TUIKitConstants.IMAGE_HEIGHT, firstFrame.getHeight());
-                intent.putExtra(TUIKitConstants.VIDEO_TIME, duration);
-                intent.putExtra(TUIKitConstants.CAMERA_IMAGE_PATH, path);
-                intent.putExtra(TUIKitConstants.CAMERA_VIDEO_PATH, url);
-                firstFrame.getWidth();
-                //setResult(-1, intent);
-                if (mCallBack != null) {
-                    mCallBack.onSuccess(intent);
-                }
-                finish();
             }
         });
 
         jCameraView.setLeftClickListener(new ClickListener() {
             @Override
             public void onClick() {
-                CameraActivity.this.finish();
+                Camera4Activity.this.finish();
             }
         });
         jCameraView.setRightClickListener(new ClickListener() {
@@ -113,6 +76,7 @@ public class CameraActivity extends Activity {
         //jCameraView.setVisibility(View.GONE);
         TUIKitLog.i(TAG, DeviceUtil.getDeviceModel());
     }
+
 
     @Override
     public void onDetachedFromWindow() {

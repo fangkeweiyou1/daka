@@ -22,7 +22,7 @@ import com.tencent.qcloud.tim.uikit.component.AudioPlayer;
 import com.tencent.qcloud.tim.uikit.component.face.Emoji;
 import com.tencent.qcloud.tim.uikit.component.face.FaceFragment;
 import com.tencent.qcloud.tim.uikit.component.face.FaceManager;
-import com.tencent.qcloud.tim.uikit.component.video.CameraActivity;
+import com.tencent.qcloud.tim.uikit.component.video.Camera5Activity;
 import com.tencent.qcloud.tim.uikit.component.video.JCameraView;
 import com.tencent.qcloud.tim.uikit.modules.chat.base.BaseInputFragment;
 import com.tencent.qcloud.tim.uikit.modules.chat.layout.inputmore.InputMoreFragment;
@@ -187,9 +187,9 @@ public class InputLayout extends InputLayoutUI implements View.OnClickListener, 
         if (!checkPermission(CAPTURE)) {
             return;
         }
-        Intent captureIntent = new Intent(getContext(), CameraActivity.class);
+        Intent captureIntent = new Intent(getContext(), Camera5Activity.class);
         captureIntent.putExtra(TUIKitConstants.CAMERA_TYPE, JCameraView.BUTTON_STATE_ONLY_CAPTURE);
-        CameraActivity.mCallBack = new IUIKitCallBack() {
+        Camera5Activity.mCallBack = new IUIKitCallBack() {
             @Override
             public void onSuccess(Object data) {
                 Uri contentUri = Uri.fromFile(new File(data.toString()));
@@ -213,9 +213,9 @@ public class InputLayout extends InputLayoutUI implements View.OnClickListener, 
         if (!checkPermission(VIDEO_RECORD)) {
             return;
         }
-        Intent captureIntent = new Intent(getContext(), CameraActivity.class);
+        Intent captureIntent = new Intent(getContext(), Camera5Activity.class);
         captureIntent.putExtra(TUIKitConstants.CAMERA_TYPE, JCameraView.BUTTON_STATE_ONLY_RECORDER);
-        CameraActivity.mCallBack = new IUIKitCallBack() {
+        Camera5Activity.mCallBack = new IUIKitCallBack() {
             @Override
             public void onSuccess(Object data) {
                 Intent videoData = (Intent) data;

@@ -29,6 +29,7 @@
         <activity android:name=".Camera2Activity" />
         <activity android:name=".MusicActivity" />
         <activity android:name=".camera2.Camera3Activity"  android:theme="@style/MaterialTheme"/>
+        <activity android:name=".Camera4Activity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

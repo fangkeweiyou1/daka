@@ -24,15 +24,11 @@ import com.camerakit.CameraKitView;
 import com.wushiyi.mvp.utils.JsonUtil;
 import com.wushiyi.util.ToastUtilKt;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import timber.log.Timber;
-
-import static java.lang.System.out;
 import static timber.log.Timber.d;
 
 /**
@@ -55,7 +51,7 @@ public class Camera2Activity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         context = this;
 
-        setContentView(R.layout.activity_camera);
+        setContentView(R.layout.activity_camera5);
         view_snap_cover = findViewById(R.id.view_snap_cover);
         iv_snap_info = (ImageView) findViewById(R.id.iv_snap_info);
         ll_snap_picture = (LinearLayout) findViewById(R.id.ll_snap_picture);
