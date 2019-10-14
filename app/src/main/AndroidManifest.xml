@@ -27,6 +27,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Camera2Activity" />
+        <activity android:name=".MusicActivity" />
+        <activity android:name="Camera3Activity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -37,6 +39,16 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+        <service
+            android:name=".TimerService"
+            android:enabled="true" />
+        <receiver android:name=".TimerBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="testalarm0"/>
+                <action android:name="testalarm1"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

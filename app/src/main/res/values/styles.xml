@@ -10,6 +10,9 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowActionBar">false</item>
     </style>
+    <style name="MaterialTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+    </style>
 
     <style name="FullScreen" parent="AppTheme">
         <item name="android:windowFullscreen">true</item>

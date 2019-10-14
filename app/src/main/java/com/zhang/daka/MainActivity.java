@@ -1,6 +1,9 @@
 package com.zhang.daka;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.Log;
+import android.view.View;
 
 import com.baidu.ocr.sdk.OCR;
 import com.baidu.ocr.sdk.OnResultListener;
@@ -24,6 +28,7 @@ import com.wushiyi.util.ToastUtilKt;
 
 import java.io.FileOutputStream;
 import java.util.Calendar;
+import java.util.Locale;
 
 import timber.log.Timber;
 
@@ -63,6 +68,46 @@ public class MainActivity extends AppCompatActivity {
 
         //百度OCR初始化
         initAccessTokenWithAkSk();
+
+
+//        setAmClock();
+//        setPmClock();
+
+
+    }
+
+    /**
+     * 设置上午闹钟
+     */
+    void setAmClock() {
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 9);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Intent intent = new Intent();
+        intent.setAction("testalarm0");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,0, intent,PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Service.ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+    }
+
+    /**
+     * 设置上午闹钟
+     */
+    void setPmClock() {
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 18);
+        calendar.set(Calendar.MINUTE, 28);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Intent intent = new Intent();
+        intent.setAction("testalarm1");
+        PendingIntent pendingIntent =PendingIntent.getBroadcast(context,0, intent,PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Service.ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
     /**
@@ -113,5 +158,10 @@ public class MainActivity extends AppCompatActivity {
             mRecyclerView.scrollToPosition(position);
             adapter.notifyItemChanged(position);
         }
+    }
+
+    public void stopClcok(View view) {
+        Intent intent = new Intent(this, TimerService.class);
+        stopService(intent);
     }
 }
