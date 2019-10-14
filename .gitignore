@@ -16,3 +16,6 @@
 /.idea/
 app/release/app-release.apk
 app/release/output.json
+tuikit/build
+tuikit/tuikit.iml
+tuikit/.idea

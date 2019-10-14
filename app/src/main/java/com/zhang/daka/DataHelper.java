@@ -1,21 +1,167 @@
 package com.zhang.daka;
 
+import android.content.Context;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
+import android.text.TextUtils;
+import android.util.Log;
+
+import com.wushiyi.mvp.utils.JsonUtil;
+import com.wushiyi.util.ToastUtilKt;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Random;
 
-import static java.lang.System.out;
+import static timber.log.Timber.d;
 
 /**
  * Created by zhangyuncai on 2019/10/12.
  */
 public class DataHelper {
-    public static int getMonthOfDay(int year,int month){
+    private static final String TAG = "DataHelper";
+
+    /**
+     * 解析照片
+     *
+     * @param file
+     */
+    public static void parsePicture(final Context context, final File file, final WCallBack<String> callBack) {
+
+        try {
+            if (!file.exists()) {
+                callBack.callback("解析图片不存在");
+                return;
+            }
+            String saveImgPath = "";
+            Calendar calendar = Calendar.getInstance();
+            int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+            if (hourOfDay < 12) {//上午图片
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd-");
+                String date = simpleDateFormat.format(calendar.getTime());
+                saveImgPath = WFileUtil.getCacheImagePath(context, date + "am");
+                callBack.callback("上午打卡保存地址:" + saveImgPath);
+            } else {//下午图片
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd-");
+                String date = simpleDateFormat.format(calendar.getTime());
+                saveImgPath = WFileUtil.getCacheImagePath(context, date + "pm");
+                callBack.callback("下午打卡保存地址:" + saveImgPath);
+            }
+            final File saveLocalFile = new File(saveImgPath);
+            //如果已经有打卡图片,就禁止解析图片
+            if (saveLocalFile.exists()) {
+                callBack.callback("打卡图片已存在");
+                return;
+            }
+
+            String imagePath = file.getAbsolutePath();
+            RecognizeService.recAccurateBasic(context, imagePath,
+                    new RecognizeService.ServiceListener() {
+                        @Override
+                        public void onResult(String result) {
+                            Log.d(TAG, "result:" + result);
+                            //如果已经有打卡图片,就禁止解析图片
+                            if (saveLocalFile.exists()) {
+                                callBack.callback("打卡图片已存在");
+                                return;
+                            }
+                            try {
+                                OcrModel ocrModel = JsonUtil.INSTANCE.jsonToAny(result, OcrModel.class);
+                                boolean isDataSuccess = isDakaSuccess(ocrModel);
+                                if (isDataSuccess) {//如果打卡成功保存图片
+                                    callBack.callback("解析图片已签到");
+                                    FileInputStream fileInputStream = new FileInputStream(file);
+                                    FileOutputStream outputStream = new FileOutputStream(saveLocalFile.getAbsoluteFile());
+                                    outputStream.write(fileInputStream.read());
+                                    outputStream.close();
+                                    ToastUtilKt.showToast("打卡成功");
+                                    //播放铃声
+                                    initPlayer(context);
+                                    callBack.callback("解析图片已签到并保存");
+                                } else {
+                                    callBack.callback("解析图片未签到");
+                                    callBack.callback("fail");
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 是否打卡成功
+     *
+     * @return
+     */
+    static boolean isDakaSuccess(OcrModel ocrModel) {
+        boolean isDataSuccess = false;
+        for (WordsResultBean wordsResultBean : ocrModel.words_result) {
+            String words = wordsResultBean.words;
+            d("----------->>>>>>>>-----------words:" + words);
+            if (!TextUtils.isEmpty(words)) {
+                if (words.contains("张运才")) {
+                    isDataSuccess = true;
+                } else if (words.contains("张运败")) {
+                    isDataSuccess = true;
+                } else if (words.contains("已签到")) {
+                    isDataSuccess = true;
+                } else if (words.contains("谢谢")) {
+                    isDataSuccess = true;
+                } else if (words.contains("it部")) {
+                    isDataSuccess = true;
+                } else if (words.contains("00000019")) {
+                    isDataSuccess = true;
+                } else if (words.contains("000019")) {
+                    isDataSuccess = true;
+                } else if (words.contains("0000")) {
+                    isDataSuccess = true;
+                }
+            }
+            if (isDataSuccess) {
+                break;
+            }
+        }
+        return isDataSuccess;
+    }
+
+    /**
+     * 播放打卡成功铃声
+     */
+    static void initPlayer(Context context) {
+        try {
+            AssetFileDescriptor openFd = context.getAssets().openFd("message.wav");
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            mediaPlayer.reset();
+            mediaPlayer.setDataSource(openFd);
+            mediaPlayer.prepareAsync();
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    mp.setLooping(false);
+                    mp.start();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int getMonthOfDay(int year, int month) {
         int day = 0;
-        if(year%4==0&&year%100!=0||year%400==0){
+        if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
             day = 29;
-        }else{
+        } else {
             day = 28;
         }
-        switch (month){
+        switch (month) {
             case 1:
             case 3:
             case 5:
@@ -36,9 +182,9 @@ public class DataHelper {
 
         return 0;
     }
+
     public static String getDayText(int position) {
-        switch (position)
-        {
+        switch (position) {
             case 0:
                 return "01";
             case 1:

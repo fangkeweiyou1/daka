@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-
+package com.zhang.daka.camera2
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle

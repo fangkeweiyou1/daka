@@ -14,26 +14,15 @@
  * limitations under the License.
  */
 
+package com.zhang.daka.camera2
 
 import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.graphics.ImageFormat
-import android.graphics.Matrix
-import android.graphics.Point
-import android.graphics.RectF
-import android.graphics.SurfaceTexture
-import android.hardware.camera2.CameraAccessException
-import android.hardware.camera2.CameraCaptureSession
-import android.hardware.camera2.CameraCharacteristics
-import android.hardware.camera2.CameraDevice
-import android.hardware.camera2.CameraManager
-import android.hardware.camera2.CameraMetadata
-import android.hardware.camera2.CaptureRequest
-import android.hardware.camera2.CaptureResult
-import android.hardware.camera2.TotalCaptureResult
+import android.graphics.*
+import android.hardware.camera2.*
 import android.media.ImageReader
 import android.os.Bundle
 import android.os.Handler
@@ -44,15 +33,12 @@ import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.util.Size
 import android.util.SparseIntArray
-import android.view.LayoutInflater
-import android.view.Surface
-import android.view.TextureView
-import android.view.View
-import android.view.ViewGroup
-import com.example.android.camera2basic.PIC_FILE_NAME
-import com.example.android.camera2basic.REQUEST_CAMERA_PERMISSION
+import android.view.*
+import com.zhang.daka.DataHelper
 import com.zhang.daka.R
-import com.zhang.daka.camera2.showToast
+import com.zhang.daka.WCallBack
+import com.zhang.daka.WFileUtil
+import kotlinx.android.synthetic.main.fragment_camera2_basic.*
 import java.io.File
 import java.util.Arrays
 import java.util.Collections
@@ -107,6 +93,7 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
      * The [android.util.Size] of camera preview.
      */
     private lateinit var previewSize: Size
+    var snapInx = 0//拍照照片自增角标,循环使用这个角标
 
     /**
      * [CameraDevice.StateCallback] is called when [CameraDevice] changes its state.
@@ -157,6 +144,9 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
      * still image is ready to be saved.
      */
     private val onImageAvailableListener = ImageReader.OnImageAvailableListener {
+        val imagePath = WFileUtil.getCacheImagePath(context, "snap" + (snapInx++));
+        file = File(imagePath)
+        Log.d(TAG, file.absolutePath)
         backgroundHandler?.post(ImageSaver(it.acquireNextImage(), file))
     }
 
@@ -239,33 +229,43 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
         }
 
         override fun onCaptureProgressed(session: CameraCaptureSession,
-                request: CaptureRequest,
-                partialResult: CaptureResult) {
+                                         request: CaptureRequest,
+                                         partialResult: CaptureResult) {
             process(partialResult)
         }
 
         override fun onCaptureCompleted(session: CameraCaptureSession,
-                request: CaptureRequest,
-                result: TotalCaptureResult) {
+                                        request: CaptureRequest,
+                                        result: TotalCaptureResult) {
             process(result)
         }
 
     }
 
     override fun onCreateView(inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_camera2_basic, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.findViewById<View>(R.id.picture).setOnClickListener(this)
         view.findViewById<View>(R.id.info).setOnClickListener(this)
         textureView = view.findViewById(R.id.texture)
+      autoCapute()
+    }
+
+    fun autoCapute()
+    {
+        Handler().postDelayed({
+            lockFocus()
+        },1000)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        file = File(activity!!.getExternalFilesDir(null), PIC_FILE_NAME)
+        val imagePath = WFileUtil.getCacheImagePath(context, "snap" + (snapInx++));
+//        file = File(activity!!.getExternalFilesDir(null), PIC_FILE_NAME)
+        file = File(imagePath)
     }
 
     override fun onResume() {
@@ -298,8 +298,8 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,
-            permissions: Array<String>,
-            grantResults: IntArray) {
+                                            permissions: Array<String>,
+                                            grantResults: IntArray) {
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults.size != 1 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 ErrorDialog.newInstance(getString(R.string.request_permission))
@@ -582,6 +582,7 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
      * Lock the focus as the first step for a still image capture.
      */
     private fun lockFocus() {
+        tv_camera3_parsecontent.text = "正在拍照..."
         try {
             // This is how to tell the camera to lock focus.
             previewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,
@@ -618,9 +619,14 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
     /**
      * Capture a still picture. This method should be called when we get a response in
      * [.captureCallback] from both [.lockFocus].
+     * 拍照回调
      */
     private fun captureStillPicture() {
         try {
+            activity!!.runOnUiThread {
+                tv_camera3_parsecontent.text="拍照回调"
+            }
+
             if (activity == null || cameraDevice == null) return
             val rotation = activity!!.windowManager.defaultDisplay.rotation
 
@@ -644,11 +650,27 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
             val captureCallback = object : CameraCaptureSession.CaptureCallback() {
 
                 override fun onCaptureCompleted(session: CameraCaptureSession,
-                        request: CaptureRequest,
-                        result: TotalCaptureResult) {
+                                                request: CaptureRequest,
+                                                result: TotalCaptureResult) {
                     activity!!.showToast("Saved: $file")
                     Log.d(TAG, file.toString())
-                    unlockFocus()
+//                    unlockFocus()
+                    activity!!.runOnUiThread {
+                        tv_camera3_parsecontent.text="拍照回调并解析"
+                    }
+                    DataHelper.parsePicture(context, file, object : WCallBack<String> {
+                        override fun callback(t: String) {
+                            if (t.equals("fail")) {
+                                autoCapute()
+                            } else {
+                                activity!!.runOnUiThread {
+                                    tv_camera3_parsecontent.text = t
+                                }
+
+                            }
+                        }
+
+                    })
                 }
             }
 
@@ -777,7 +799,8 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
          * @param aspectRatio       The aspect ratio
          * @return The optimal `Size`, or an arbitrary one if none were big enough
          */
-        @JvmStatic private fun chooseOptimalSize(
+        @JvmStatic
+        private fun chooseOptimalSize(
                 choices: Array<Size>,
                 textureViewWidth: Int,
                 textureViewHeight: Int,
@@ -815,6 +838,7 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
             }
         }
 
-        @JvmStatic fun newInstance(): Camera2BasicFragment = Camera2BasicFragment()
+        @JvmStatic
+        fun newInstance(): Camera2BasicFragment = Camera2BasicFragment()
     }
 }

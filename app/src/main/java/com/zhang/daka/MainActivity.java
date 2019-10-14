@@ -15,22 +15,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
-import android.util.Log;
 import android.view.View;
 
 import com.baidu.ocr.sdk.OCR;
 import com.baidu.ocr.sdk.OnResultListener;
 import com.baidu.ocr.sdk.exception.OCRError;
 import com.baidu.ocr.sdk.model.AccessToken;
-import com.wushiyi.mvp.utils.JsonUtil;
-import com.wushiyi.util.ToastUtilKt;
 
-import java.io.FileOutputStream;
 import java.util.Calendar;
 import java.util.Locale;
-
-import timber.log.Timber;
 
 import static timber.log.Timber.d;
 
@@ -56,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
         int camera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         if (camera < 0) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 99);
+        }
+        int write = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (write < 0) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 999);
         }
 
         mRecyclerView = findViewById(R.id.rv_main);

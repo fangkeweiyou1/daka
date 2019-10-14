@@ -13,7 +13,7 @@ public class WFileUtil {
 
     public static String getCacheImagePath(Context context, String imageName) {
         String imageFolder = createCacheImageFolder(context);
-        return imageFolder + "/" + imageName+".png";
+        return imageFolder + "/" + imageName + ".png";
     }
 
     /**
@@ -22,8 +22,8 @@ public class WFileUtil {
      * @return
      */
     public static String createCacheImageFolder(Context context) {
-        String dir = getDiskCachePath(context);
-        String path = dir + "/dakaimage";
+        String dir = getDiskPath(context);
+        String path = dir + "/aa_daka_img";
         File file = new File(path);
         if (!file.exists()) {
             file.mkdirs();
@@ -41,6 +41,21 @@ public class WFileUtil {
             return context.getExternalCacheDir().getPath();
         } else {
             return context.getCacheDir().getPath();
+        }
+    }
+
+    /**
+     * 获取内存卡地址
+     *
+     * @param context
+     * @return
+     */
+    public static String getDiskPath(Context context) {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED .equals(state) ) {
+            return Environment.getExternalStorageDirectory().getAbsolutePath();
+        } else {
+            return context.getFilesDir().getAbsolutePath();
         }
     }
 

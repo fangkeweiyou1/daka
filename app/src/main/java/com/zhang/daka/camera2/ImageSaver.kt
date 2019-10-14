@@ -1,11 +1,10 @@
+package com.zhang.daka.camera2
 
 import android.media.Image
 import android.util.Log
-
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.nio.ByteBuffer
 
 /**
  * Saves a JPEG [Image] into the specified [File].

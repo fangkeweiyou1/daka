@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+package com.zhang.daka.camera2
 
 import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
-import com.example.android.camera2basic.REQUEST_CAMERA_PERMISSION
 import com.zhang.daka.R
 
 /**

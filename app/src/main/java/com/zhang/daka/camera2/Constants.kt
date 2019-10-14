@@ -13,10 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 @file:JvmName("Constants")
-
-package com.example.android.camera2basic
-
+package com.zhang.daka.camera2
 @JvmField val REQUEST_CAMERA_PERMISSION = 1
 @JvmField val PIC_FILE_NAME = "pic.jpg"
