@@ -1,9 +1,11 @@
 package com.zhang.daka;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -175,7 +177,7 @@ public class Camera4Activity extends AppCompatActivity {
                                     int read = 0;
                                     FileOutputStream outputStream = new FileOutputStream(imagePath2);
                                     while ((read = fileInputStream.read(output)) != -1) {
-                                        outputStream.write(output,0,read);
+                                        outputStream.write(output, 0, read);
                                     }
                                     fileInputStream.close();
                                     outputStream.close();
@@ -200,6 +202,7 @@ public class Camera4Activity extends AppCompatActivity {
      */
     void initPlayer() {
         try {
+            autoSetAudioVolumn();
             AssetFileDescriptor openFd = getAssets().openFd("message.wav");
             MediaPlayer mediaPlayer = new MediaPlayer();
             mediaPlayer.reset();
@@ -210,6 +213,7 @@ public class Camera4Activity extends AppCompatActivity {
                 public void onPrepared(MediaPlayer mp) {
                     mp.setLooping(false);
                     mp.start();
+                    resetAudioVolumn();
                 }
             });
         } catch (IOException e) {
@@ -217,6 +221,31 @@ public class Camera4Activity extends AppCompatActivity {
         }
     }
 
+    //当前音量大小
+    int currentVolume = 0;
+
+    /**
+     * 设置音量
+     */
+    private void autoSetAudioVolumn() {
+        AudioManager mAudioManager = (AudioManager) (context.getSystemService(Context.AUDIO_SERVICE));
+        //获取手机最大音量
+        int maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        //设置最大音量
+        int setVolume = (int) (maxVolume * 1f);
+        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, maxVolume, 0);
+    }
+
+    /**
+     * 重置音量
+     */
+    private void resetAudioVolumn() {
+        if (currentVolume > 0) {
+            AudioManager mAudioManager = (AudioManager) (context.getSystemService(Context.AUDIO_SERVICE));
+            mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, 0);
+        }
+    }
 
     /**
      * 是否打卡成功
@@ -296,8 +325,7 @@ public class Camera4Activity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(subscribe!=null)
-        {
+        if (subscribe != null) {
             subscribe.dispose();
         }
     }
