@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.zhang.daka.DakaMainActivity;
 import com.zhang.daka.R;
+import com.zhang.daka.net.HttpUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +34,13 @@ public class DanciMainActivity extends AppCompatActivity {
             mDatas.add("");
         }
         mRecyclerView = findViewById(R.id.rv_danci_horiz);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mAdapter = new DanciHorizAdapter(mDatas);
         mRecyclerView.setAdapter(mAdapter);
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(mRecyclerView);
+
+        HttpUtils.translate("你好", true);
     }
 
     public void daka(View view) {

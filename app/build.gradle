@@ -17,6 +17,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        encoding 'UTF-8'
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -66,4 +71,6 @@ dependencies {
     //Eventbus
     api "org.greenrobot:eventbus:$versions.eventBusVersion"
 
+    // Logging
+    api "com.jakewharton.timber:timber:$versions.timberVersion"
 }
