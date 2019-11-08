@@ -1,4 +1,4 @@
-package com.zhang.daka;
+package com.zhang.daka.daka;
 
 import android.app.Activity;
 import android.content.Context;
@@ -28,6 +28,10 @@ import com.tencent.qcloud.tim.uikit.utils.TUIKitLog;
 import com.tencent.qcloud.tim.uikit.utils.ToastUtil;
 import com.wushiyi.mvp.utils.JsonUtil;
 import com.wushiyi.util.ToastUtilKt;
+import com.zhang.daka.R;
+import com.zhang.daka.model.OcrModel;
+import com.zhang.daka.model.WordsResultBean;
+import com.zhang.daka.utils.WFileUtil;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

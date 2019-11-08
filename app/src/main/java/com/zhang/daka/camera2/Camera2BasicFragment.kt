@@ -34,10 +34,10 @@ import android.util.Log
 import android.util.Size
 import android.util.SparseIntArray
 import android.view.*
-import com.zhang.daka.DataHelper
+import com.zhang.daka.utils.DataHelper
 import com.zhang.daka.R
-import com.zhang.daka.WCallBack
-import com.zhang.daka.WFileUtil
+import com.zhang.daka.utils.WCallBack
+import com.zhang.daka.utils.WFileUtil
 import kotlinx.android.synthetic.main.fragment_camera2_basic.*
 import java.io.File
 import java.util.Arrays

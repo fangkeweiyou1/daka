@@ -1,4 +1,4 @@
-package com.zhang.daka;
+package com.zhang.daka.daka;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -23,6 +23,10 @@ import com.camerakit.CameraKit;
 import com.camerakit.CameraKitView;
 import com.wushiyi.mvp.utils.JsonUtil;
 import com.wushiyi.util.ToastUtilKt;
+import com.zhang.daka.R;
+import com.zhang.daka.model.OcrModel;
+import com.zhang.daka.model.WordsResultBean;
+import com.zhang.daka.utils.WFileUtil;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

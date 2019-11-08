@@ -1,4 +1,4 @@
-package com.zhang.daka;
+package com.zhang.daka.daka;
 
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+
+import com.zhang.daka.R;
 
 import java.io.IOException;
 

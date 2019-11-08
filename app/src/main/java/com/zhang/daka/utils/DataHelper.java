@@ -1,4 +1,4 @@
-package com.zhang.daka;
+package com.zhang.daka.utils;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -8,6 +8,10 @@ import android.util.Log;
 
 import com.wushiyi.mvp.utils.JsonUtil;
 import com.wushiyi.util.ToastUtilKt;
+import com.zhang.daka.R;
+import com.zhang.daka.daka.RecognizeService;
+import com.zhang.daka.model.OcrModel;
+import com.zhang.daka.model.WordsResultBean;
 
 import java.io.File;
 import java.io.FileInputStream;

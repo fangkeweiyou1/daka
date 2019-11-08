@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-        android:name=".DakaApplication"
+        android:name=".config.DakaApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -26,10 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Camera2Activity" />
-        <activity android:name=".MusicActivity" />
+        <activity android:name=".daka.Camera2Activity" />
+        <activity android:name=".daka.MusicActivity" />
         <activity android:name=".camera2.Camera3Activity"  android:theme="@style/MaterialTheme"/>
-        <activity android:name=".Camera4Activity" />
+        <activity android:name=".daka.Camera4Activity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -41,9 +41,9 @@
                 android:resource="@xml/file_paths" />
         </provider>
         <service
-            android:name=".TimerService"
+            android:name=".daka.TimerService"
             android:enabled="true" />
-        <receiver android:name=".TimerBroadcastReceiver">
+        <receiver android:name=".daka.TimerBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="testalarm0"/>

@@ -1,4 +1,4 @@
-package com.zhang.daka;
+package com.zhang.daka.config;
 
 import com.tencent.qcloud.tim.uikit.TUIKit;
 import com.tencent.qcloud.tim.uikit.component.face.CustomFace;

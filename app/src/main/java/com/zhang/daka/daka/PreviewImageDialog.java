@@ -1,4 +1,4 @@
-package com.zhang.daka;
+package com.zhang.daka.daka;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -7,6 +7,8 @@ import android.view.WindowManager;
 
 import com.bumptech.glide.Glide;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.zhang.daka.R;
+import com.zhang.daka.base.BaseDialog;
 
 import java.io.File;
 

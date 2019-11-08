@@ -1,4 +1,4 @@
-package com.zhang.daka;
+package com.zhang.daka.model;
 
 import java.io.Serializable;
 

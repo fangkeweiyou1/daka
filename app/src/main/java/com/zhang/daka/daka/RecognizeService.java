@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2017 Baidu, Inc. All Rights Reserved.
  */
-package com.zhang.daka;
+package com.zhang.daka.daka;
 
 import android.content.Context;
 

@@ -21,6 +21,8 @@ import com.baidu.ocr.sdk.OCR;
 import com.baidu.ocr.sdk.OnResultListener;
 import com.baidu.ocr.sdk.exception.OCRError;
 import com.baidu.ocr.sdk.model.AccessToken;
+import com.zhang.daka.daka.MainAdapter;
+import com.zhang.daka.daka.TimerService;
 
 import java.util.Calendar;
 import java.util.Locale;

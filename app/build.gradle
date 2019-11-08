@@ -36,7 +36,7 @@ dependencies {
     api project(':ocr_ui')
     api project(':tuikit')
     //mvp,utils
-    api('com.github.fangkeweiyou1:mvp2:1.1.0') {
+    api('com.github.fangkeweiyou1:mvp3:1.0.0') {
         exclude group: 'com.github.fangkeweiyou1.libutils'
     }
     api 'com.github.fangkeweiyou1:libutils:1.1.1'

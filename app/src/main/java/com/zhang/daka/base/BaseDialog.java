@@ -1,4 +1,4 @@
-package com.zhang.daka;
+package com.zhang.daka.base;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -12,6 +12,7 @@ import android.view.WindowManager;
 
 import com.wushiyi.util.DisplayUtil;
 import com.wushiyi.util.WCallBack;
+import com.zhang.daka.R;
 
 
 /**
