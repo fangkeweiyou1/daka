@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".kaoshi.danci.DanciMainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/FullScreen">
@@ -26,9 +26,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".DakaMainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreen" />
         <activity android:name=".daka.Camera2Activity" />
         <activity android:name=".daka.MusicActivity" />
-        <activity android:name=".camera2.Camera3Activity"  android:theme="@style/MaterialTheme"/>
+        <activity
+            android:name=".camera2.Camera3Activity"
+            android:theme="@style/MaterialTheme" />
         <activity android:name=".daka.Camera4Activity" />
 
         <provider
@@ -46,8 +53,8 @@
         <receiver android:name=".daka.TimerBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="testalarm0"/>
-                <action android:name="testalarm1"/>
+                <action android:name="testalarm0" />
+                <action android:name="testalarm1" />
             </intent-filter>
         </receiver>
     </application>
