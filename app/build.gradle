@@ -47,4 +47,23 @@ dependencies {
     implementation files('libs/ocr-sdk.jar')
 
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+
+    //recycleview通用适配器
+    api "com.github.CymChad:BaseRecyclerViewAdapterHelper:$versions.adapterhelper"
+
+
+    // RetroFit
+    api "com.squareup.retrofit2:retrofit:$versions.retrofitVersion"
+    api "com.squareup.retrofit2:converter-gson:$versions.retrofitVersion"
+    api "com.squareup.okhttp3:logging-interceptor:$versions.loggingInterceptorVersion"
+
+    // Rx
+    api "io.reactivex.rxjava2:rxandroid:$versions.rxAndroidVersion"
+    // Already has RxJava, but still better to explicitly get latest version.
+    api "io.reactivex.rxjava2:rxjava:$versions.rxJavaVersion"
+    api "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofitVersion"
+
+    //Eventbus
+    api "org.greenrobot:eventbus:$versions.eventBusVersion"
+
 }
