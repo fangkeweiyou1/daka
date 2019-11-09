@@ -6,6 +6,7 @@ import com.baidu.ocr.sdk.OCR;
 import com.baidu.ocr.sdk.OnResultListener;
 import com.baidu.ocr.sdk.exception.OCRError;
 import com.baidu.ocr.sdk.model.AccessToken;
+import com.jiyun_greendao.DBOpenHelper;
 import com.tencent.imsdk.session.SessionWrapper;
 import com.tencent.qcloud.tim.uikit.TUIKit;
 import com.wushiyi.mvp.MvpInit;
@@ -37,6 +38,9 @@ public class DakaApplication extends Application {
 
         //百度OCR初始化
         initAccessTokenWithAkSk();
+
+        //greendao初始化
+        DBOpenHelper.getDaoSession(this);
     }
 
 
