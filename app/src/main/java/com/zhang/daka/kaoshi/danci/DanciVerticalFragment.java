@@ -15,6 +15,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 
 import com.jiyun_greendao.info.WordInfo;
 import com.wushiyi.mvp.base.SimpleFragment;
@@ -41,6 +42,7 @@ public class DanciVerticalFragment extends SimpleFragment {
     RecyclerView mRecyclerView;
     private Disposable subscribe;
     private ProgressBar pb_dancivertical;
+    private SeekBar sb_dancivertical_progress;
     private LinearLayoutManager linearLayoutManager;
     private RadioGroup rg_dancivertical;
     private WebView webView;
@@ -60,6 +62,8 @@ public class DanciVerticalFragment extends SimpleFragment {
 
         pb_dancivertical = getView().findViewById(R.id.pb_dancivertical);
         pb_dancivertical.setMax(10);
+        sb_dancivertical_progress = getView().findViewById(R.id.sb_dancivertical_progress);
+
         rg_dancivertical = getView().findViewById(R.id.rg_dancivertical);
         webView = getView().findViewById(R.id.webview_dancivertical);
         setting(webView);
@@ -68,6 +72,7 @@ public class DanciVerticalFragment extends SimpleFragment {
         if (getArguments() != null) {
             position = getArguments().getInt("position", 0);
             wordInfos = (List<WordInfo>) getArguments().getSerializable("datas");
+            sb_dancivertical_progress.setMax(wordInfos.size());
             mRecyclerView = getView().findViewById(R.id.rv_dancivertical);
             mAdapter = new DanciVerticalAdapter(wordInfos);
             linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -77,6 +82,8 @@ public class DanciVerticalFragment extends SimpleFragment {
             snapHelper.attachToRecyclerView(mRecyclerView);
         }
 
+        findWordInfo(0);
+
     }
 
     @Override
@@ -85,18 +92,48 @@ public class DanciVerticalFragment extends SimpleFragment {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
+                   findWordInfo(firstVisibleItemPosition);
+                }
+
             }
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
-                if (firstVisibleItemPosition >= 0 && wordInfos.size() > firstVisibleItemPosition) {
-                    WordInfo wordInfo = wordInfos.get(firstVisibleItemPosition);
-                    loadUrl(wordInfo);
-                }
+                sb_dancivertical_progress.setProgress(firstVisibleItemPosition);
             }
         });
+        sb_dancivertical_progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser) {
+                    if (progress >= 0 && wordInfos.size() > progress) {
+                        mRecyclerView.scrollToPosition(progress);
+                        findWordInfo(progress);
+                    }
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+    }
+
+    private void findWordInfo(int index) {
+        if (index >= 0 && wordInfos.size() > index) {
+            WordInfo wordInfo = wordInfos.get(index);
+            loadUrl(wordInfo);
+        }
     }
 
     @Override

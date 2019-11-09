@@ -55,11 +55,11 @@
             android:layout_gravity="bottom"
             android:orientation="vertical">
 
-            <View
+            <SeekBar
+                android:id="@+id/sb_dancivertical_progress"
+                style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/common_line_gray" />
-
+                android:layout_height="10dp" />
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_dancivertical"
                 android:layout_width="match_parent"
