@@ -10,24 +10,27 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class WordInfo {
     @Id(autoincrement = true)
-    private long id;
+    private Long id;
     private String alpha;//头字母
-    private String word;//单词
+    private String wordCn;//中文
+    private String wordEn;//英文
     private String type;//类型
-    @Generated(hash = 453015677)
-    public WordInfo(long id, String alpha, String word, String type) {
+    @Generated(hash = 574812343)
+    public WordInfo(Long id, String alpha, String wordCn, String wordEn,
+            String type) {
         this.id = id;
         this.alpha = alpha;
-        this.word = word;
+        this.wordCn = wordCn;
+        this.wordEn = wordEn;
         this.type = type;
     }
     @Generated(hash = 112235395)
     public WordInfo() {
     }
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getAlpha() {
@@ -36,11 +39,17 @@ public class WordInfo {
     public void setAlpha(String alpha) {
         this.alpha = alpha;
     }
-    public String getWord() {
-        return this.word;
+    public String getWordCn() {
+        return this.wordCn;
     }
-    public void setWord(String word) {
-        this.word = word;
+    public void setWordCn(String wordCn) {
+        this.wordCn = wordCn;
+    }
+    public String getWordEn() {
+        return this.wordEn;
+    }
+    public void setWordEn(String wordEn) {
+        this.wordEn = wordEn;
     }
     public String getType() {
         return this.type;

@@ -37,6 +37,7 @@
             android:name=".camera2.Camera3Activity"
             android:theme="@style/MaterialTheme" />
         <activity android:name=".daka.Camera4Activity" />
+        <activity android:name=".kaoshi.danci.AddDanciActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
