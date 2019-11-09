@@ -4,11 +4,14 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
+import java.io.Serializable;
+
 /**
  * Created by zhangyuncai on 2019/11/9.
  */
 @Entity
-public class WordInfo {
+public class WordInfo implements Serializable {
+    static final long serialVersionUID = 42L;
     @Id(autoincrement = true)
     private Long id;
     private String alpha;//头字母

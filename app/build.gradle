@@ -43,7 +43,7 @@ dependencies {
     api project(':tuikit')
     api project(path: ':lib_greendao')
     //mvp,utils
-    api('com.github.fangkeweiyou1:mvp3:1.0.0') {
+    api('com.github.fangkeweiyou1:mvp3:1.0.2') {
         exclude group: 'com.github.fangkeweiyou1.libutils'
     }
     api 'com.github.fangkeweiyou1:libutils:1.1.1'
