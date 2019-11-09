@@ -3,7 +3,9 @@ package com.zhang.daka.kaoshi.danci;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.webkit.WebView;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 
 import com.jiyun_greendao.info.WordInfo;
 import com.wushiyi.mvp.base.SimpleFragment;
@@ -75,9 +77,25 @@ public class DanciVerticalFragment extends SimpleFragment {
                         int firstVisibleItemPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
                         firstVisibleItemPosition++;
                         mRecyclerView.smoothScrollToPosition(firstVisibleItemPosition);
+//                        WebView webView = mRecyclerView.getChildAt(firstVisibleItemPosition).findViewById(R.id.webview_dancivertical);
+//                        RadioGroup radioGroup = mRecyclerView.getChildAt(firstVisibleItemPosition).findViewById(R.id.rg_dancivertical);
+//                        clickYuyin(webView, radioGroup);
                     }
                     pb_dancivertical.setProgress(Math.toIntExact(aLong % 10), true);
                 }, throwable -> throwable.printStackTrace());
+    }
+
+
+    private void clickYuyin(WebView webView, RadioGroup radioGroup) {
+
+        if (radioGroup.getCheckedRadioButtonId() == R.id.rb_dancivertical_english) {
+            webView.loadUrl("javascript:document.getElementsByClassName(\"dic-sound\")[0].click();");
+        } else if (radioGroup.getCheckedRadioButtonId() == R.id.rb_dancivertical_america) {
+            webView.loadUrl("javascript:document.getElementsByClassName(\"dic-sound\")[1].click();");
+        } else {
+
+        }
+
     }
 
     @Override
@@ -112,4 +130,6 @@ public class DanciVerticalFragment extends SimpleFragment {
         EventBus.getDefault().unregister(this);
         super.onDestroyView();
     }
+
+
 }

@@ -10,7 +10,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.RadioGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -39,15 +38,6 @@ public class DanciVerticalAdapter extends BaseQuickAdapter<WordInfo, BaseViewHol
         setting(webView);
         setWebViewChormeClient(webView);
         webView.loadUrl(String.format("http://m.iciba.com/%s", item.getWordEn()));
-
-
-        RadioGroup rg_dancivertical = helper.getView(R.id.rg_dancivertical);
-        rg_dancivertical.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                clickYuyin(webView, checkedId);
-            }
-        });
 
     }
 
@@ -108,18 +98,6 @@ public class DanciVerticalAdapter extends BaseQuickAdapter<WordInfo, BaseViewHol
                 return super.shouldOverrideUrlLoading(view, url);
             }
         });
-    }
-
-    private void clickYuyin(WebView webView, int checkedId) {
-
-        if (checkedId == R.id.rb_dancivertical_english) {
-            webView.loadUrl("javascript:document.getElementsByClassName(\"dic-sound\")[0].click();");
-        } else if (checkedId == R.id.rb_dancivertical_america) {
-            webView.loadUrl("javascript:document.getElementsByClassName(\"dic-sound\")[1].click();");
-        } else {
-
-        }
-
     }
 
 
