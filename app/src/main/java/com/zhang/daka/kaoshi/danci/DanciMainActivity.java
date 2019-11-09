@@ -13,8 +13,11 @@ import com.zhang.daka.DakaMainActivity;
 import com.zhang.daka.R;
 import com.zhang.daka.net.HttpUtils;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import timber.log.Timber;
 
 /**
  * Created by zhangyuncai on 2019/11/8.
@@ -41,6 +44,23 @@ public class DanciMainActivity extends AppCompatActivity {
         snapHelper.attachToRecyclerView(mRecyclerView);
 
         HttpUtils.translate("你好", true);
+
+        try {
+            InputStream inputStream = getAssets().open("danci.txt");
+            StringBuilder stringBuilder = new StringBuilder();
+            byte[] bytes = new byte[1024];
+            int length = -1;
+            while ((length = inputStream.read(bytes)) != -1) {
+                stringBuilder.append(new String(bytes, 0, length));
+                if (stringBuilder.length() > 1000) {
+                    break;
+                }
+            }
+            inputStream.close();
+            Timber.d("----------->>>>>>>>-----------stringBuilder:"+stringBuilder);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void daka(View view) {
