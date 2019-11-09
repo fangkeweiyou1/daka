@@ -1,1 +1,1 @@
-include ':app', ':ocr_ui', ':tuikit'
+include ':app', ':ocr_ui', ':tuikit', ':lib_greendao'
