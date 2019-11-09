@@ -24,9 +24,6 @@ public class DBOpenHelper extends DataHelper<DaoMaster, DaoSession> {
         super(context);
     }
 
-    public static WaitDetailModelInfoDao getWaitDetailModelInfoDao() {
-        return getDaoSession(dbContext).getWaitDetailModelInfoDao();
-    }
     public static OrderLogisInfoDao getOrderLogisInfoDao() {
         return getDaoSession(dbContext).getOrderLogisInfoDao();
     }

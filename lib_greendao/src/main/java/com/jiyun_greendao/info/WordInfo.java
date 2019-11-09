@@ -14,14 +14,14 @@ public class WordInfo {
     private String alpha;//头字母
     private String word;//单词
     private String type;//类型
-    @Generated(hash = 1861564821)
+    @Generated(hash = 453015677)
     public WordInfo(long id, String alpha, String word, String type) {
         this.id = id;
         this.alpha = alpha;
         this.word = word;
         this.type = type;
     }
-    @Generated(hash = 2101857135)
+    @Generated(hash = 112235395)
     public WordInfo() {
     }
     public long getId() {
