@@ -8,4 +8,23 @@
     <dimen name="frame_height">112dp</dimen>
     <dimen name="image_button_padding">20dp</dimen>
     <color name="control_background">#cc4285f4</color>
+
+
+
+    <color name="common_text_black">#323232</color>
+    <color name="common_text_gray">#999999</color>
+    <color name="common_text_orange">#EB5405</color>
+    <color name="common_text_blue">#168CD5</color>
+
+    <color name="common_line_gray">#c3c3c3</color><!--通用分割线,通常用于1dp或者1px-->
+    <color name="common_line_d0d0d0">#d0d0d0</color><!--可能用的分割线,比通用分割线浅-->
+    <color name="common_line_f2f2f2">#f2f2f2</color><!--可能用的分割线,通常用于5dp以上-->
+
+    <color name="common_bg_gray">#f0f0f0</color><!--常用背景色-->
+    <color name="common_bg_blue">#64B2E6</color><!--常用背景色-->
+    <color name="common_bg_blue2">#64B2E6</color><!--常用背景色-->
+    <color name="common_bg_orange">#EB5405</color>
+    <color name="common_bg_999">#999999</color><!--常用于标题栏背景色-->
+    <color name="common_bg_orange2">#fea475</color>
+    <color name="common_bg_orange3">#ff6f24</color>
 </resources>

@@ -8,21 +8,21 @@ import org.greenrobot.greendao.annotation.Generated;
  * Created by zhangyuncai on 2019/11/9.
  */
 @Entity
-public class WordModel {
+public class WordInfo {
     @Id(autoincrement = true)
     private long id;
     private String alpha;//头字母
     private String word;//单词
     private String type;//类型
     @Generated(hash = 1861564821)
-    public WordModel(long id, String alpha, String word, String type) {
+    public WordInfo(long id, String alpha, String word, String type) {
         this.id = id;
         this.alpha = alpha;
         this.word = word;
         this.type = type;
     }
     @Generated(hash = 2101857135)
-    public WordModel() {
+    public WordInfo() {
     }
     public long getId() {
         return this.id;

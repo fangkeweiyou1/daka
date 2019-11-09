@@ -19,3 +19,4 @@ app/release/output.json
 tuikit/build
 tuikit/tuikit.iml
 tuikit/.idea
+/ocr_ui/build

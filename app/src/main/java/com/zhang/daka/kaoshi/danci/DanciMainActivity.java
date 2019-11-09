@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.zhang.daka.DakaMainActivity;
 import com.zhang.daka.R;
+import com.zhang.daka.daka.adapter.MenuAdapter;
 import com.zhang.daka.net.HttpUtils;
 
 import java.io.InputStream;
@@ -27,6 +28,9 @@ public class DanciMainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private DanciHorizAdapter mAdapter;
     private final List<String> mDatas = new ArrayList<>();
+
+    private final List<String> menus=new ArrayList<>();
+    private MenuAdapter menuAdapter=new MenuAdapter(menus);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

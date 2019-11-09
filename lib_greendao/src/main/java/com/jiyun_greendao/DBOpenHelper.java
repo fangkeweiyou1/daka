@@ -97,7 +97,6 @@ public class DBOpenHelper extends DataHelper<DaoMaster, DaoSession> {
 
         private void dropAllTables(Database db, boolean b) {
             //todo 这里升级数据库要用到
-            WaitDetailModelInfoDao.dropTable(db, b);
             OrderLogisInfoDao.dropTable(db, b);
         }
         //                sql语句示例
