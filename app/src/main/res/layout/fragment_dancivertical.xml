@@ -11,34 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="10dp" />
 
-    <RadioGroup
-        android:id="@+id/rg_dancivertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/rb_dancivertical_close"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="关闭自动发音" />
-
-        <RadioButton
-            android:id="@+id/rb_dancivertical_english"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="英式发音" />
-
-        <RadioButton
-            android:id="@+id/rb_dancivertical_america"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:checked="true"
-            android:text="美式发音" />
-    </RadioGroup>
 
     <FrameLayout
         android:layout_width="match_parent"

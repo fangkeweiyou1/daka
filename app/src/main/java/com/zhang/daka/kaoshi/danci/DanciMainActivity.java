@@ -1,60 +1,83 @@
 package com.zhang.daka.kaoshi.danci;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Switch;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jiyun_greendao.DBOpenHelper;
 import com.jiyun_greendao.info.WordInfo;
 import com.jiyun_greendao.info.WordInfoDao;
 import com.wushiyi.mvp.MvpExtendsKt;
 import com.wushiyi.mvp.base.BaseFragmentPagerAdapter;
+import com.wushiyi.mvp.base.SimpleAppCompatActivity;
 import com.zhang.daka.DakaMainActivity;
 import com.zhang.daka.R;
-import com.zhang.daka.daka.adapter.MenuAdapter;
 import com.zhang.daka.event.IntervalEvent;
 
 import org.greenrobot.eventbus.EventBus;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import timber.log.Timber;
 
 /**
  * Created by zhangyuncai on 2019/11/8.
  */
-public class DanciMainActivity extends AppCompatActivity {
-
-    private Activity mActivity;
-
-    private final List<String> menus = new ArrayList<>();
-    private MenuAdapter menuAdapter = new MenuAdapter(menus);
-    private RecyclerView menuRecyclerView;
-    private DividerItemDecoration dividerItemDecoration;
+public class DanciMainActivity extends SimpleAppCompatActivity {
 
 
     ViewPager mViewPager;
     private List<DanciVerticalFragment> fragments;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_danci);
-        mActivity = this;
-        menuRecyclerView = findViewById(R.id.rv_main_menu);
+    public int getLayoutId() {
+        return R.layout.activity_danci;
+    }
+
+    @Override
+    public void initView() {
         mViewPager = findViewById(R.id.vp_main);
-
-        initMenu();
-
         initViewPager();
+    }
+
+    @Override
+    public void initEvent() {
+
+    }
+
+    @Override
+    public void onClick(@NotNull View v) {
+        switch (v.getId()) {
+            case R.id.tv_danci_daka:
+                startActivity(new Intent(mActivity, DakaMainActivity.class));
+                break;
+            case R.id.tv_danci_dancitxt:
+                startActivity(new Intent(mActivity, DanciTxtActivity.class));
+                break;
+            case R.id.tv_danci_adddanci:
+                startActivity(new Intent(mActivity, AddDanciActivity.class));
+                break;
+            case R.id.sw_danci_interval:
+                if (((Switch) v).isChecked()) {
+                    interval();
+                } else {
+                    endInterval();
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void initData() {
 
     }
 
@@ -77,50 +100,32 @@ public class DanciMainActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * 初始化左边菜单栏
-     */
-    private void initMenu() {
-        menus.clear();
-        menus.add("打卡");
-        menus.add("新增单词");
-        menus.add("轮询");
+    private Disposable subscribe;
 
-        menuRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        if (dividerItemDecoration == null) {
-            dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-            menuRecyclerView.addItemDecoration(dividerItemDecoration);
-        }
-        menuRecyclerView.setAdapter(menuAdapter);
-        menuAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-
-
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (menuAdapter.getItem(position)) {
-                    case "打卡":
-                        startActivity(new Intent(mActivity, DakaMainActivity.class));
-                        break;
-                    case "新增单词":
-                        startActivity(new Intent(mActivity, AddDanciActivity.class));
-                        break;
-                    case "轮询":
-                        EventBus.getDefault().post(new IntervalEvent(mViewPager.getCurrentItem()));
-                        break;
-
-                }
-            }
-        });
-
+    private void interval() {
+        subscribe = Observable.interval(1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aLong -> {
+                    Timber.d("----------->>>>>>>>-----------aLong:" + aLong);
+                    EventBus.getDefault().post(new IntervalEvent(mViewPager.getCurrentItem(), aLong));
+                }, throwable -> throwable.printStackTrace());
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
+    private void endInterval() {
+        if (subscribe != null && !subscribe.isDisposed()) {
+            subscribe.dispose();
+        }
     }
 
     @Override
     protected void onDestroy() {
+        endInterval();
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        //按返回键返回桌面
+        moveTaskToBack(true);
     }
 }

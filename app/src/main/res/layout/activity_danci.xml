@@ -9,14 +9,97 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_main_menu"
+    <ScrollView
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:paddingTop="70dp"
-        android:background="@color/white" />
+        android:background="@color/white"
+        android:paddingTop="70dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/divider"
+            android:orientation="vertical"
+            android:showDividers="middle|end|beginning|none">
+
+            <TextView
+                android:id="@+id/tv_danci_daka"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="?selectableItemBackground"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:text="打卡"
+                android:textColor="@color/common_text_black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_danci_adddanci"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="?selectableItemBackground"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:text="新增单词"
+                android:textColor="@color/common_text_black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_danci_dancitxt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="?selectableItemBackground"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:text="单词.txt"
+                android:textColor="@color/common_text_black"
+                android:textSize="14sp" />
+
+            <Switch
+                android:id="@+id/sw_danci_interval"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="?selectableItemBackground"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:text="轮询"
+                android:textColor="@color/common_text_black"
+                android:textSize="14sp" />
+
+            <RadioGroup
+                android:id="@+id/rg_danci"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/divider"
+                android:orientation="vertical"
+                android:showDividers="middle|end|beginning|none">
+
+                <RadioButton
+                    android:id="@+id/rb_danci_close"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="?selectableItemBackground"
+                    android:text="关闭自动发音" />
+
+                <RadioButton
+                    android:id="@+id/rb_danci_english"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="?selectableItemBackground"
+                    android:text="英式发音" />
+
+                <RadioButton
+                    android:id="@+id/rb_danci_america"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="?selectableItemBackground"
+                    android:checked="true"
+                    android:text="美式发音" />
+            </RadioGroup>
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.v4.widget.DrawerLayout>

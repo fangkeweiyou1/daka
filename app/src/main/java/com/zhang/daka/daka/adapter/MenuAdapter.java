@@ -18,6 +18,7 @@ public class MenuAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, String item) {
+        helper.setIsRecyclable(false);
         helper.setText(R.id.tv_menu_content, item);
     }
 }

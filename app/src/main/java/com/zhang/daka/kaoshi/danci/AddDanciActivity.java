@@ -1,6 +1,5 @@
 package com.zhang.daka.kaoshi.danci;
 
-import android.os.SystemClock;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -18,7 +17,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 /**
@@ -30,7 +28,6 @@ public class AddDanciActivity extends SimpleAppCompatActivity {
     private final List<WordModel> wordModels = new ArrayList<>();
     private AddDanciAdapter mAdapter = new AddDanciAdapter(wordModels);
     private RecyclerView mRecyclerView;
-    private Disposable subscribe;
 
     @Override
     public int getLayoutId() {
@@ -43,11 +40,32 @@ public class AddDanciActivity extends SimpleAppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
 
+        findViewById(R.id.tv_adddanci_import).setOnClickListener(v -> {
+            importWords();
+        });
+
+        List<WordInfo> list = DBOpenHelper.getWordInfoDao().queryBuilder().build().list();
+        if (list != null) {
+            for (WordInfo info : list) {
+                WordModel wordModel = new WordModel();
+                wordModel.wordEn = info.getWordEn();
+                wordModel.wordCn = info.getWordCn();
+                wordModel.alpha = info.getAlpha();
+                wordModel.type = info.getType();
+                wordModel.content = wordModel.wordEn + "      " + wordModel.wordCn;
+                wordModels.add(wordModel);
+            }
+            mAdapter.notifyDataSetChanged();
+        }
+
+    }
+
+    private void importWords() {
+
         new Thread() {
             @Override
             public void run() {
                 try {
-                    SystemClock.sleep(2000);
                     InputStream inputStream = getAssets().open("danci.txt");
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
                     String lineContent = null;
@@ -127,7 +145,6 @@ public class AddDanciActivity extends SimpleAppCompatActivity {
     public void initData() {
 
     }
-
 
 
 }

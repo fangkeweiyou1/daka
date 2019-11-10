@@ -39,6 +39,7 @@
             android:theme="@style/MaterialTheme" />
         <activity android:name=".daka.Camera4Activity" />
         <activity android:name=".kaoshi.danci.AddDanciActivity" />
+        <activity android:name=".kaoshi.danci.DanciTxtActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -5,8 +5,10 @@ package com.zhang.daka.event;
  */
 public class IntervalEvent {
     public int position;
+    public long aLong;
 
-    public IntervalEvent(int position) {
+    public IntervalEvent(int position, long aLong) {
         this.position = position;
+        this.aLong = aLong;
     }
 }

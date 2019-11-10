@@ -6,8 +6,9 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -27,11 +28,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 /**
@@ -40,11 +37,10 @@ import timber.log.Timber;
 public class DanciVerticalFragment extends SimpleFragment {
     int position;
     RecyclerView mRecyclerView;
-    private Disposable subscribe;
+
     private ProgressBar pb_dancivertical;
     private SeekBar sb_dancivertical_progress;
     private LinearLayoutManager linearLayoutManager;
-    private RadioGroup rg_dancivertical;
     private WebView webView;
     private DanciVerticalAdapter mAdapter;
     private List<WordInfo> wordInfos;
@@ -64,7 +60,6 @@ public class DanciVerticalFragment extends SimpleFragment {
         pb_dancivertical.setMax(10);
         sb_dancivertical_progress = getView().findViewById(R.id.sb_dancivertical_progress);
 
-        rg_dancivertical = getView().findViewById(R.id.rg_dancivertical);
         webView = getView().findViewById(R.id.webview_dancivertical);
         setting(webView);
         setWebViewChormeClient(webView);
@@ -78,7 +73,7 @@ public class DanciVerticalFragment extends SimpleFragment {
             linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
             mRecyclerView.setLayoutManager(linearLayoutManager);
             mRecyclerView.setAdapter(mAdapter);
-            LinearSnapHelper snapHelper = new LinearSnapHelper();
+            PagerSnapHelper snapHelper = new PagerSnapHelper();
             snapHelper.attachToRecyclerView(mRecyclerView);
         }
 
@@ -94,7 +89,7 @@ public class DanciVerticalFragment extends SimpleFragment {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
-                   findWordInfo(firstVisibleItemPosition);
+                    findWordInfo(firstVisibleItemPosition);
                 }
 
             }
@@ -141,31 +136,27 @@ public class DanciVerticalFragment extends SimpleFragment {
 
     }
 
-    public void inverval() {
-        subscribe = Observable.interval(1, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(aLong -> {
-                    Timber.d("----------->>>>>>>>-----------aLong:" + aLong);
-                    if (aLong % 10 == 0 && aLong != 0) {
-                        int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
-                        firstVisibleItemPosition++;
-                        mRecyclerView.smoothScrollToPosition(firstVisibleItemPosition);
+    public void inverval(IntervalEvent event) {
+        long aLong = event.aLong;
+        if (aLong % 10 == 0 && aLong != 0) {
+            int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
+            firstVisibleItemPosition++;
+            mRecyclerView.smoothScrollToPosition(firstVisibleItemPosition);
 
-                    }
-                    if (aLong % 3 == 0) {
-                        clickYuyin();
-                    }
-                    pb_dancivertical.setProgress(Math.toIntExact(aLong % 10), true);
-                }, throwable -> throwable.printStackTrace());
+        }
+        if (aLong % 3 == 0) {
+            clickYuyin();
+        }
+        pb_dancivertical.setProgress(Math.toIntExact(aLong % 10), true);
 
     }
 
 
     private void clickYuyin() {
-
-        if (rg_dancivertical.getCheckedRadioButtonId() == R.id.rb_dancivertical_english) {
+        RadioGroup rg_danci = getActivity().findViewById(R.id.rg_danci);
+        if (rg_danci.getCheckedRadioButtonId() == R.id.rb_danci_english) {
             webView.loadUrl("javascript:document.getElementsByClassName(\"dic-sound\")[0].click();");
-        } else if (rg_dancivertical.getCheckedRadioButtonId() == R.id.rb_dancivertical_america) {
+        } else if (rg_danci.getCheckedRadioButtonId() == R.id.rb_danci_america) {
             webView.loadUrl("javascript:document.getElementsByClassName(\"dic-sound\")[1].click();");
         } else {
 
@@ -173,30 +164,11 @@ public class DanciVerticalFragment extends SimpleFragment {
 
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        endInterval();
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (!isVisibleToUser && isViewPrepared()) {
-            endInterval();
-        }
-    }
-
-    private void endInterval() {
-        if (subscribe != null && !subscribe.isDisposed()) {
-            subscribe.dispose();
-        }
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onIntervalEvent(IntervalEvent event) {
         if (event != null && event.position == position) {
-            inverval();
+            inverval(event);
         }
     }
 
@@ -232,7 +204,16 @@ public class DanciVerticalFragment extends SimpleFragment {
         return settings;
     }
 
+    private String loadWord = null;
+
     private void loadUrl(WordInfo item) {
+
+        //加载过的单词不在加载
+        if (TextUtils.equals(item.getWordEn(), loadWord)) {
+            return;
+        }
+
+        loadWord = item.getWordEn();
 
         webView.loadUrl(String.format("http://m.iciba.com/%s", item.getWordEn()));
     }
