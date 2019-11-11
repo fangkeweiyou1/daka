@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.jiyun_greendao.DBOpenHelper;
 import com.jiyun_greendao.info.WordInfo;
@@ -14,6 +15,7 @@ import com.wushiyi.mvp.base.BaseFragmentPagerAdapter;
 import com.wushiyi.mvp.base.SimpleAppCompatActivity;
 import com.zhang.daka.DakaMainActivity;
 import com.zhang.daka.R;
+import com.zhang.daka.event.FullScreenEvent;
 import com.zhang.daka.event.IntervalEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,6 +38,7 @@ public class DanciMainActivity extends SimpleAppCompatActivity {
 
 
     ViewPager mViewPager;
+    TextView tv_danci_intervaltime;
     private List<DanciVerticalFragment> fragments;
 
     @Override
@@ -46,6 +49,7 @@ public class DanciMainActivity extends SimpleAppCompatActivity {
     @Override
     public void initView() {
         mViewPager = findViewById(R.id.vp_main);
+        tv_danci_intervaltime = findViewById(R.id.tv_danci_intervaltime);
         initViewPager();
     }
 
@@ -57,6 +61,9 @@ public class DanciMainActivity extends SimpleAppCompatActivity {
     @Override
     public void onClick(@NotNull View v) {
         switch (v.getId()) {
+            case R.id.sw_danci_fullscreen:
+                EventBus.getDefault().post(new FullScreenEvent(((Switch) v).isChecked()));
+                break;
             case R.id.tv_danci_daka:
                 startActivity(new Intent(mActivity, DakaMainActivity.class));
                 break;
@@ -72,6 +79,12 @@ public class DanciMainActivity extends SimpleAppCompatActivity {
                 } else {
                     endInterval();
                 }
+                break;
+            case R.id.tv_danci_addition:
+                tv_danci_intervaltime.setText(++DanciVerticalFragment.intervalTime + "");
+                break;
+            case R.id.tv_danci_substract:
+                tv_danci_intervaltime.setText(--DanciVerticalFragment.intervalTime + "");
                 break;
         }
     }
@@ -91,6 +104,7 @@ public class DanciMainActivity extends SimpleAppCompatActivity {
             Bundle bundle = new Bundle();
             bundle.putSerializable("datas", (Serializable) wordInfoList);
             bundle.putInt("position", position++);
+            bundle.putString("alphabet", c+"");
             DanciVerticalFragment fragment = MvpExtendsKt.sNewStanceFragment(this, DanciVerticalFragment.class, bundle);
             fragments.add(fragment);
         }

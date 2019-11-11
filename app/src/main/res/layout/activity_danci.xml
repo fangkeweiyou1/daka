@@ -69,6 +69,17 @@
                 android:textColor="@color/common_text_black"
                 android:textSize="14sp" />
 
+            <Switch
+                android:id="@+id/sw_danci_fullscreen"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="?selectableItemBackground"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:text="全屏显示"
+                android:textColor="@color/common_text_black"
+                android:textSize="14sp" />
+
             <RadioGroup
                 android:id="@+id/rg_danci"
                 android:layout_width="match_parent"
@@ -99,6 +110,44 @@
                     android:checked="true"
                     android:text="美式发音" />
             </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="40dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:text="-"
+                    android:onClick="onClick"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="?selectableItemBackground"
+                    android:id="@+id/tv_danci_substract"
+                    android:textSize="16sp"
+                    android:textColor="@color/common_text_black"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/tv_danci_intervaltime"
+                    android:layout_width="0dp"
+                    android:text="10"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="?selectableItemBackground"
+                    android:textSize="16sp"
+                    android:textColor="@color/common_text_black"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:onClick="onClick"
+                    android:layout_width="0dp"
+                    android:text="+"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:id="@+id/tv_danci_addition"
+                    android:background="?selectableItemBackground"
+                    android:textSize="16sp"
+                    android:textColor="@color/common_text_black"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

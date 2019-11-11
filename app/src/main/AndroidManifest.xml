@@ -19,7 +19,6 @@
         <activity
             android:name=".kaoshi.danci.DanciMainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
             android:theme="@style/FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -9,18 +9,23 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.jiyun_greendao.info.WordInfo;
 import com.wushiyi.mvp.base.SimpleFragment;
 import com.zhang.daka.R;
+import com.zhang.daka.config.AppConfigKt;
+import com.zhang.daka.event.FullScreenEvent;
 import com.zhang.daka.event.IntervalEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -35,16 +40,21 @@ import timber.log.Timber;
  * Created by zhangyuncai on 2019/11/9.
  */
 public class DanciVerticalFragment extends SimpleFragment {
+    public static int intervalTime = 10;
     int position;
     RecyclerView mRecyclerView;
 
     private ProgressBar pb_dancivertical;
+    private LinearLayout ll_dancevertical_fullscreen_vessel;
+    private TextView tv_dancivertical_worden;
+    private TextView tv_dancivertical_wordcn;
     private SeekBar sb_dancivertical_progress;
     private LinearLayoutManager linearLayoutManager;
     private WebView webView;
     private DanciVerticalAdapter mAdapter;
     private List<WordInfo> wordInfos;
 
+    private String alphabet;
 
     @Override
     public int getLayoutId() {
@@ -57,6 +67,9 @@ public class DanciVerticalFragment extends SimpleFragment {
     public void initView() {
 
         pb_dancivertical = getView().findViewById(R.id.pb_dancivertical);
+        ll_dancevertical_fullscreen_vessel = getView().findViewById(R.id.ll_dancevertical_fullscreen_vessel);
+        tv_dancivertical_worden = getView().findViewById(R.id.tv_dancivertical_worden);
+        tv_dancivertical_wordcn = getView().findViewById(R.id.tv_dancivertical_wordcn);
         pb_dancivertical.setMax(10);
         sb_dancivertical_progress = getView().findViewById(R.id.sb_dancivertical_progress);
 
@@ -66,6 +79,7 @@ public class DanciVerticalFragment extends SimpleFragment {
 
         if (getArguments() != null) {
             position = getArguments().getInt("position", 0);
+            alphabet = getArguments().getString("alphabet");
             wordInfos = (List<WordInfo>) getArguments().getSerializable("datas");
             sb_dancivertical_progress.setMax(wordInfos.size());
             mRecyclerView = getView().findViewById(R.id.rv_dancivertical);
@@ -75,6 +89,93 @@ public class DanciVerticalFragment extends SimpleFragment {
             mRecyclerView.setAdapter(mAdapter);
             PagerSnapHelper snapHelper = new PagerSnapHelper();
             snapHelper.attachToRecyclerView(mRecyclerView);
+
+            int index = 0;
+            switch (alphabet) {
+                case "a":
+                    index = AppConfigKt.getAIndex();
+                    break;
+                case "b":
+                    index = AppConfigKt.getBIndex();
+                    break;
+                case "c":
+                    index = AppConfigKt.getCIndex();
+                    break;
+                case "d":
+                    index = AppConfigKt.getDIndex();
+                    break;
+                case "e":
+                    index = AppConfigKt.getEIndex();
+                    break;
+                case "f":
+                    index = AppConfigKt.getFIndex();
+                    break;
+                case "g":
+                    index = AppConfigKt.getGIndex();
+                    break;
+                case "h":
+                    index = AppConfigKt.getHIndex();
+                    break;
+                case "i":
+                    index = AppConfigKt.getIIndex();
+                    break;
+                case "j":
+                    index = AppConfigKt.getJIndex();
+                    break;
+                case "k":
+                    index = AppConfigKt.getKIndex();
+                    break;
+                case "l":
+                    index = AppConfigKt.getLIndex();
+                    break;
+                case "m":
+                    index = AppConfigKt.getMIndex();
+                    break;
+                case "n":
+                    index = AppConfigKt.getNIndex();
+                    break;
+                case "o":
+                    index = AppConfigKt.getOIndex();
+                    break;
+                case "p":
+                    index = AppConfigKt.getPIndex();
+                    break;
+                case "q":
+                    index = AppConfigKt.getQIndex();
+                    break;
+                case "r":
+                    index = AppConfigKt.getRIndex();
+                    break;
+                case "s":
+                    index = AppConfigKt.getSIndex();
+                    break;
+                case "t":
+                    index = AppConfigKt.getTIndex();
+                    break;
+                case "u":
+                    index = AppConfigKt.getUIndex();
+                    break;
+                case "v":
+                    index = AppConfigKt.getVIndex();
+                    break;
+                case "w":
+                    index = AppConfigKt.getWIndex();
+                    break;
+                case "x":
+                    index = AppConfigKt.getXIndex();
+                    break;
+                case "y":
+                    index = AppConfigKt.getYIndex();
+                    break;
+                case "z":
+                    index = AppConfigKt.getZIndex();
+                    break;
+
+
+            }
+            if (index >= 0 && wordInfos.size() > index) {
+                mRecyclerView.scrollToPosition(index);
+            }
         }
 
         findWordInfo(0);
@@ -83,6 +184,8 @@ public class DanciVerticalFragment extends SimpleFragment {
 
     @Override
     public void initEvent() {
+        ll_dancevertical_fullscreen_vessel.setOnClickListener(v -> {
+        });
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -128,6 +231,90 @@ public class DanciVerticalFragment extends SimpleFragment {
         if (index >= 0 && wordInfos.size() > index) {
             WordInfo wordInfo = wordInfos.get(index);
             loadUrl(wordInfo);
+
+
+            switch (alphabet) {
+                case "a":
+                    AppConfigKt.setAIndex(index);
+                    break;
+                case "b":
+                    AppConfigKt.setBIndex(index);
+                    break;
+                case "c":
+                    AppConfigKt.setCIndex(index);
+                    break;
+                case "d":
+                    AppConfigKt.setDIndex(index);
+                    break;
+                case "e":
+                    AppConfigKt.setEIndex(index);
+                    break;
+                case "f":
+                    AppConfigKt.setFIndex(index);
+                    break;
+                case "g":
+                    AppConfigKt.setGIndex(index);
+                    break;
+                case "h":
+                    AppConfigKt.setHIndex(index);
+                    break;
+                case "i":
+                    AppConfigKt.setIIndex(index);
+                    break;
+                case "j":
+                    AppConfigKt.setJIndex(index);
+                    break;
+                case "k":
+                    AppConfigKt.setKIndex(index);
+                    break;
+                case "l":
+                    AppConfigKt.setLIndex(index);
+                    break;
+                case "m":
+                    AppConfigKt.setMIndex(index);
+                    break;
+                case "n":
+                    AppConfigKt.setNIndex(index);
+                    break;
+                case "o":
+                    AppConfigKt.setOIndex(index);
+                    break;
+                case "p":
+                    AppConfigKt.setPIndex(index);
+                    break;
+                case "q":
+                    AppConfigKt.setQIndex(index);
+                    break;
+                case "r":
+                    AppConfigKt.setRIndex(index);
+                    break;
+                case "s":
+                    AppConfigKt.setSIndex(index);
+                    break;
+                case "t":
+                    AppConfigKt.setTIndex(index);
+                    break;
+                case "u":
+                    AppConfigKt.setUIndex(index);
+                    break;
+                case "v":
+                    AppConfigKt.setVIndex(index);
+                    break;
+                case "w":
+                    AppConfigKt.setWIndex(index);
+                    break;
+                case "x":
+                    AppConfigKt.setXIndex(index);
+                    break;
+                case "y":
+                    AppConfigKt.setYIndex(index);
+                    break;
+                case "z":
+                    AppConfigKt.setZIndex(index);
+                    break;
+
+
+            }
         }
     }
 
@@ -138,7 +325,7 @@ public class DanciVerticalFragment extends SimpleFragment {
 
     public void inverval(IntervalEvent event) {
         long aLong = event.aLong;
-        if (aLong % 10 == 0 && aLong != 0) {
+        if (aLong % intervalTime == 0 && aLong != 0) {
             int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
             firstVisibleItemPosition++;
             mRecyclerView.smoothScrollToPosition(firstVisibleItemPosition);
@@ -147,7 +334,7 @@ public class DanciVerticalFragment extends SimpleFragment {
         if (aLong % 3 == 0) {
             clickYuyin();
         }
-        pb_dancivertical.setProgress(Math.toIntExact(aLong % 10), true);
+        pb_dancivertical.setProgress(Math.toIntExact(aLong % intervalTime), true);
 
     }
 
@@ -169,6 +356,13 @@ public class DanciVerticalFragment extends SimpleFragment {
     public void onIntervalEvent(IntervalEvent event) {
         if (event != null && event.position == position) {
             inverval(event);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onIntervalEvent(FullScreenEvent event) {
+        if (event != null) {
+            ll_dancevertical_fullscreen_vessel.setVisibility(event.isFullScreen ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -216,6 +410,9 @@ public class DanciVerticalFragment extends SimpleFragment {
         loadWord = item.getWordEn();
 
         webView.loadUrl(String.format("http://m.iciba.com/%s", item.getWordEn()));
+
+        tv_dancivertical_wordcn.setText(item.getWordCn());
+        tv_dancivertical_worden.setText(item.getWordEn());
     }
 
     protected void setWebViewChormeClient(WebView webView) {
