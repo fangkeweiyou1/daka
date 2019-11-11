@@ -328,7 +328,11 @@ public class DanciVerticalFragment extends SimpleFragment {
         if (aLong % intervalTime == 0 && aLong != 0) {
             int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
             firstVisibleItemPosition++;
-            mRecyclerView.smoothScrollToPosition(firstVisibleItemPosition);
+            if (firstVisibleItemPosition == wordInfos.size()) {
+                mRecyclerView.scrollToPosition(0);
+            }else {
+                mRecyclerView.smoothScrollToPosition(firstVisibleItemPosition);
+            }
 
         }
         if (aLong % 3 == 0) {
