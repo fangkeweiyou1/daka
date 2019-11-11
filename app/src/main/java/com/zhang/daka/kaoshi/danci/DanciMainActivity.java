@@ -7,9 +7,6 @@ import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.jiyun_greendao.DBOpenHelper;
-import com.jiyun_greendao.info.WordInfo;
-import com.jiyun_greendao.info.WordInfoDao;
 import com.wushiyi.mvp.MvpExtendsKt;
 import com.wushiyi.mvp.base.BaseFragmentPagerAdapter;
 import com.wushiyi.mvp.base.SimpleAppCompatActivity;
@@ -21,7 +18,6 @@ import com.zhang.daka.event.IntervalEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -96,13 +92,10 @@ public class DanciMainActivity extends SimpleAppCompatActivity {
 
     private void initViewPager() {
         fragments = new ArrayList<>();
-        WordInfoDao dao = DBOpenHelper.getWordInfoDao();
         String alphas = "abcdefghijklmnopqrstuvwxyz";
         int position = 0;
         for (char c : alphas.toCharArray()) {
-            List<WordInfo> wordInfoList = dao.queryBuilder().where(WordInfoDao.Properties.Alpha.eq(c + "")).build().list();
             Bundle bundle = new Bundle();
-            bundle.putSerializable("datas", (Serializable) wordInfoList);
             bundle.putInt("position", position++);
             bundle.putString("alphabet", c+"");
             DanciVerticalFragment fragment = MvpExtendsKt.sNewStanceFragment(this, DanciVerticalFragment.class, bundle);

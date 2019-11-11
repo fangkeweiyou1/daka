@@ -21,10 +21,13 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.jiyun_greendao.DBOpenHelper;
 import com.jiyun_greendao.info.WordInfo;
+import com.jiyun_greendao.info.WordInfoDao;
 import com.wushiyi.mvp.base.SimpleFragment;
 import com.zhang.daka.R;
 import com.zhang.daka.config.AppConfigKt;
+import com.zhang.daka.event.AddDanciEvent;
 import com.zhang.daka.event.FullScreenEvent;
 import com.zhang.daka.event.IntervalEvent;
 
@@ -80,7 +83,8 @@ public class DanciVerticalFragment extends SimpleFragment {
         if (getArguments() != null) {
             position = getArguments().getInt("position", 0);
             alphabet = getArguments().getString("alphabet");
-            wordInfos = (List<WordInfo>) getArguments().getSerializable("datas");
+            WordInfoDao dao = DBOpenHelper.getWordInfoDao();
+            wordInfos = dao.queryBuilder().where(WordInfoDao.Properties.Alpha.eq(alphabet)).build().list();
             sb_dancivertical_progress.setMax(wordInfos.size());
             mRecyclerView = getView().findViewById(R.id.rv_dancivertical);
             mAdapter = new DanciVerticalAdapter(wordInfos);
@@ -330,7 +334,7 @@ public class DanciVerticalFragment extends SimpleFragment {
             firstVisibleItemPosition++;
             if (firstVisibleItemPosition == wordInfos.size()) {
                 mRecyclerView.scrollToPosition(0);
-            }else {
+            } else {
                 mRecyclerView.smoothScrollToPosition(firstVisibleItemPosition);
             }
 
@@ -364,9 +368,19 @@ public class DanciVerticalFragment extends SimpleFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onIntervalEvent(FullScreenEvent event) {
+    public void onFullScreenEvent(FullScreenEvent event) {
         if (event != null) {
             ll_dancevertical_fullscreen_vessel.setVisibility(event.isFullScreen ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onAddDanciEvent(AddDanciEvent event) {
+        if (event != null) {
+            WordInfoDao dao = DBOpenHelper.getWordInfoDao();
+            wordInfos.clear();
+            wordInfos.addAll(dao.queryBuilder().where(WordInfoDao.Properties.Alpha.eq(alphabet)).build().list());
+            mAdapter.notifyDataSetChanged();
         }
     }
 

@@ -1,15 +1,19 @@
 package com.zhang.daka.kaoshi.danci;
 
+import android.app.ProgressDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 
 import com.jiyun_greendao.DBOpenHelper;
 import com.jiyun_greendao.info.WordInfo;
-import com.jiyun_greendao.info.WordInfoDao;
 import com.wushiyi.mvp.base.SimpleAppCompatActivity;
+import com.wushiyi.util.ToastUtilKt;
 import com.zhang.daka.R;
+import com.zhang.daka.event.AddDanciEvent;
 import com.zhang.daka.model.WordModel;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -61,7 +65,10 @@ public class AddDanciActivity extends SimpleAppCompatActivity {
     }
 
     private void importWords() {
-
+        //清除数据
+        DBOpenHelper.getWordInfoDao().deleteAll();
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.show();
         new Thread() {
             @Override
             public void run() {
@@ -71,17 +78,20 @@ public class AddDanciActivity extends SimpleAppCompatActivity {
                     String lineContent = null;
                     while ((lineContent = reader.readLine()) != null) {
                         addWordModel(lineContent);
-//                        if (wordModels.size() > 10) {
-//                            break;
-//                        }
                     }
                     inputStream.close();
 
                     runOnUiThread(() -> {
+                        ToastUtilKt.showToast("已导入完毕");
                         mAdapter.notifyDataSetChanged();
+                        progressDialog.dismiss();
+                        EventBus.getDefault().post(new AddDanciEvent());
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
+                    runOnUiThread(() -> {
+                        progressDialog.dismiss();
+                    });
                 }
             }
         }.start();
@@ -101,7 +111,7 @@ public class AddDanciActivity extends SimpleAppCompatActivity {
             String[] strings = content.split("\\s+");
             if (strings != null && strings.length >= 2) {
                 String wordCn = strings[1];
-                String wordEn = strings[0];
+                String wordEn = strings[0].toLowerCase();
                 String alpha = wordEn.charAt(0) + "";
 
                 WordModel model = new WordModel();
@@ -116,24 +126,12 @@ public class AddDanciActivity extends SimpleAppCompatActivity {
     }
 
     private void addWordInfo(WordModel model) {
-
-        WordInfoDao dao = DBOpenHelper.getWordInfoDao();
-        List<WordInfo> list = dao.queryBuilder().where(WordInfoDao.Properties.WordEn.eq(model.wordEn)).build().list();
-        if (list == null || list.size() == 0) {//不存在
-            WordInfo info = new WordInfo();
-            info.setAlpha(model.alpha);
-            info.setWordCn(model.wordCn);
-            info.setWordEn(model.wordEn);
-            DBOpenHelper.getWordInfoDao().insert(info);
-            Timber.d("----------->>>>>>>>-----------已添加:" + model.wordEn);
-        } else {//已存在
-            WordInfo info = list.get(0);
-            info.setAlpha(model.alpha);
-            info.setWordCn(model.wordCn);
-            info.setWordEn(model.wordEn);
-            DBOpenHelper.getWordInfoDao().insertOrReplace(info);
-            Timber.d("----------->>>>>>>>-----------已添加并替换:" + model.wordEn);
-        }
+        WordInfo info = new WordInfo();
+        info.setAlpha(model.alpha);
+        info.setWordCn(model.wordCn);
+        info.setWordEn(model.wordEn);
+        DBOpenHelper.getWordInfoDao().insert(info);
+        Timber.d("----------->>>>>>>>-----------已添加:" + model.wordEn);
 
     }
 
