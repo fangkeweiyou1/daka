@@ -30,6 +30,7 @@ import com.zhang.daka.config.AppConfigKt;
 import com.zhang.daka.event.AddDanciEvent;
 import com.zhang.daka.event.FullScreenEvent;
 import com.zhang.daka.event.IntervalEvent;
+import com.zhang.daka.event.ShowTypeEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -374,6 +375,17 @@ public class DanciVerticalFragment extends SimpleFragment {
         }
     }
 
+    public int showType;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onShowTypeEvent(ShowTypeEvent event) {
+        if (event != null) {
+            this.showType = event.showType;
+            mAdapter.setShowType(showType);
+            setShowTypeView();
+        }
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onAddDanciEvent(AddDanciEvent event) {
         if (event != null) {
@@ -431,6 +443,22 @@ public class DanciVerticalFragment extends SimpleFragment {
 
         tv_dancivertical_wordcn.setText(item.getWordCn());
         tv_dancivertical_worden.setText(item.getWordEn());
+
+       setShowTypeView();
+    }
+
+    private void setShowTypeView()
+    {
+        if (showType == 1) {//中文
+            tv_dancivertical_wordcn.setVisibility(View.VISIBLE);
+            tv_dancivertical_worden.setVisibility(View.INVISIBLE);
+        } else if (showType == 2) {
+            tv_dancivertical_wordcn.setVisibility(View.INVISIBLE);
+            tv_dancivertical_worden.setVisibility(View.VISIBLE);
+        } else {
+            tv_dancivertical_wordcn.setVisibility(View.VISIBLE);
+            tv_dancivertical_worden.setVisibility(View.VISIBLE);
+        }
     }
 
     protected void setWebViewChormeClient(WebView webView) {

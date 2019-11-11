@@ -148,6 +148,37 @@
                     android:textColor="@color/common_text_black"
                     android:layout_height="match_parent" />
             </LinearLayout>
+
+            <RadioGroup
+                android:id="@+id/rg_danci_showtype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/divider"
+                android:orientation="vertical"
+                android:showDividers="middle|end|beginning|none">
+
+                <RadioButton
+                    android:id="@+id/rb_danci_both"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="?selectableItemBackground"
+                    android:checked="true"
+                    android:text="中英文" />
+
+                <RadioButton
+                    android:id="@+id/rb_danci_onlyen"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="?selectableItemBackground"
+                    android:text="英文" />
+
+                <RadioButton
+                    android:id="@+id/rb_danci_onlycn"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="?selectableItemBackground"
+                    android:text="中文" />
+            </RadioGroup>
         </LinearLayout>
     </ScrollView>
 

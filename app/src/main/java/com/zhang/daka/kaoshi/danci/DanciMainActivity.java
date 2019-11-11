@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import com.zhang.daka.DakaMainActivity;
 import com.zhang.daka.R;
 import com.zhang.daka.event.FullScreenEvent;
 import com.zhang.daka.event.IntervalEvent;
+import com.zhang.daka.event.ShowTypeEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
@@ -51,7 +53,22 @@ public class DanciMainActivity extends SimpleAppCompatActivity {
 
     @Override
     public void initEvent() {
-
+        ((RadioGroup)findViewById(R.id.rg_danci_showtype)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int showType=0;
+                if(checkedId==R.id.rb_danci_onlycn)
+                {
+                    showType=1;
+                }else  if(checkedId==R.id.rb_danci_onlyen)
+                {
+                    showType=2;
+                }else {
+                    showType=0;
+                }
+                EventBus.getDefault().post(new ShowTypeEvent(showType));
+            }
+        });
     }
 
     @Override
