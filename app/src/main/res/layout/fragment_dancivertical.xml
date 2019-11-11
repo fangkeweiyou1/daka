@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <ProgressBar
+        android:progressDrawable="@drawable/progressbar_horizontal_1"
         android:id="@+id/pb_dancivertical"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
@@ -30,6 +31,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <SeekBar
+                android:progressDrawable="@drawable/progressbar_horizontal_1"
                 android:id="@+id/sb_dancivertical_progress"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
