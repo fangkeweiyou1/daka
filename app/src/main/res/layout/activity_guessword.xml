@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_guess"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:itemCount="1"
+        tools:listitem="@layout/item_guess_alphabet" />
+
+    <View
+        android:id="@+id/view_guess_divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/common_text_black"
+        app:layout_constraintBottom_toTopOf="@+id/rv_guess" />
+
+    <TextView
+        android:id="@+id/tv_guess_resultword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:hint="请输入单词"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textColor="@color/common_text_black"
+        android:textIsSelectable="true"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/view_guess_divider" />
+
+
+    <View
+        android:id="@+id/view_guess_divider2"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/common_text_black"
+        app:layout_constraintBottom_toTopOf="@+id/tv_guess_resultword" />
+
+
+</android.support.constraint.ConstraintLayout>

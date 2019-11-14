@@ -58,6 +58,18 @@
                 android:textColor="@color/common_text_black"
                 android:textSize="14sp" />
 
+
+            <TextView
+                android:id="@+id/tv_danci_guess"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="?selectableItemBackground"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:text="猜一猜"
+                android:textColor="@color/common_text_black"
+                android:textSize="14sp" />
+
             <Switch
                 android:id="@+id/sw_danci_interval"
                 android:layout_width="match_parent"
