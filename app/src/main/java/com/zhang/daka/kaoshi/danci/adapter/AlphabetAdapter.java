@@ -14,19 +14,31 @@ import java.util.List;
  * Created by zhangyuncai on 2019/11/13.
  */
 public class AlphabetAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
-    public AlphabetAdapter(@Nullable List<String> data) {
-        super(R.layout.item_guess_alphabet, data);
+
+    private int selection = 0;
+
+    public String getSelectAlphabet() {
+        if (mData.size() > selection) {
+            return mData.get(selection);
+        }
+        return "";
+    }
+
+    public AlphabetAdapter(int layoutResId, @Nullable List<String> data) {
+        super(layoutResId, data);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, String item) {
         helper.setText(R.id.tv_guess_alphabet, item);
+
         TextView tv_guess_alphabet = helper.getView(R.id.tv_guess_alphabet);
-        if (TextUtils.equals(item, "delete")) {
-            tv_guess_alphabet.setTextSize(20);
-        } else {
-            tv_guess_alphabet.setTextSize(40);
-        }
-        helper.addOnClickListener(R.id.tv_guess_alphabet);
+        tv_guess_alphabet.setSelected(selection == helper.getLayoutPosition());
+
+        helper.itemView.setOnClickListener(v -> {
+            selection = helper.getLayoutPosition();
+            notifyDataSetChanged();
+        });
+
     }
 }
