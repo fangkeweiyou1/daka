@@ -12,12 +12,46 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    //签名工具
+    signingConfigs {
+        //正式发布版
+        release {
+            keyAlias 'china'
+            keyPassword '123520'
+            storeFile file('daka.jks')
+            storePassword '123520'
+        }
+        //调试debug版
+//        debug {
+//        keyAlias 'china'
+//        keyPassword '123520'
+//        storeFile file('asia5b.jks')
+//        storePassword '123520'
+//        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
+            multiDexEnabled true
+            zipAlignEnabled true
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            multiDexEnabled true
+            zipAlignEnabled true
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
     }
+
     compileOptions {
         encoding 'UTF-8'
         sourceCompatibility JavaVersion.VERSION_1_8
