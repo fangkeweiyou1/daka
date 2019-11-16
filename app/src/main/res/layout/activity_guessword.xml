@@ -8,41 +8,83 @@
 
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_guess_alphabet1"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:itemCount="1"
+        tools:listitem="@layout/item_guess_alphabet1_adapter" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_guess_alphabet2"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toRightOf="@+id/rv_guess_alphabet1"
+        tools:itemCount="1"
+        tools:listitem="@layout/item_guess_alphabet1_adapter" />
+
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_guess"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="android.support.v7.widget.GridLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        app:layout_constraintLeft_toRightOf="@+id/rv_guess_alphabet2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="1"
         tools:listitem="@layout/item_guess_alphabet" />
 
-    <View
-        android:id="@+id/view_guess_divider"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/common_text_black"
-        app:layout_constraintBottom_toTopOf="@+id/rv_guess" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_guess_notice"
+        tools:listitem="@layout/item_guessnotice_adapter"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/rv_guess_alphabet2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_guess" />
+
+
+    <com.zhang.daka.view.BesselView
+        android:id="@+id/bv_guess"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/rv_guess_alphabet2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_guess" />
 
     <TextView
-        android:id="@+id/tv_guess_resultword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:hint="请输入单词"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
+        android:layout_width="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="15dp"
+        android:onClick="onClick"
+        android:textSize="16sp"
         android:textColor="@color/common_text_black"
-        android:textIsSelectable="true"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/view_guess_divider" />
+        android:textStyle="bold"
+        android:id="@+id/tv_guess_clear"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="clear"
+        android:gravity="center"
+        android:background="@color/common_bg_gray"
+        android:layout_height="wrap_content"/>
 
+    <Switch
+        android:background="@color/common_bg_gray"
+        android:layout_width="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="15dp"
+        android:onClick="onClick"
+        android:textSize="16sp"
+        android:checked="true"
+        android:textColor="@color/common_text_black"
+        android:textStyle="bold"
+        android:id="@+id/tv_guess_notice"
+        app:layout_constraintTop_toBottomOf="@+id/rv_guess"
+        android:text="notice"
+        android:gravity="center"
+        android:layout_height="wrap_content"/>
 
-    <View
-        android:id="@+id/view_guess_divider2"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/common_text_black"
-        app:layout_constraintBottom_toTopOf="@+id/tv_guess_resultword" />
 
 
 </android.support.constraint.ConstraintLayout>
