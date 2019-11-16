@@ -1,4 +1,4 @@
-package com.zhang.daka.kaoshi.danci;
+package com.zhang.daka.kaoshi.danci.fragment;
 
 import android.graphics.Bitmap;
 import android.net.http.SslError;
@@ -31,6 +31,7 @@ import com.zhang.daka.event.AddDanciEvent;
 import com.zhang.daka.event.FullScreenEvent;
 import com.zhang.daka.event.IntervalEvent;
 import com.zhang.daka.event.ShowTypeEvent;
+import com.zhang.daka.kaoshi.danci.adapter.DanciVerticalAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

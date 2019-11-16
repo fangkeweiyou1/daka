@@ -1,4 +1,4 @@
-package com.zhang.daka.kaoshi.danci;
+package com.zhang.daka.kaoshi.danci.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import com.zhang.daka.R;
 import com.zhang.daka.event.FullScreenEvent;
 import com.zhang.daka.event.IntervalEvent;
 import com.zhang.daka.event.ShowTypeEvent;
+import com.zhang.daka.kaoshi.danci.fragment.DanciVerticalFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;

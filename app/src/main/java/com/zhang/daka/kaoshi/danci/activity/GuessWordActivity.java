@@ -1,4 +1,4 @@
-package com.zhang.daka.kaoshi.danci;
+package com.zhang.daka.kaoshi.danci.activity;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
@@ -8,9 +8,7 @@ import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Switch;
-import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jiyun_greendao.DBOpenHelper;
 import com.jiyun_greendao.info.WordInfo;
 import com.jiyun_greendao.info.WordInfoDao;
@@ -24,8 +22,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import timber.log.Timber;
 
 import static timber.log.Timber.d;
 

@@ -1,4 +1,4 @@
-package com.zhang.daka.kaoshi.danci;
+package com.zhang.daka.kaoshi.danci.adapter;
 
 import android.support.annotation.Nullable;
 

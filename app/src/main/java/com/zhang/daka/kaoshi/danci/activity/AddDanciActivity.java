@@ -1,4 +1,4 @@
-package com.zhang.daka.kaoshi.danci;
+package com.zhang.daka.kaoshi.danci.activity;
 
 import android.app.ProgressDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +11,7 @@ import com.wushiyi.mvp.base.SimpleAppCompatActivity;
 import com.wushiyi.util.ToastUtilKt;
 import com.zhang.daka.R;
 import com.zhang.daka.event.AddDanciEvent;
+import com.zhang.daka.kaoshi.danci.adapter.AddDanciAdapter;
 import com.zhang.daka.model.WordModel;
 
 import org.greenrobot.eventbus.EventBus;
