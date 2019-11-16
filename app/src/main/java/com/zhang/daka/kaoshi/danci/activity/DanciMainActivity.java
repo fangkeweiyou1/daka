@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -11,11 +12,13 @@ import android.widget.TextView;
 import com.wushiyi.mvp.MvpExtendsKt;
 import com.wushiyi.mvp.base.BaseFragmentPagerAdapter;
 import com.wushiyi.mvp.base.SimpleAppCompatActivity;
+import com.wushiyi.mvp.base.SimpleFragment;
 import com.zhang.daka.DakaMainActivity;
 import com.zhang.daka.R;
 import com.zhang.daka.event.FullScreenEvent;
 import com.zhang.daka.event.IntervalEvent;
 import com.zhang.daka.event.ShowTypeEvent;
+import com.zhang.daka.kaoshi.danci.fragment.CavasFragment;
 import com.zhang.daka.kaoshi.danci.fragment.DanciVerticalFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -39,6 +42,7 @@ public class DanciMainActivity extends SimpleAppCompatActivity {
     ViewPager mViewPager;
     TextView tv_danci_intervaltime;
     private List<DanciVerticalFragment> fragments;
+    private FrameLayout fl_canci_cavas;
 
     @Override
     public int getLayoutId() {
@@ -50,22 +54,23 @@ public class DanciMainActivity extends SimpleAppCompatActivity {
         mViewPager = findViewById(R.id.vp_main);
         tv_danci_intervaltime = findViewById(R.id.tv_danci_intervaltime);
         initViewPager();
+
+        fl_canci_cavas = findViewById(R.id.fl_danci_cavas);
+        getSupportFragmentManager().beginTransaction().add(R.id.fl_danci_cavas, SimpleFragment.instantiate(this, CavasFragment.class.getName())).commit();
     }
 
     @Override
     public void initEvent() {
-        ((RadioGroup)findViewById(R.id.rg_danci_showtype)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        ((RadioGroup) findViewById(R.id.rg_danci_showtype)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                int showType=0;
-                if(checkedId==R.id.rb_danci_onlycn)
-                {
-                    showType=1;
-                }else  if(checkedId==R.id.rb_danci_onlyen)
-                {
-                    showType=2;
-                }else {
-                    showType=0;
+                int showType = 0;
+                if (checkedId == R.id.rb_danci_onlycn) {
+                    showType = 1;
+                } else if (checkedId == R.id.rb_danci_onlyen) {
+                    showType = 2;
+                } else {
+                    showType = 0;
                 }
                 EventBus.getDefault().post(new ShowTypeEvent(showType));
             }
@@ -77,6 +82,9 @@ public class DanciMainActivity extends SimpleAppCompatActivity {
         switch (v.getId()) {
             case R.id.sw_danci_fullscreen:
                 EventBus.getDefault().post(new FullScreenEvent(((Switch) v).isChecked()));
+                break;
+            case R.id.sw_danci_cavas:
+                fl_canci_cavas.setVisibility((((Switch) v).isChecked()) ? View.VISIBLE : View.GONE);
                 break;
             case R.id.tv_danci_daka:
                 startActivity(new Intent(mActivity, DakaMainActivity.class));
@@ -118,7 +126,7 @@ public class DanciMainActivity extends SimpleAppCompatActivity {
         for (char c : alphas.toCharArray()) {
             Bundle bundle = new Bundle();
             bundle.putInt("position", position++);
-            bundle.putString("alphabet", c+"");
+            bundle.putString("alphabet", c + "");
             DanciVerticalFragment fragment = MvpExtendsKt.sNewStanceFragment(this, DanciVerticalFragment.class, bundle);
             fragments.add(fragment);
         }
