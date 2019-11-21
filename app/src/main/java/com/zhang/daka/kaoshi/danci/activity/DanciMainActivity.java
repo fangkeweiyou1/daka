@@ -20,6 +20,7 @@ import com.zhang.daka.event.IntervalEvent;
 import com.zhang.daka.event.ShowTypeEvent;
 import com.zhang.daka.kaoshi.danci.fragment.CavasFragment;
 import com.zhang.daka.kaoshi.danci.fragment.DanciVerticalFragment;
+import com.zhang.daka.kaoshi.huibian.HuibianActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
@@ -88,6 +89,9 @@ public class DanciMainActivity extends SimpleAppCompatActivity {
                 break;
             case R.id.tv_danci_daka:
                 startActivity(new Intent(mActivity, DakaMainActivity.class));
+                break;
+            case R.id.tv_danci_huibian:
+                startActivity(new Intent(mActivity, HuibianActivity.class));
                 break;
             case R.id.tv_danci_guess:
                 startActivity(new Intent(mActivity, GuessWordActivity.class));
