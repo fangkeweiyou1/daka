@@ -121,7 +121,7 @@ public class HuibianModel implements Serializable {
         list.add(model);
 
         model = new HuibianModel();
-        model.question = "30、IP称为___________，它用来存放代码段中的___________。";
+        model.question = "30、IP是___________，它用来存放代码段中的___________。";
         model.anwser = "指令指示器 ;偏移地址（或EA） ";
         list.add(model);
 
@@ -192,7 +192,7 @@ public class HuibianModel implements Serializable {
 
 
         model = new HuibianModel();
-        model.question = "2、某数据段的逻辑地址为F000:100,则数据段的段地址为F000H,偏移地址为100H，物理地址为f0100H。从逻辑地址为F000:100开始的一个8个字的数据区，其最后一个字的物理地址是F010EH。";
+        model.question = "2、某数据段的逻辑地址为F000:100,则数据段的段地址为F000H,偏移地址为100H，物理地址为F0100H。从逻辑地址为F000:100开始的一个8个字的数据区，其最后一个字的物理地址是F010EH。";
         model.anwser = "A. 正确";
         list.add(model);
 
@@ -253,10 +253,6 @@ public class HuibianModel implements Serializable {
         model.anwser = "A. 正确";
         list.add(model);
 
-        model = new HuibianModel();
-        model.question = "29、假设程序中的数据定义如下： PARTNO  DW ? PNAME  DB   16 DUP (?) COUNT  DD? PLENTH   EQU  $-PARTNO 问PLENTH的值为16H。";
-        model.anwser = "A. 正确";
-        list.add(model);
 
         model = new HuibianModel();
         model.question = "30、中断服务程序的入口地址称为中断向量。每个中断向量占个字节，其中，两个低字节存放中断服务程序的，两个高字节存放中断服务程序的4偏移地址段地址。";
@@ -389,7 +385,151 @@ public class HuibianModel implements Serializable {
         model.anwser = "9,表示存储单元CC占有的字的个数";
         list.add(model);
 
+        model = new HuibianModel();
+        model.question = "11、在指令MOV AX，[BX]中，源操作数的寻址方式为___________,目的操作数的寻址方式为___________。";
+        model.anwser = "间接寻址 ;寄存器寻址 ";
+        list.add(model);
 
+        model = new HuibianModel();
+        model.question = "将十六进制数FFH化为十进制是___________,化为二进制是__________,化为八进制是__________";
+        model.anwser = "255,11111111,377";
+        list.add(model);
+
+        model = new HuibianModel();
+        model.question = "指令MOV MYDAT.BX..SL.,ES:AX有错,错误为_______________,指令MOV  BYTE PTR [BX], 1000有错，错误为_________________。 ";
+        model.anwser = "AX寄存器不能使用段超越,1000超过了一个字节的范围";
+        list.add(model);
+
+        model = new HuibianModel();
+        model.question = "如果TABLE为数据段中0032单元的符号名,其中存放的内容为1234H,当执行指令 'MOVAX,TABLE'和'LEA.;AX,TABLE'后,AX.的内容分别为______._______";
+        model.anwser = "1234H,0032";
+        list.add(model);
+
+        model = new HuibianModel();
+        model.question = "若当前代码段大小为32K,CS.=0c018H,则该代码段第一个自己的物理地址为____________,最后一个字节的物理地址为_________";
+        model.anwser = "0C0180H,C817FH";
+        list.add(model);
+
+        model = new HuibianModel();
+        model.question = "将16进制数CDH化为十进制是______,化为二进制______,化为八进制_________";
+        model.anwser = "205,11001101,315";
+        list.add(model);
+
+        model = new HuibianModel();
+        model.question = "将2进制数100010化为十进制是______,将十进制数100化为八进制_____";
+        model.anwser = "34,144";
+        list.add(model);
+
+        model = new HuibianModel();
+        model.question = "[程序分析题]\n" +
+                "MOV AH, 1\n" +
+                "INT 21H;从键盘输入字符\n" +
+                "AND; AL, 0FH\n" +
+                "MOV BL， AL\n" +
+                "MOV AH，1\n" +
+                "INT 21H;\n" +
+                "从键盘输入字符MOV AH, 0\n" +
+                "AND:; AL，OFH\n" +
+                "ADD; AL, BL\n" +
+                "PUSH AXDAA\n" +
+                "PUSH AX\n" +
+                "\n" +
+                "上述程序段执行时，若第一-次从键盘输入6, 第二次从键盘输入7.那么: .\n" +
+                "1.第一次AX进栈的数是\n" +
+                "2.第二次AX进栈的数是答案:\n" +
+                "\n" +
+                "(1)第一次AX进栈的数是( 000DH )\n" +
+                "(2)第二次AX进栈的数是( 0103H)无\n" +
+                "\n" +
+                "\n" +
+                "\n";
+        model.anwser = "答案";
+        list.add(model);
+
+        model = new HuibianModel();
+        model.question = "[程序分析题]\n" +
+                "试分析下面的程序段完成什么功能?\n" +
+                "MOV CL， 04\n" +
+                "SHL DX,  CL\n" +
+                "MOV  BL， AH\n" +
+                "SHL  AX， CL\n" +
+                "SHR  BL,  CL\n" +
+                "OR  DL，BL答案:\n" +
+                "\n" +
+                "本程序段将((DX),(AX))的双字同时左移4位，即将此双字乘以10H (16)。无\n" ;
+        model.anwser = "答案";
+        list.add(model);
+
+        model = new HuibianModel();
+        model.question = "[程序分析题]\n" +
+                "NUM DB.; ?\n" +
+                "MOV AH, 1\n" +
+                "INT 21H\n" +
+                "CMP AL，39H\n" +
+                "JBE NEXT\n" +
+                "SUB:; AL，7\n" +
+                "NEXT: SUB: AL, 30H\n" +
+                "MOV NUM, AL\n" +
+                "上述程序段运行后，若输入’F'，则NUM.=____用二进制表示.若’8’,则NUM.=__用二进制表示.该程序段的功能是\n" +
+                "答案:\n" +
+                "\n" +
+                "1111 1000\n" +
+                "功能:将1 6进制化成=进制。无\n";
+        model.anwser = "答案";
+        list.add(model);
+
+        model = new HuibianModel();
+        model.question = "[程序分析题]\n" +
+                "有下列数据定义VA.; DB.; OFFH\n" +
+                "VB.; DB.:;  1，2\n" +
+                "VC; DW 3456H\n" +
+                "执行下列指令序列:\n" +
+                "MOV AX, WORD.: PTR VB.; 1\n" +
+                "MOV BL, BYTE PTR VC; 1\n" +
+                "MOV CL，VB1\n" +
+                "则AX=___。 BL=____ ,CL=.\n" +
+                "答案:\n" +
+                "AX= 5602H BL= 34H CL= 02H\n";
+        model.anwser = "答案";
+        list.add(model);
+
+        model = new HuibianModel();
+        model.question = "[程序分析题]\n" +
+                "MOV AL, 5\n" +
+                "ADD.;AL，AL\n" +
+                "MOV BL, AL\n" +
+                "ADD:; AL，AL\n" +
+                "ADD;AL，BL\n" +
+                "上述程序段执行后，AL=___， BL=_\n" +
+                "程序段的功能用数学表达式表示.\n" +
+                "答案:\n" +
+                "\n" +
+                "AL=30, BL=10\n" +
+                "将寄存器AL中的数乘以6并放回AL中。\n";
+        model.anwser = "答案";
+        list.add(model);
+
+        model = new HuibianModel();
+        model.question = "[程序分析题]\n" +
+                "MOV BL, 64H\n" +
+                "MOV CL, 03H\n" +
+                "XOR AX, AX\n" +
+                "AGAIN: ADD; AL, BL\n" +
+                "ADC; AH, 0\n" +
+                "DEC:; CL\n" +
+                "JNZ AGAIN\n" +
+                "问: 1.该程序段完成的功能是_____ :2.AX=_________\n" +
+                "答案:\n" +
+                "\n" +
+                "(1)该程序段完成的功能是:将BL中的数乘3放入AX中\n" +
+                "(2) AX=1 1000000\n" ;
+        model.anwser = "答案";
+        list.add(model);
+
+        model = new HuibianModel();
+        model.question = "";
+        model.anwser = "答案";
+        list.add(model);
 
         return list;
     }

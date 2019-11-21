@@ -76,6 +76,7 @@ public class HuibianActivity extends SimpleAppCompatActivity {
         searchRecyclerView.setAdapter(searchAdapter);
         searchRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
+        codeList.add("暂停");
         for (int i = 0; i < 10; i++) {
             codeList.add("" + i);
         }
@@ -87,13 +88,14 @@ public class HuibianActivity extends SimpleAppCompatActivity {
         codeList.add(",");
         codeList.add("clear");
         codeList.add("clear");
-        codeList.add("clear");
         codeList.add(" ");
         codeList.add(" ");
         codeList.add(" ");
         codeList.add(" ");
         codeList.add(" ");
         codeList.add(" ");
+        codeList.add("堆栈");
+        codeList.add("伪指令");
         codeAdapter = new HuibianCodeAdapter(codeList);
         rv_huibian_code.setLayoutManager(new GridLayoutManager(this, 6));
         rv_huibian_code.setAdapter(codeAdapter);
@@ -102,22 +104,30 @@ public class HuibianActivity extends SimpleAppCompatActivity {
 
     }
 
+    private void interval() {
+        if (subscribe != null) {
+            subscribe.dispose();
+            subscribe = null;
+        } else {
+            subscribe = Observable.interval(5, TimeUnit.SECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(aLong -> {
+                        currentPosition++;
+                        if (currentPosition >= allList.size()) {
+                            currentPosition = 0;
+                        }
+                        if (allList.size() > currentPosition) {
+                            allRecyclerView.scrollToPosition(currentPosition);
+                        }
+                    }, throwable -> {
+                        throwable.printStackTrace();
+                    });
+        }
+    }
 
     @Override
     public void initEvent() {
-        subscribe = Observable.interval(5, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(aLong -> {
-                    currentPosition++;
-                    if (currentPosition >= allList.size()) {
-                        currentPosition = 0;
-                    }
-                    if (allList.size() > currentPosition) {
-                        allRecyclerView.scrollToPosition(currentPosition);
-                    }
-                }, throwable -> {
-                    throwable.printStackTrace();
-                });
+
 
         et_huibian_search.addTextChangedListener(new BaseTextWatcher() {
             @Override
@@ -132,6 +142,8 @@ public class HuibianActivity extends SimpleAppCompatActivity {
                 String item = codeAdapter.getItem(position);
                 if (TextUtils.equals(item, "clear")) {
                     search = "";
+                } else if (TextUtils.equals(item, "暂停")) {
+                    interval();
                 } else {
                     search += item;
                 }
@@ -185,7 +197,9 @@ public class HuibianActivity extends SimpleAppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        subscribe.dispose();
+        if (subscribe != null && !subscribe.isDisposed()) {
+            subscribe.dispose();
+        }
         super.onDestroy();
     }
 }
