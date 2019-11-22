@@ -3,7 +3,6 @@ package com.zhang.daka.kaoshi.huibian;
 import android.graphics.Color;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -34,7 +33,7 @@ import io.reactivex.disposables.Disposable;
  * 汇编考试
  */
 public class HuibianActivity extends SimpleAppCompatActivity {
-    private final List<HuibianModel> allList = HuibianModel.getHuibianModels();
+    private final List<HuibianModel> allList = HuibianHelper.getHuibianModels();
     private final HuibianAdapter allAdapter = new HuibianAdapter(allList);
     private RecyclerView allRecyclerView;
     private int currentPosition = 0;
@@ -76,30 +75,11 @@ public class HuibianActivity extends SimpleAppCompatActivity {
         searchRecyclerView.setAdapter(searchAdapter);
         searchRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        codeList.add("暂停");
-        for (int i = 0; i < 10; i++) {
-            codeList.add("" + i);
-        }
-        for (char j = 'a'; j <= 'z'; j++) {
-            codeList.add("" + j);
-        }
-        codeList.add(".");
-        codeList.add("、");
-        codeList.add(",");
-        codeList.add("clear");
-        codeList.add("clear");
-        codeList.add(" ");
-        codeList.add(" ");
-        codeList.add(" ");
-        codeList.add(" ");
-        codeList.add(" ");
-        codeList.add(" ");
-        codeList.add("堆栈");
-        codeList.add("伪指令");
+        codeList.add("汇编");
+        codeList.add("逻辑");
         codeAdapter = new HuibianCodeAdapter(codeList);
-        rv_huibian_code.setLayoutManager(new GridLayoutManager(this, 6));
+        rv_huibian_code.setLayoutManager(new LinearLayoutManager(this));
         rv_huibian_code.setAdapter(codeAdapter);
-        rv_huibian_code.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
         rv_huibian_code.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
     }
@@ -140,14 +120,16 @@ public class HuibianActivity extends SimpleAppCompatActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 String item = codeAdapter.getItem(position);
-                if (TextUtils.equals(item, "clear")) {
-                    search = "";
-                } else if (TextUtils.equals(item, "暂停")) {
-                    interval();
-                } else {
-                    search += item;
+                if (TextUtils.equals(item, "汇编")) {
+                    allList.clear();
+                    allList.addAll(HuibianHelper.getHuibianModels());
+                    allAdapter.notifyDataSetChanged();
+                } else if (TextUtils.equals(item, "逻辑")) {
+                    allList.clear();
+                    allList.addAll(LuojiHelper.getLuojiModels());
+                    allAdapter.notifyDataSetChanged();
                 }
-                search(search);
+                search("");
             }
         });
 
