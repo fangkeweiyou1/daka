@@ -45,7 +45,7 @@
             android:theme="@style/FullScreen" />
         <activity
             android:name=".kaoshi.huibian.HuibianActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="portrait"
             android:theme="@style/FullScreen" />
 
         <provider
