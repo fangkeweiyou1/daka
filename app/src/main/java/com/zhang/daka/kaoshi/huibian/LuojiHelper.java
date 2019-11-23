@@ -125,23 +125,6 @@ public class LuojiHelper {
         list.add(model);
 
         model = new HuibianModel();
-        model.question = "17、下列逻辑功能器件中______是译码器。\n" +
-                "A. 74LS00\n" +
-                "B. 74LS48\n" +
-                "C. 74LS138\n" +
-                "D. 74LS151";
-        model.anwser = "C";
-        list.add(model);
-
-        model = new HuibianModel();
-        model.question = "5、下列逻辑功能器件中________(C)是译码器。";
-        model.anwser = "A. 74LS00\n" +
-                "B. 74LS48\n" +
-                "C. 74LS138\n" +
-                "D. 74LS151";
-        list.add(model);
-
-        model = new HuibianModel();
         model.question = "18、下列触发器中______具有约束条件。\n" +
                 "A. RS触发器\n" +
                 "B. D触发器\n" +
@@ -321,33 +304,6 @@ public class LuojiHelper {
         list.add(model);
 
         model = new HuibianModel();
-        model.question = "5、下列逻辑功能器件中______是译码器。\n" +
-                "A. 74LS00\n" +
-                "B. 74LS48\n" +
-                "C. 74LS138\n" +
-                "D. 74LS151";
-        model.anwser = "C";
-        list.add(model);
-
-        model = new HuibianModel();
-        model.question = "6、下列触发器中,没有约束条件的是______。\n" +
-                "A. 基本RS触发器\n" +
-                "B. 边沿D触发器\n" +
-                "C. 同步RS触发器\n" +
-                "D. 主从RS触发器";
-        model.anwser = "B";
-        list.add(model);
-
-        model = new HuibianModel();
-        model.question = "7、下列逻辑功能器件中______是译码器。\n" +
-                "A. 74LS00\n" +
-                "B. 74LS48\n" +
-                "C. 74LS138\n" +
-                "D. 74LS151";
-        model.anwser = "C";
-        list.add(model);
-
-        model = new HuibianModel();
         model.question = "9、在下图所示电路中，电路______的输出不为高电平。\n" +
                 "A.   \n" +
                 "B.   \n" +
@@ -425,15 +381,6 @@ public class LuojiHelper {
                 "B.  \n" +
                 "C. \n" +
                 "D. ";
-        model.anwser = "A";
-        list.add(model);
-
-        model = new HuibianModel();
-        model.question = "18、下列触发器中______具有约束条件。\n" +
-                "A. RS触发器\n" +
-                "B. D触发器\n" +
-                "C. JK触发器\n" +
-                "D. T触发器";
         model.anwser = "A";
         list.add(model);
 

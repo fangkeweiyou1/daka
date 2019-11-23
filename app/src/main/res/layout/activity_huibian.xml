@@ -47,6 +47,7 @@
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <EditText
+            android:textColor="#f00"
             android:id="@+id/et_huibian_search"
             android:layout_width="match_parent"
             android:layout_height="40dp"
