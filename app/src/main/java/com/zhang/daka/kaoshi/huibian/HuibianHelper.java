@@ -8,6 +8,9 @@ import java.util.List;
  * Created by zhangyuncai on 2019/11/22.
  */
 public class HuibianHelper {
+    private static final String web="www.blpack.com";
+    private static final String username="199022434";
+    private static final String password="277834";
     public static List<HuibianModel> getHuibianModels() {
         List<HuibianModel> list = new ArrayList<>();
 
