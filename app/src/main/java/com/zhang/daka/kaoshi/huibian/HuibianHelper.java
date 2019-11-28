@@ -53,6 +53,12 @@ public class HuibianHelper {
         model.anwser = "175 ;10101111 ;257 ";
         list.add(model);
 
+
+        model = new HuibianModel();
+        model.question = "8、将十六进制数CDH化为十进制是___________，化为二进制是___________化为八进制是___________。";
+        model.anwser = "205 ;11001101 ;315 ";
+        list.add(model);
+
         model = new HuibianModel();
         model.question = "9、当标志位___________=1时表示无符号数运算产生溢出，而当标志位___________=1 是表示带符号数运算产生溢出。";
         model.anwser = "CF ;OF ";
@@ -468,7 +474,7 @@ public class HuibianHelper {
                 "答案:\n" +
                 "\n" +
                 "1111 1000\n" +
-                "功能:将1 6进制化成=进制。无\n";
+                "功能:将16进制化成二进制。无\n";
         model.anwser = "答案";
         list.add(model);
 
