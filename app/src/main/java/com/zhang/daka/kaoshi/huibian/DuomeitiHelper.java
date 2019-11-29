@@ -198,7 +198,7 @@ public class DuomeitiHelper  {
                 "2.MPEG-2\n" +
                 "3.MPEG Layer3\n" +
                 "4.MPEG-4";
-        model.anwser="";
+        model.anwser="C";
         list.add(model);
 
         model=new HuibianModel();
@@ -207,7 +207,7 @@ public class DuomeitiHelper  {
                 "2.WRG（白红绿）\n" +
                 "3.RGB（红绿蓝）\n" +
                 "4.CMY（青品红黄）";
-        model.anwser="";
+        model.anwser="C";
         list.add(model);
 
         model=new HuibianModel();
@@ -216,7 +216,7 @@ public class DuomeitiHelper  {
                 "2.检索迅速\n" +
                 "3.保存期短\n" +
                 "4.可以及时传播";
-        model.anwser="";
+        model.anwser="C";
         list.add(model);
 
         model=new HuibianModel();
@@ -225,7 +225,7 @@ public class DuomeitiHelper  {
                 "2.音频卡的分类主要是根据采样信息的压缩比来分，压缩比越大，音质越好。\n" +
                 "3.音频卡的分类主要是根据接口功能来分，接口功能越多，音质越好。\n" +
                 "4.音频卡的分类主要是根据采样量化的位数来分，位数越高，量化精度越高，音质越好。";
-        model.anwser="";
+        model.anwser="D";
         list.add(model);
 
         model=new HuibianModel();
@@ -234,7 +234,7 @@ public class DuomeitiHelper  {
                 "2.预测编码是根据某一模型进行的。\n" +
                 "3.预测编码需将预测的误差进行存储或传输。\n" +
                 "4.预测编码中典型的压缩方法有DPCM、ADPCM。";
-        model.anwser="";
+        model.anwser="A";
         list.add(model);
 
         model=new HuibianModel();
@@ -243,7 +243,7 @@ public class DuomeitiHelper  {
                 "2.MPEG-2\n" +
                 "3.MPEG-3\n" +
                 "4.MPEG-4";
-        model.anwser="";
+        model.anwser="B";
         list.add(model);
 
         model=new HuibianModel();
@@ -252,7 +252,7 @@ public class DuomeitiHelper  {
                 "2.1984年，美国Apple公司推出Macintosh系统机\n" +
                 "3.1986年，Philips和Sony公司宣布发明了交互式光盘系统CD-I\n" +
                 "4.1987年，美国RCA公司展示了交互式数字视频系统DVI";
-        model.anwser="";
+        model.anwser="C";
         list.add(model);
 
         model=new HuibianModel();
@@ -261,7 +261,7 @@ public class DuomeitiHelper  {
                 "2.多媒体技术\n" +
                 "3.电子技术\n" +
                 "4.传输技术";
-        model.anwser="";
+        model.anwser="B";
         list.add(model);
 
         model=new HuibianModel();
@@ -270,7 +270,7 @@ public class DuomeitiHelper  {
                 "2.（1）（2）\n" +
                 "3.（1）（2）（3）\n" +
                 "4.全部";
-        model.anwser="";
+        model.anwser="D";
         list.add(model);
 
         model=new HuibianModel();
@@ -279,7 +279,7 @@ public class DuomeitiHelper  {
                 "2.再次编辑\n" +
                 "3.特效处理\n" +
                 "4.音频调整";
-        model.anwser="";
+        model.anwser="A";
         list.add(model);
 
         model=new HuibianModel();
@@ -288,7 +288,7 @@ public class DuomeitiHelper  {
                 "2.字节\n" +
                 "3.节点\n" +
                 "4.像素";
-        model.anwser="";
+        model.anwser="A";
         list.add(model);
 
         model=new HuibianModel();
@@ -297,7 +297,7 @@ public class DuomeitiHelper  {
                 "2.数字解码器\n" +
                 "3.模拟到数字的转换器（A/D转换器）\n" +
                 "4.数字到模拟的转换器（D/A转换器）";
-        model.anwser="";
+        model.anwser="C";
         list.add(model);
 
         model=new HuibianModel();
@@ -306,7 +306,7 @@ public class DuomeitiHelper  {
                 "2.动态\n" +
                 "3.点阵\n" +
                 "4.矢量";
-        model.anwser="";
+        model.anwser="A";
         list.add(model);
 
         model=new HuibianModel();
@@ -315,7 +315,7 @@ public class DuomeitiHelper  {
                 "2.时间可扩充性；空间可扩展性；硬件扩展技术；软件扩展技术。\n" +
                 "3.数据分块技术；空间可扩展性；信噪比可扩充性；框架技术。\n" +
                 "4.空间可扩展性；时间可扩充性；信噪比可扩充性；数据分块技术。";
-        model.anwser="";
+        model.anwser="D";
         list.add(model);
 
         model=new HuibianModel();
@@ -324,7 +324,7 @@ public class DuomeitiHelper  {
                 "2.（2）（3）（4）\n" +
                 "3.（1）（2）（3）\n" +
                 "4.全部";
-        model.anwser="";
+        model.anwser="A";
         list.add(model);
 
         model=new HuibianModel();
@@ -333,7 +333,7 @@ public class DuomeitiHelper  {
                 "2.黑白图片\n" +
                 "3.彩色图片\n" +
                 "4.位图文件形成图片";
-        model.anwser="";
+        model.anwser="A";
         list.add(model);
 
         model=new HuibianModel();
@@ -342,7 +342,7 @@ public class DuomeitiHelper  {
                 "2.数码照相机\n" +
                 "3.键盘\n" +
                 "4.鼠标";
-        model.anwser="";
+        model.anwser="B";
         list.add(model);
 
         model=new HuibianModel();
@@ -351,7 +351,7 @@ public class DuomeitiHelper  {
                 "2.传输媒体\n" +
                 "3.表现媒体\n" +
                 "4.存储媒体";
-        model.anwser="";
+        model.anwser="D";
         list.add(model);
 
         model=new HuibianModel();
@@ -360,7 +360,7 @@ public class DuomeitiHelper  {
                 "2.多媒体核心系统\n" +
                 "3.多媒体实时压缩和解压缩\n" +
                 "4.多媒体硬件系统";
-        model.anwser="";
+        model.anwser="B";
         list.add(model);
 
         model=new HuibianModel();
@@ -369,7 +369,7 @@ public class DuomeitiHelper  {
                 "2.CMYK\n" +
                 "3.LAB\n" +
                 "4.黑白模式";
-        model.anwser="";
+        model.anwser="D";
         list.add(model);
 
         model=new HuibianModel();
@@ -378,7 +378,7 @@ public class DuomeitiHelper  {
                 "2.MPEG-2\n" +
                 "3.MPEG Layer3\n" +
                 "4.MPEG-4";
-        model.anwser="";
+        model.anwser="C";
         list.add(model);
 
         model=new HuibianModel();
@@ -387,7 +387,7 @@ public class DuomeitiHelper  {
                 "2.图像信号、亮度信号、色度信号。\n" +
                 "3.图像信号、复合同步信号、复合消隐信号。\n" +
                 "4.图像信号、复合同步信号、复合色度信号。";
-        model.anwser="";
+        model.anwser="C";
         list.add(model);
 
         model=new HuibianModel();
@@ -396,7 +396,7 @@ public class DuomeitiHelper  {
                 "2.20世纪70年代\n" +
                 "3.20世纪80年代\n" +
                 "4.20世纪90年代";
-        model.anwser="";
+        model.anwser="C";
         list.add(model);
 
         model=new HuibianModel();
@@ -405,7 +405,7 @@ public class DuomeitiHelper  {
                 "2.（1）（2）（4）\n" +
                 "3.（1）（3）（4）\n" +
                 "4.全部";
-        model.anwser="";
+        model.anwser="D";
         list.add(model);
 
         model=new HuibianModel();
@@ -414,7 +414,7 @@ public class DuomeitiHelper  {
                 "2.（1）（2）（3）\n" +
                 "3.（1）（3）（4）\n" +
                 "4. 全部";
-        model.anwser="";
+        model.anwser="D";
         list.add(model);
 
 
@@ -424,7 +424,7 @@ public class DuomeitiHelper  {
                 "B. CMYK\n" +
                 "C. LAB\n" +
                 "D. 黑白模式";
-        model.anwser="";
+        model.anwser="D";
         list.add(model);
 
         model=new HuibianModel();
@@ -433,7 +433,7 @@ public class DuomeitiHelper  {
                 "B. 传输\n" +
                 "C. 开发\n" +
                 "D. 压缩";
-        model.anwser="";
+        model.anwser="D";
         list.add(model);
 
         model=new HuibianModel();
@@ -442,7 +442,7 @@ public class DuomeitiHelper  {
                 "B. 音频卡的分类主要是根据采样信息的压缩比来分，压缩比越大，音质越好。\n" +
                 "C. 音频卡的分类主要是根据接口功能来分，接口功能越多，音质越好。\n" +
                 "D. 音频卡的分类主要是根据采样量化的位数来分，位数越高，量化精度越高，音质越好。";
-        model.anwser="";
+        model.anwser="D";
         list.add(model);
 
         model=new HuibianModel();
@@ -451,7 +451,7 @@ public class DuomeitiHelper  {
                 "B. MPG\n" +
                 "C. AVS\n" +
                 "D. BMP";
-        model.anwser="";
+        model.anwser="D";
         list.add(model);
 
         model=new HuibianModel();
@@ -460,7 +460,7 @@ public class DuomeitiHelper  {
                 "B. 位图放大时会变得模糊不清，矢量图放大时则不会产生失真\n" +
                 "C. 位图和矢量图都可以用软件绘制出来\n" +
                 "D. 位图是由若干像素点构成的，矢量图则是通过计算方法生成的";
-        model.anwser="";
+        model.anwser="A";
         list.add(model);
 
         model=new HuibianModel();
@@ -469,7 +469,7 @@ public class DuomeitiHelper  {
                 "B. 流媒体技术\n" +
                 "C. ADSL技术\n" +
                 "D. 智能化技术";
-        model.anwser="";
+        model.anwser="B";
         list.add(model);
 
         model=new HuibianModel();
@@ -478,7 +478,7 @@ public class DuomeitiHelper  {
                 "B. 图像信号、亮度信号、色度信号。\n" +
                 "C. 图像信号、复合同步信号、复合消隐信号。\n" +
                 "D. 图像信号、复合同步信号、复合色度信号。";
-        model.anwser="";
+        model.anwser="C";
         list.add(model);
 
         model=new HuibianModel();
@@ -487,7 +487,7 @@ public class DuomeitiHelper  {
                 "B. （3）（4）\n" +
                 "C. （2）（3）（4）\n" +
                 "D. 全部";
-        model.anwser="";
+        model.anwser="C";
         list.add(model);
 
         model=new HuibianModel();
@@ -496,7 +496,7 @@ public class DuomeitiHelper  {
                 "B. 百家争鸣\n" +
                 "C. 停滞不前\n" +
                 "D. 领先于世界";
-        model.anwser="";
+        model.anwser="B";
         list.add(model);
 
         model=new HuibianModel();
@@ -1131,7 +1131,10 @@ public class DuomeitiHelper  {
         model.question="\n" +
                 "能是:  1 ,用硬件显示移动数据，允许高速的动画制作; 2.显示同步协处理器; 3.控制25个通 道的dma,使qpu以最小的开销处理盘声音和视频信息; 4.从28hz震 荡器产生系统时钟; 5.为视频ram vram.和扩展ram卡提供所有的控制信号; 6.为vram和扩 展ram卡提供地址.选择- -项:\n" +
                 "\n" +
-                "      A.全部\nB. 4.5.6.\nC.1.2.3.D.2.3.5. \n" +
+                "A.全部\n" +
+                "B. 4.5.6.\n" +
+                "C.1.2.3." +
+                "D.2.3.5. \n" +
                 "\n" +
                 "\n";
         model.anwser="A";
@@ -1142,8 +1145,9 @@ public class DuomeitiHelper  {
                 "多媒体计算机系统的两大组成部分是\n" +
                 "选择一项:\n" +
                 "O A.多媒体计算机硬件系统和多媒体计算机软件系统\n" +
-                "B.多媒体器件和多媒体主机◎C.音箱和声卡\n" +
-                "◎D.多媒体输入设备和多媒体输出设备答案: A\n" +
+                "B.多媒体器件和多媒体主机◎" +
+                "C.音箱和声卡\n" +
+                "D.多媒体输入设备和多媒体输出设备答案: A\n" +
                 "\n" +
                 "\n" +
                 "\n";
@@ -1153,7 +1157,11 @@ public class DuomeitiHelper  {
         model=new HuibianModel();
         model.question="所谓媒体是指\n" +
                 "选择- -项:\n" +
-                "◎A.计算机输入与输出的信息◎B.计算机屏幕显示的信息◎C.表示和传播信息的载体◎D.各种信息的编码答案: C\n" +
+                "◎" +
+                "A.计算机输入与输出的信息◎" +
+                "B.计算机屏幕显示的信息◎" +
+                "C.表示和传播信息的载体◎" +
+                "D.各种信息的编码答案: C\n" +
                 "\n" +
                 "\n" +
                 "\n";
@@ -1163,7 +1171,11 @@ public class DuomeitiHelper  {
 
         model=new HuibianModel();
         model.question="在超文本和超媒体中，不同信息块之间的连接是通过.来连接的.\n" +
-                "选择- -项:◎A.节点B.链◎C.字◎D.字节答案: B\n" +
+                "选择- -项:◎" +
+                "A.节点" +
+                "B.链◎" +
+                "C.字◎" +
+                "D.字节答案: B\n" +
                 "\n" +
                 "\n" +
                 "\n";
@@ -1172,7 +1184,11 @@ public class DuomeitiHelper  {
 
         model=new HuibianModel();
         model.question="超文本是一种非线性的网状结构，它把文本可以分为不同基本信息快，即信息的基本单元是\n" +
-                "选择- -项:●A.节点B.字◎C.字节D.链\n" +
+                "选择- -项:●" +
+                "A.节点" +
+                "B.字◎" +
+                "C.字节" +
+                "D.链\n" +
                 "\n" +
                 "\n" +
                 "\n";
@@ -1181,7 +1197,11 @@ public class DuomeitiHelper  {
 
         model=new HuibianModel();
         model.question="超文本技术提供了另-种对多媒体对象的管理形式，它是一种.的信息组织形式.\n" +
-                "选择一项:◎A.非线性◎B.线性◎C.抽象性◎D.曲线性\n" +
+                "选择一项:◎" +
+                "A.非线性◎" +
+                "B.线性◎" +
+                "C.抽象性◎" +
+                "D.曲线性\n" +
                 "\n" +
                 "\n" +
                 "\n";
@@ -1191,7 +1211,10 @@ public class DuomeitiHelper  {
         model=new HuibianModel();
         model.question="两分钟双声道，16位采样位数，22.05khz采样频率声 音的不压缩的数据量是:\n" +
                 "选择一项:\n" +
-                "A.10.35mb◎B. 5.05mb◎C.10.58mb。D.10.09mb\n" +
+                "A.10.35mb◎" +
+                "B. 5.05mb◎" +
+                "C.10.58mb。" +
+                "D.10.09mb\n" +
                 "\n" +
                 "\n" +
                 "\n";
@@ -1200,11 +1223,142 @@ public class DuomeitiHelper  {
 
         model=new HuibianModel();
         model.question="，是多媒体技术最主要的特征.\n" +
-                "选择-项:。A. 数字化◎B.多样性◎C.交互性◎D.集成性◎E.非线性\n" +
+                "选择-项:。" +
+                "A. 数字化◎" +
+                "B.多样性◎" +
+                "C.交互性◎" +
+                "D.集成性◎" +
+                "E.非线性\n" +
                 "\n" +
                 "\n" +
                 "\n";
         model.anwser="C";
+        list.add(model);
+
+        model=new HuibianModel();
+        model.question=".\n" +
+                "下列说法正确的是\n" +
+                "选择一项:\n" +
+                "●A.预测编码方法中是对预测值进行编码的.\n" +
+                "◎B.预测编码方法只是应用在图像数据的压缩上.。" +
+                "C.预测编码是根据模型进行的.\n" +
+                "◎D.预测编码是一种只能对空间冗余进行压缩的方法.\n" +
+                "\n" +
+                "\n" +
+                "\n";
+        model.anwser="C";
+        list.add(model);
+
+        model=new HuibianModel();
+        model.question="颜色的三要素包括\n" +
+                "”\n" +
+                "选择一项:\n" +
+                "◎A.亮度.饱和度分辩率◎" +
+                "B.亮度色调.分辩率◎" +
+                "C.色调.饱和度.分辩率◎" +
+                "D.亮度.色调.饱和度\n" +
+                "\n" +
+                "\n" +
+                "\n";
+        model.anwser="D";
+        list.add(model);
+
+        model=new HuibianModel();
+        model.question="下面属于多媒体的关键特性是\n" +
+                "选择-项:◎" +
+                "A.独占性◎" +
+                "B.实时性◎" +
+                "C.交互性。" +
+                "D.分时性\n" +
+                "\n" +
+                "\n" +
+                "\n";
+        model.anwser="C";
+        list.add(model);
+
+        model=new HuibianModel();
+        model.question="多媒体制作过程中，不同媒体类型的数据收集需要不同的设备和技术手段，动画一般通过\n" +
+                "选择一项:\n" +
+                "◎A.声卡剪辑◎B.视频卡采集◎C.字处理软件◎D.专用绘图软件答案: D\n" +
+                "\n" +
+                "\n" +
+                "\n";
+        model.anwser="D";
+        list.add(model);
+
+        model=new HuibianModel();
+        model.question="[简答题]数据冗余指的是什么?答案:\n" +
+                "数据冗余指的是什么?\n";
+        model.anwser="答:冗余是指信息所具有的各种性质中多余的无用空间，其多余的程度叫做\"冗余度”。-般而言，图像和语音的数据冗余度很大";
+        list.add(model);
+
+        model=new HuibianModel();
+        model.question="[简答题]简述多媒体视频会议系统的结构.答案:\n" +
+                "简述多媒体视频会议系统的结构。\n" +
+                "。无\n";
+        model.anwser="答:多媒体视频会议系统的结构大致分为四个部分:多媒体信息处理计算机及其l/O设备、多点控制器、数字通信网络接口和控制管理软件";
+        list.add(model);
+
+        model=new HuibianModel();
+        model.question="\n" +
+                "[简答题]简述预测编码的基本原理.答案:";
+        model.anwser="答:预测编码原理是从相临像素之间有强的相关性特点考虑的。" +
+                "比如当前像素的灰度或颜色信号，数值上与其相临的像素总是比较接近的，" +
+                "除非处于边界状态，那么，当前像素的灰度或颜色信号的数值就可以用前面出现的" +
+                "像素的值进行预测，得到一一个预测值并将实际值与预测值进行求差，对这个" +
+                "差值进行编码、传送,这种编码方法就是预测编码方法";
+        list.add(model);
+
+        model=new HuibianModel();
+        model.question="[简答题]促进多媒体技术发展的关键技术有哪些?答案:\n" +
+                "\n" +
+                "促进多媒体技术发展的关键技术有哪些?";
+        model.anwser="答:这些关键技术是: (1) CD-\\n\" +\n" +
+                "                \"ROM解决了多媒体信息的存储问题; " +
+                "(2) 高速计算机网络可以传送多媒体信息; " +
+                "(3) 多媒体信息高速处理的硬件环境; " +
+                "(4) 多媒体压缩技术、人机交互技术和分布式处理技术的出现促进了多媒体" +
+                "系统的产生与发展。\\n\" +\n" +
+                "                \"\\n\" +\n" +
+                "                \"\\n\" +\n" +
+                "                \"\\n";
+        list.add(model);
+
+        model=new HuibianModel();
+        model.question="[简答题]促进多媒体技术发展的关键技术有哪些?答案:\n" +
+                "\n" +
+                "促进多媒体技术发展的关键技术有哪些?";
+        model.anwser="答:这些关键技术是: (1) CD-\\n\" +\n" +
+                "                \"ROM解决了多媒体信息的存储问题; " +
+                "(2) 高速计算机网络可以传送多媒体信息; " +
+                "(3) 多媒体信息高速处理的硬件环境; " +
+                "(4) 多媒体压缩技术、人机交互技术和分布式处理技术的出现促进了多媒体" +
+                "系统的产生与发展。\\n\" +\n" +
+                "                \"\\n\" +\n" +
+                "                \"\\n\" +\n" +
+                "                \"\\n";
+        list.add(model);
+
+        model=new HuibianModel();
+        model.question="[简答题]什么是超文本，超文本的主要成分是什么?答案:\n" +
+                "什么是超文本，超文本的主要成分是什么?\n" +
+                "。无\n" +
+                "\n" +
+                "\n" +
+                "\n";
+        model.anwser="答:超文本定义为由信息结点和表示结点间相关性的链构成的一个具有-定逻" +
+                "辑结构和语义的网络。超文本的主要成分是结点和表示结点间关系的链构成的信息网络";
+        list.add(model);
+
+        model=new HuibianModel();
+        model.question="[简答题]电脑三原色是哪三种颜色?答案:\n" +
+                "电脑三原色是哪三种颜色?\n" +
+                "”。\n" +
+                "\n" +
+                "\n" +
+                "\n";
+        model.anwser="答: R (红)、G(绿)、B (黄)三种颜色构成了光线的三原色。" +
+                "计算机显示器就是根据这个原理制造的。于是，光三原色有人又叫“电脑三原色";
         list.add(model);
 
 
