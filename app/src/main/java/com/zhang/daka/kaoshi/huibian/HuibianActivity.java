@@ -75,7 +75,6 @@ public class HuibianActivity extends SimpleAppCompatActivity {
         searchRecyclerView.setAdapter(searchAdapter);
         searchRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        codeList.add("汇编");
         codeList.add("逻辑");
         codeList.add("多媒体");
         codeAdapter = new HuibianCodeAdapter(codeList);
@@ -121,11 +120,7 @@ public class HuibianActivity extends SimpleAppCompatActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 String item = codeAdapter.getItem(position);
-                if (TextUtils.equals(item, "汇编")) {
-                    allList.clear();
-                    allList.addAll(HuibianHelper.getHuibianModels());
-                    allAdapter.notifyDataSetChanged();
-                } else if (TextUtils.equals(item, "逻辑")) {
+                if (TextUtils.equals(item, "逻辑")) {
                     allList.clear();
                     allList.addAll(LuojiHelper.getLuojiModels());
                     allAdapter.notifyDataSetChanged();
