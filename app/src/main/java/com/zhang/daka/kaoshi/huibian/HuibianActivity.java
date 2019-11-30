@@ -33,7 +33,7 @@ import io.reactivex.disposables.Disposable;
  * 汇编考试
  */
 public class HuibianActivity extends SimpleAppCompatActivity {
-    private final List<HuibianModel> allList = DuomeitiHelper.getDuomeitiList();
+    private final List<HuibianModel> allList = LuojiHelper.getLuojiModels();
     private final HuibianAdapter allAdapter = new HuibianAdapter(allList);
     private RecyclerView allRecyclerView;
     private int currentPosition = 0;
@@ -76,7 +76,6 @@ public class HuibianActivity extends SimpleAppCompatActivity {
         searchRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         codeList.add("逻辑");
-        codeList.add("多媒体");
         codeAdapter = new HuibianCodeAdapter(codeList);
         rv_huibian_code.setLayoutManager(new LinearLayoutManager(this));
         rv_huibian_code.setAdapter(codeAdapter);
@@ -123,10 +122,6 @@ public class HuibianActivity extends SimpleAppCompatActivity {
                 if (TextUtils.equals(item, "逻辑")) {
                     allList.clear();
                     allList.addAll(LuojiHelper.getLuojiModels());
-                    allAdapter.notifyDataSetChanged();
-                }else if (TextUtils.equals(item, "多媒体")) {
-                    allList.clear();
-                    allList.addAll(DuomeitiHelper.getDuomeitiList());
                     allAdapter.notifyDataSetChanged();
                 }
                 search("");
