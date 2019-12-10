@@ -43,10 +43,6 @@
             android:name=".kaoshi.danci.activity.GuessWordActivity"
             android:screenOrientation="landscape"
             android:theme="@style/FullScreen" />
-        <activity
-            android:name=".kaoshi.huibian.HuibianActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/FullScreen" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -59,17 +59,6 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/tv_danci_huibian"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="?selectableItemBackground"
-                android:gravity="center_vertical"
-                android:onClick="onClick"
-                android:text="汇编考试"
-                android:textColor="@color/common_text_black"
-                android:textSize="14sp" />
-
-            <TextView
                 android:id="@+id/tv_danci_dancitxt"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -120,7 +109,7 @@
                 android:background="?selectableItemBackground"
                 android:gravity="center_vertical"
                 android:onClick="onClick"
-                android:text="全屏显示"
+                android:text="画图"
                 android:textColor="@color/common_text_black"
                 android:textSize="14sp" />
 
