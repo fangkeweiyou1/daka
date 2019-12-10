@@ -2,7 +2,9 @@ package com.zhang.daka.kaoshi.danci.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
@@ -24,7 +26,9 @@ import com.zhang.daka.kaoshi.danci.fragment.DanciVerticalFragment;
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -41,6 +45,7 @@ public class DanciMainActivity extends SimpleAppCompatActivity {
 
     ViewPager mViewPager;
     TextView tv_danci_intervaltime;
+    TextView tv_danci_daojishi;
     private List<DanciVerticalFragment> fragments;
     private FrameLayout fl_canci_cavas;
 
@@ -53,10 +58,12 @@ public class DanciMainActivity extends SimpleAppCompatActivity {
     public void initView() {
         mViewPager = findViewById(R.id.vp_main);
         tv_danci_intervaltime = findViewById(R.id.tv_danci_intervaltime);
+        tv_danci_daojishi = findViewById(R.id.tv_danci_daojishi);
         initViewPager();
 
         fl_canci_cavas = findViewById(R.id.fl_danci_cavas);
         getSupportFragmentManager().beginTransaction().add(R.id.fl_danci_cavas, SimpleFragment.instantiate(this, CavasFragment.class.getName())).commit();
+
     }
 
     @Override
@@ -73,6 +80,36 @@ public class DanciMainActivity extends SimpleAppCompatActivity {
                     showType = 0;
                 }
                 EventBus.getDefault().post(new ShowTypeEvent(showType));
+            }
+        });
+
+        DrawerLayout drawerLayout = findViewById(R.id.drawerlayout);
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View view, float v) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View view) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd");
+                try {
+                    Date date = simpleDateFormat.parse("2020_03_21");
+                    long diff = date.getTime() - new Date().getTime();
+                    tv_danci_daojishi.setText(String.format("倒计时:%s天", diff / (3600 * 24 * 1000) + ""));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View view) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int i) {
+
             }
         });
     }
