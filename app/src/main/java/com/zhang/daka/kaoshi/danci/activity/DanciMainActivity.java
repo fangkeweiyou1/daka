@@ -126,6 +126,9 @@ public class DanciMainActivity extends SimpleAppCompatActivity {
             case R.id.tv_danci_daka:
                 startActivity(new Intent(mActivity, DakaMainActivity.class));
                 break;
+            case R.id.tv_danci_music:
+                startActivity(new Intent(mActivity, MusicActivity.class));
+                break;
             case R.id.tv_danci_guess:
                 startActivity(new Intent(mActivity, GuessWordActivity.class));
                 break;

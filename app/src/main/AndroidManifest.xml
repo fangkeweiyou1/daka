@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".kaoshi.danci.activity.DanciMainActivity"
+            android:name=".mvp.SplashActivity"
             android:launchMode="singleTask"
             android:theme="@style/FullScreen">
             <intent-filter>
@@ -27,12 +27,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".kaoshi.danci.activity.DanciMainActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/FullScreen"></activity>
+        <activity
             android:name=".DakaMainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/FullScreen" />
         <activity android:name=".daka.Camera2Activity" />
-        <activity android:name=".daka.MusicActivity" />
         <activity
             android:name=".camera2.Camera3Activity"
             android:theme="@style/MaterialTheme" />
@@ -43,6 +46,8 @@
             android:name=".kaoshi.danci.activity.GuessWordActivity"
             android:screenOrientation="landscape"
             android:theme="@style/FullScreen" />
+        <activity android:name=".kaoshi.danci.activity.MusicActivity" />
+
 
         <provider
             android:name="android.support.v4.content.FileProvider"
