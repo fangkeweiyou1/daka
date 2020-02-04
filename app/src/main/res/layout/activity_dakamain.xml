@@ -12,12 +12,4 @@
         android:layout_weight="1"
         android:layout_height="0dp"></android.support.v7.widget.RecyclerView>
 
-    <Button
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:text="关闭闹钟"
-        android:id="@+id/bt_main_stopclock"
-        android:onClick="stopClcok"
-        android:layout_height="wrap_content" />
-
 </LinearLayout>

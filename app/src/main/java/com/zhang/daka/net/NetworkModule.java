@@ -3,6 +3,7 @@ package com.zhang.daka.net;
 import android.app.Application;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.wushiyi.mvp.MvpExtendsKt;
 
 import org.json.JSONArray;
@@ -20,6 +21,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
 import static timber.log.Timber.d;
@@ -152,9 +154,7 @@ public final class NetworkModule {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
-//                .validateEagerly(false)// Fail early: check Retrofit configuration at creation time in Debug build.
-//                .addConverterFactory(GsonConverterFactory.create(new Gson()))
-                .addConverterFactory(ResponseConvertFactory.create(application))
+                .addConverterFactory(GsonConverterFactory.create(new Gson()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
                 .build();

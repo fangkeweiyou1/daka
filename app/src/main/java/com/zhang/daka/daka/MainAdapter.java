@@ -1,10 +1,7 @@
 package com.zhang.daka.daka;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.wushiyi.util.ToastUtilKt;
 import com.zhang.daka.R;
 import com.zhang.daka.utils.DataHelper;
 import com.zhang.daka.utils.WFileUtil;
@@ -45,13 +41,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         mainViewHolder.bt_main_daka.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int camera = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA);
-                if (camera >= 0) {
-                    context.startActivity(new Intent(context, Camera4Activity.class));
-//                    context.startActivity(new Intent(context, Camera5Activity.class));
-                } else {
-                    ToastUtilKt.showToast("请赋予拍照权限");
-                }
+//                int camera = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA);
+//                if (camera >= 0) {
+//                    context.startActivity(new Intent(context, Camera4Activity.class));
+////                    context.startActivity(new Intent(context, Camera5Activity.class));
+//                } else {
+//                    ToastUtilKt.showToast("请赋予拍照权限");
+//                }
             }
         });
         //日期

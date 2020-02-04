@@ -1,11 +1,7 @@
 package com.zhang.daka;
 
 import android.Manifest;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -14,13 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.zhang.daka.daka.MainAdapter;
-import com.zhang.daka.daka.TimerService;
 
 import java.util.Calendar;
-import java.util.Locale;
 
 /**
  * Created by zhangyuncai on 2019/10/12.
@@ -60,44 +53,7 @@ public class DakaMainActivity extends AppCompatActivity {
 
 
 
-//        setAmClock();
-//        setPmClock();
 
-
-    }
-
-    /**
-     * 设置上午闹钟
-     */
-    void setAmClock() {
-        Calendar calendar = Calendar.getInstance(Locale.getDefault());
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 9);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        Intent intent = new Intent();
-        intent.setAction("testalarm0");
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,0, intent,PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Service.ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-    }
-
-    /**
-     * 设置上午闹钟
-     */
-    void setPmClock() {
-        Calendar calendar = Calendar.getInstance(Locale.getDefault());
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 18);
-        calendar.set(Calendar.MINUTE, 28);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        Intent intent = new Intent();
-        intent.setAction("testalarm1");
-        PendingIntent pendingIntent =PendingIntent.getBroadcast(context,0, intent,PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Service.ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
 
@@ -111,8 +67,4 @@ public class DakaMainActivity extends AppCompatActivity {
         }
     }
 
-    public void stopClcok(View view) {
-        Intent intent = new Intent(this, TimerService.class);
-        stopService(intent);
-    }
 }
