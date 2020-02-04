@@ -68,10 +68,11 @@ public class MainActivity extends BaseActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelId,
                     "Asia5B message",
-                    NotificationManager.IMPORTANCE_DEFAULT);
+                    NotificationManager.IMPORTANCE_HIGH);
             notificationManager.createNotificationChannel(channel);
         }
         Notification notification = notificationBuilder.build();
+        notification.flags |= Notification.FLAG_NO_CLEAR;
         notificationManager.notify(notifyId /* ID of notification */, notification);
     }
 
