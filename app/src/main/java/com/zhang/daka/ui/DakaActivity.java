@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -45,15 +44,7 @@ public class DakaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_daka);
         context = this;
 
-        //申请权限
-        int camera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
-        if (camera < 0) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 99);
-        }
-        int write = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (write < 0) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 999);
-        }
+
 
         mRecyclerView = findViewById(R.id.rv_daka);
         adapter = new DakaAdapter(this);
@@ -64,7 +55,10 @@ public class DakaActivity extends AppCompatActivity {
         pagerSnapHelper.attachToRecyclerView(mRecyclerView);
 
 
-
+        boolean isNowPhoto = getIntent().getBooleanExtra("isNowPhoto", false);
+        if (isNowPhoto) {
+            clickPhoto();
+        }
 
     }
 
@@ -98,8 +92,6 @@ public class DakaActivity extends AppCompatActivity {
         }
 
     }
-
-
 
 
     @Override

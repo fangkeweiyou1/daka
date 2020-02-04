@@ -1,8 +1,10 @@
 package com.zhang.daka.ui
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.tbruyelle.rxpermissions2.RxPermissions
 
 /**
  * Created by zhangyuncai on 2020/1/7.
@@ -22,7 +24,11 @@ class SplashActivity:AppCompatActivity() {
                 }
             }
         }
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
+        RxPermissions(this).request(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe {
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }
+
     }
 }

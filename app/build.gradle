@@ -81,4 +81,7 @@ dependencies {
     //Eventbus
     api "org.greenrobot:eventbus:$versions.eventBusVersion"
 
+    //权限
+    api 'com.github.tbruyelle:rxpermissions:0.10.2'
+
 }
