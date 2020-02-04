@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -21,11 +23,15 @@ import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.wushiyi.mvp.MvpExtendsKt;
+import com.wushiyi.mvp.base.BaseFragmentPagerAdapter;
 import com.wushiyi.util.AppUtil;
 import com.zhang.daka.R;
 import com.zhang.daka.model.MenuModel;
 import com.zhang.daka.mvp.BaseActivity;
 import com.zhang.daka.ui.adapter.MenuAdapter;
+import com.zhang.daka.ui.fragment.MusicHomeFragment;
+import com.zhang.daka.ui.fragment.MusicListFragment;
 
 import java.util.ArrayList;
 
@@ -41,6 +47,7 @@ public class MainActivity extends BaseActivity {
     MenuAdapter menuAdapter;
     final ArrayList<MenuModel> menuModels = new ArrayList<>();
     ViewPager mViewPager;
+    TabLayout mTabLayout;
     //播放器容器
     private LinearLayout ll_music_vessel;
     //音乐封面
@@ -68,13 +75,15 @@ public class MainActivity extends BaseActivity {
         Intent dakaIntent = new Intent(this, MainActivity.class);
         dakaIntent.putExtra("isNowPhoto", true);
         PendingIntent dakaPendingIntent = PendingIntent.getActivity(this, 0, dakaIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        PendingIntent mainPendingIntent = PendingIntent.getActivity(this, 0, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         RemoteViews remoteViews = new RemoteViews(AppUtil.INSTANCE.getPackageName(), R.layout.view_notify);
         remoteViews.setOnClickPendingIntent(R.id.iv_notify_pre, null);
         remoteViews.setOnClickPendingIntent(R.id.iv_notify_play, null);
         remoteViews.setOnClickPendingIntent(R.id.iv_notify_next, null);
         remoteViews.setOnClickPendingIntent(R.id.iv_notify_daka, dakaPendingIntent);
-        remoteViews.setOnClickPendingIntent(R.id.tv_notify_name, null);
+        remoteViews.setOnClickPendingIntent(R.id.tv_notify_name, mainPendingIntent);
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.mipmap.ic_launcher)
@@ -111,6 +120,7 @@ public class MainActivity extends BaseActivity {
         drawerlayout = findViewById(R.id.drawerlayout);
         menuRecyclerView = findViewById(R.id.rv_main_menu);
         mViewPager = findViewById(R.id.vp_main);
+        mTabLayout = findViewById(R.id.tab_main);
         ll_music_vessel = findViewById(R.id.ll_music_vessel);
         iv_music_thum = findViewById(R.id.iv_music_thum);
         tv_music_name = findViewById(R.id.tv_music_name);
@@ -126,6 +136,16 @@ public class MainActivity extends BaseActivity {
         menuAdapter.addHeaderView(headView);
         menuRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         menuRecyclerView.setAdapter(menuAdapter);
+
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments.add(MvpExtendsKt.sNewStanceFragment(this, MusicListFragment.class));
+        fragments.add(MvpExtendsKt.sNewStanceFragment(this, MusicHomeFragment.class));
+        ArrayList<String> tabTexts = new ArrayList<>();
+        tabTexts.add("本地音乐");
+        tabTexts.add("歌词");
+        BaseFragmentPagerAdapter<Fragment> pagerAdapter = new BaseFragmentPagerAdapter<>(getSupportFragmentManager(), fragments, tabTexts);
+        mViewPager.setAdapter(pagerAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
 
         if (getIntent().hasExtra("isNowPhoto")) {
             clickPhoto();
