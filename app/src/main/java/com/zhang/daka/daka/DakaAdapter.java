@@ -24,11 +24,11 @@ import java.util.Calendar;
 /**
  * Created by zhangyuncai on 2019/10/12.
  */
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder> {
-    private static final String TAG = "MainAdapter";
+public class DakaAdapter extends RecyclerView.Adapter<DakaAdapter.MainViewHolder> {
+    private static final String TAG = "DakaAdapter";
     private final DakaActivity activity;
 
-    public MainAdapter(DakaActivity activity) {
+    public DakaAdapter(DakaActivity activity) {
         this.activity = activity;
     }
 

@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".mvp.SplashActivity"
+            android:name=".ui.SplashActivity"
             android:launchMode="singleTask"
             android:theme="@style/FullScreen">
             <intent-filter>
@@ -29,6 +29,9 @@
 
         <activity
             android:name=".ui.DakaActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.MainActivity"
             android:launchMode="singleTask" />
 
 
