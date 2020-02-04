@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.zhang.daka.DakaMainActivity;
 import com.zhang.daka.R;
 import com.zhang.daka.utils.DataHelper;
 import com.zhang.daka.utils.WFileUtil;
@@ -25,6 +26,11 @@ import java.util.Calendar;
  */
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder> {
     private static final String TAG = "MainAdapter";
+    private final DakaMainActivity activity;
+
+    public MainAdapter(DakaMainActivity activity) {
+        this.activity = activity;
+    }
 
 
     @NonNull
@@ -41,13 +47,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         mainViewHolder.bt_main_daka.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                int camera = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA);
-//                if (camera >= 0) {
-//                    context.startActivity(new Intent(context, Camera4Activity.class));
-////                    context.startActivity(new Intent(context, Camera5Activity.class));
-//                } else {
-//                    ToastUtilKt.showToast("请赋予拍照权限");
-//                }
+                activity.clickPhoto();
             }
         });
         //日期

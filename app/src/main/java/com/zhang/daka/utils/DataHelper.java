@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import com.zhang.daka.R;
 
 import java.io.IOException;
+import java.util.GregorianCalendar;
 import java.util.Random;
 
 /**
@@ -14,6 +15,14 @@ import java.util.Random;
  */
 public class DataHelper {
     private static final String TAG = "DataHelper";
+
+   public static boolean isAm() {
+        //结果为“0”是上午     结果为“1”是下午
+        GregorianCalendar ca = new GregorianCalendar();
+        int i = ca.get(GregorianCalendar.AM_PM);
+        System.out.println("---<<<>>>---i:" + i);
+        return i == 0;
+    }
 
 
     /**
