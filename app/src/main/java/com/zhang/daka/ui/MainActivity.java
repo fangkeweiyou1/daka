@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,7 +44,8 @@ public class MainActivity extends BaseActivity {
 
     private void showNotification() {
 
-        Intent dakaIntent = new Intent(this, DakaActivity.class);
+        Intent dakaIntent = new Intent(this, MainActivity.class);
+        dakaIntent.putExtra("isNowPhoto", true);
         PendingIntent dakaPendingIntent = PendingIntent.getActivity(this, 0, dakaIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         RemoteViews remoteViews = new RemoteViews(AppUtil.INSTANCE.getPackageName(), R.layout.view_notify);
@@ -73,6 +75,13 @@ public class MainActivity extends BaseActivity {
         notificationManager.notify(notifyId /* ID of notification */, notification);
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent.hasExtra("isNowPhoto")) {
+            clickPhoto();
+        }
+    }
 
     @Override
     public void initView() {
@@ -87,7 +96,9 @@ public class MainActivity extends BaseActivity {
         menuRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         menuRecyclerView.setAdapter(menuAdapter);
 
-
+        if (getIntent().hasExtra("isNowPhoto")) {
+            clickPhoto();
+        }
     }
 
 
@@ -131,5 +142,11 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 789) {
+            System.out.println("---<<<>>>---789");
+        }
+    }
 }
