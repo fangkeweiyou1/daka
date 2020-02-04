@@ -9,12 +9,16 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RemoteViews;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wushiyi.util.AppUtil;
@@ -36,6 +40,23 @@ public class MainActivity extends BaseActivity {
     RecyclerView menuRecyclerView;
     MenuAdapter menuAdapter;
     final ArrayList<MenuModel> menuModels = new ArrayList<>();
+    ViewPager mViewPager;
+    //播放器容器
+    private LinearLayout ll_music_vessel;
+    //音乐封面
+    private ImageView iv_music_thum;
+    //音乐名称
+    private TextView tv_music_name;
+    //音乐作者
+    private TextView tv_music_author;
+    //上一首
+    private ImageView iv_music_pre;
+    //播放
+    private ImageView iv_music_play;
+    //下一首
+    private ImageView iv_music_next;
+    //音乐菜单
+    private ImageView iv_music_menu;
 
     @Override
     public int getLayoutId() {
@@ -89,6 +110,15 @@ public class MainActivity extends BaseActivity {
         showNotification();
         drawerlayout = findViewById(R.id.drawerlayout);
         menuRecyclerView = findViewById(R.id.rv_main_menu);
+        mViewPager = findViewById(R.id.vp_main);
+        ll_music_vessel = findViewById(R.id.ll_music_vessel);
+        iv_music_thum = findViewById(R.id.iv_music_thum);
+        tv_music_name = findViewById(R.id.tv_music_name);
+        tv_music_author = findViewById(R.id.tv_music_author);
+        iv_music_pre = findViewById(R.id.iv_music_pre);
+        iv_music_play = findViewById(R.id.iv_music_play);
+        iv_music_next = findViewById(R.id.iv_music_next);
+        iv_music_menu = findViewById(R.id.iv_music_menu);
 
         menuModels.add(new MenuModel(R.drawable.ic_daka, "打卡"));
         View headView = View.inflate(this, R.layout.view_menu_head, null);
