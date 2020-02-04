@@ -3,7 +3,7 @@ package com.zhang.daka.mvp
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.zhang.daka.DakaMainActivity
+import com.zhang.daka.ui.DakaActivity
 
 /**
  * Created by zhangyuncai on 2020/1/7.
@@ -23,7 +23,7 @@ class SplashActivity:AppCompatActivity() {
                 }
             }
         }
-        startActivity(Intent(this, DakaMainActivity::class.java))
+        startActivity(Intent(this, DakaActivity::class.java))
         finish()
     }
 }

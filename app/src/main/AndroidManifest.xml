@@ -28,7 +28,7 @@
         </activity>
 
         <activity
-            android:name=".DakaMainActivity"
+            android:name=".ui.DakaActivity"
             android:launchMode="singleTask" />
 
 

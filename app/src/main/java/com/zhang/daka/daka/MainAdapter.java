@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.zhang.daka.DakaMainActivity;
+import com.zhang.daka.ui.DakaActivity;
 import com.zhang.daka.R;
 import com.zhang.daka.utils.DataHelper;
 import com.zhang.daka.utils.WFileUtil;
@@ -26,9 +26,9 @@ import java.util.Calendar;
  */
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder> {
     private static final String TAG = "MainAdapter";
-    private final DakaMainActivity activity;
+    private final DakaActivity activity;
 
-    public MainAdapter(DakaMainActivity activity) {
+    public MainAdapter(DakaActivity activity) {
         this.activity = activity;
     }
 
