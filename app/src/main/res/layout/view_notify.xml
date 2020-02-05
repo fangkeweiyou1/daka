@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/darker_gray"
     android:orientation="horizontal"
+    android:id="@+id/ll_notify_vessel"
     tools:layout_height="64dp">
 
     <ImageView

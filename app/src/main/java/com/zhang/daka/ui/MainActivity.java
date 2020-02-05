@@ -44,7 +44,7 @@ import java.util.ArrayList;
  */
 public class MainActivity extends BaseActivity {
     public static MainActivity mainActivity;
-    private static final String channelId = "daka_default_channel";
+    public static final String channelId = "daka_default_channel";
 
     public static final int notifyId = 569;
     DrawerLayout drawerlayout;
