@@ -34,6 +34,13 @@
             android:name=".ui.MainActivity"
             android:launchMode="singleTask" />
 
+        <receiver android:name=".event.MusicBroadCast">
+            <intent-filter>
+                <action android:name="next"></action>
+                <action android:name="pre"></action>
+            </intent-filter>
+        </receiver>
+
 
         <provider
             android:name="android.support.v4.content.FileProvider"

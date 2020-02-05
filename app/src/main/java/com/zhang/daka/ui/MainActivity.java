@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -27,18 +28,22 @@ import com.wushiyi.mvp.MvpExtendsKt;
 import com.wushiyi.mvp.base.BaseFragmentPagerAdapter;
 import com.wushiyi.util.AppUtil;
 import com.zhang.daka.R;
+import com.zhang.daka.event.MusicBroadCast;
 import com.zhang.daka.model.MenuModel;
+import com.zhang.daka.model.MusicModel;
 import com.zhang.daka.mvp.BaseActivity;
 import com.zhang.daka.ui.adapter.MenuAdapter;
 import com.zhang.daka.ui.fragment.MusicHomeFragment;
 import com.zhang.daka.ui.fragment.MusicListFragment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
  * 音乐播放器主界面
  */
 public class MainActivity extends BaseActivity {
+    public static MainActivity mainActivity;
     private static final String channelId = "daka_default_channel";
 
     public static final int notifyId = 567;
@@ -62,11 +67,13 @@ public class MainActivity extends BaseActivity {
     private ImageView iv_music_play;
     //下一首
     private ImageView iv_music_next;
-    //音乐菜单
-    private ImageView iv_music_menu;
+    private MediaPlayer mediaPlayer;
+    public final ArrayList<MusicModel> musicList = new ArrayList<>();
+    public int currentPosition = 0;
 
     @Override
     public int getLayoutId() {
+        mainActivity = this;
         return R.layout.activity_main;
     }
 
@@ -75,15 +82,42 @@ public class MainActivity extends BaseActivity {
         Intent dakaIntent = new Intent(this, MainActivity.class);
         dakaIntent.putExtra("isNowPhoto", true);
         PendingIntent dakaPendingIntent = PendingIntent.getActivity(this, 0, dakaIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         Intent mainIntent = new Intent(this, MainActivity.class);
         PendingIntent mainPendingIntent = PendingIntent.getActivity(this, 0, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        Intent nextIntent = new Intent(this, MusicBroadCast.class);
+        nextIntent.setAction("next");
+        PendingIntent nextPendingIntent = PendingIntent.getBroadcast(this, 0, nextIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Intent preIntent = new Intent(this, MusicBroadCast.class);
+        preIntent.setAction("pre");
+        PendingIntent prePendingIntent = PendingIntent.getBroadcast(this, 0, preIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Intent palyIntent = new Intent(this, MusicBroadCast.class);
+        palyIntent.setAction("paly");
+        PendingIntent palyPendingIntent = PendingIntent.getBroadcast(this, 0, palyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         RemoteViews remoteViews = new RemoteViews(AppUtil.INSTANCE.getPackageName(), R.layout.view_notify);
-        remoteViews.setOnClickPendingIntent(R.id.iv_notify_pre, null);
-        remoteViews.setOnClickPendingIntent(R.id.iv_notify_play, null);
-        remoteViews.setOnClickPendingIntent(R.id.iv_notify_next, null);
+        remoteViews.setOnClickPendingIntent(R.id.iv_notify_pre, prePendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.iv_notify_play, palyPendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.iv_notify_next, nextPendingIntent);
         remoteViews.setOnClickPendingIntent(R.id.iv_notify_daka, dakaPendingIntent);
         remoteViews.setOnClickPendingIntent(R.id.tv_notify_name, mainPendingIntent);
+        if (musicList.size() > currentPosition) {
+            MusicModel musicModel = musicList.get(currentPosition);
+            remoteViews.setTextViewText(R.id.tv_notify_name, musicModel.musicName);
+        }
+        try {
+            if (mediaPlayer.isPlaying()) {
+                remoteViews.setImageViewResource(R.id.iv_notify_play, R.drawable.lock_btn_pause);
+            } else {
+                remoteViews.setImageViewResource(R.id.iv_notify_play, R.drawable.lock_btn_play);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.mipmap.ic_launcher)
@@ -99,6 +133,10 @@ public class MainActivity extends BaseActivity {
             NotificationChannel channel = new NotificationChannel(channelId,
                     "Asia5B message",
                     NotificationManager.IMPORTANCE_HIGH);
+            channel.enableLights(false);
+            channel.enableVibration(false);
+            channel.setVibrationPattern(new long[]{0});
+            channel.setSound(null, null);
             notificationManager.createNotificationChannel(channel);
         }
         Notification notification = notificationBuilder.build();
@@ -128,7 +166,6 @@ public class MainActivity extends BaseActivity {
         iv_music_pre = findViewById(R.id.iv_music_pre);
         iv_music_play = findViewById(R.id.iv_music_play);
         iv_music_next = findViewById(R.id.iv_music_next);
-        iv_music_menu = findViewById(R.id.iv_music_menu);
 
         menuModels.add(new MenuModel(R.drawable.ic_daka, "打卡"));
         View headView = View.inflate(this, R.layout.view_menu_head, null);
@@ -150,6 +187,27 @@ public class MainActivity extends BaseActivity {
         if (getIntent().hasExtra("isNowPhoto")) {
             clickPhoto();
         }
+
+        initPlayer();
+    }
+
+    private void initPlayer() {
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer.reset();
+
+    }
+
+    private void setPlayIcon() {
+        try {
+            if (mediaPlayer.isPlaying()) {
+                iv_music_play.setImageResource(R.drawable.playbar_btn_pause);
+            } else {
+                iv_music_play.setImageResource(R.drawable.playbar_btn_play);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        showNotification();
     }
 
 
@@ -166,12 +224,57 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
+        iv_music_play.setOnClickListener(v -> {
+            playAndPause();
+        });
+        iv_music_pre.setOnClickListener(v -> {
+            playMusic(currentPosition - 1);
+        });
+        iv_music_next.setOnClickListener(v -> {
+            playMusic(currentPosition + 1);
+        });
     }
 
     public void clickPhoto() {
         Intent intent = new Intent(MainActivity.this, DakaActivity.class);
         intent.putExtra("isNowPhoto", true);
         startActivity(intent);
+    }
+
+
+    public void playMusic(int position) {
+        if (position < 0) {
+            currentPosition = 0;
+        } else if (position >= musicList.size()) {
+            currentPosition = 0;
+        } else {
+            this.currentPosition = position;
+        }
+        MusicModel musicModel = musicList.get(currentPosition);
+        try {
+            mediaPlayer.reset();
+            mediaPlayer.setDataSource(musicModel.data);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        setPlayIcon();
+        tv_music_name.setText(musicModel.musicName);
+        tv_music_author.setText(musicModel.artist);
+    }
+
+    public void playAndPause() {
+        try {
+            if (mediaPlayer.isLooping()) {
+                mediaPlayer.start();
+            } else {
+                mediaPlayer.pause();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        setPlayIcon();
     }
 
     @Override
