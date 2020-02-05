@@ -46,7 +46,7 @@ public class MainActivity extends BaseActivity {
     public static MainActivity mainActivity;
     private static final String channelId = "daka_default_channel";
 
-    public static final int notifyId = 567;
+    public static final int notifyId = 569;
     DrawerLayout drawerlayout;
     RecyclerView menuRecyclerView;
     MenuAdapter menuAdapter;
@@ -70,6 +70,7 @@ public class MainActivity extends BaseActivity {
     private MediaPlayer mediaPlayer;
     public final ArrayList<MusicModel> musicList = new ArrayList<>();
     public int currentPosition = 0;
+    public boolean isPlayed = false;
 
     @Override
     public int getLayoutId() {
@@ -262,19 +263,26 @@ public class MainActivity extends BaseActivity {
         setPlayIcon();
         tv_music_name.setText(musicModel.musicName);
         tv_music_author.setText(musicModel.artist);
+        isPlayed = true;
     }
 
     public void playAndPause() {
-        try {
-            if (mediaPlayer.isLooping()) {
-                mediaPlayer.start();
-            } else {
-                mediaPlayer.pause();
+        if (!isPlayed) {
+            if (musicList.size() > 0) {
+                playMusic(0);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            try {
+                if (!mediaPlayer.isPlaying()) {
+                    mediaPlayer.start();
+                } else {
+                    mediaPlayer.pause();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            setPlayIcon();
         }
-        setPlayIcon();
     }
 
     @Override
