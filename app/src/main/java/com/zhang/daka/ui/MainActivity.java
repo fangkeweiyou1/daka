@@ -34,6 +34,7 @@ import com.zhang.daka.event.MusicBroadCast;
 import com.zhang.daka.kugou.KuGouApiService;
 import com.zhang.daka.model.MenuModel;
 import com.zhang.daka.model.MusicModel;
+import com.zhang.daka.model.PersonModel;
 import com.zhang.daka.mvp.BaseActivity;
 import com.zhang.daka.net.NetworkModule;
 import com.zhang.daka.ui.adapter.MenuAdapter;
@@ -95,6 +96,14 @@ public class MainActivity extends BaseActivity {
     public int getLayoutId() {
         mainActivity = this;
         kuGouApiService= NetworkModule.getRetrofit(Constans.BASE_KUGOU_URL).create(KuGouApiService.class);
+        PersonModel personModel=new PersonModel();
+        personModel.setName("china");
+//        personModel.saveObservable()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(s->{
+//
+//                },throwable -> {});
         return R.layout.activity_main;
     }
 

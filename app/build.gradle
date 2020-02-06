@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'org.greenrobot.greendao' // apply plugin
 android {
+    useLibrary 'org.apache.http.legacy'
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.zhang.daka"
@@ -76,6 +77,12 @@ dependencies {
     //mvp,utils
     api('com.github.fangkeweiyou1:mvp3:1.0.2') {
         exclude group: 'com.github.fangkeweiyou1.libutils'
+    }
+    api ('cn.bmob.android:bmob-sdk:3.7.3'){
+        exclude group: 'io.reactivex.rxjava2'
+        exclude group: 'com.squareup.okio'
+        exclude group: 'com.google.code.gson'
+        exclude group: 'com.squareup.okhttp3'
     }
     api 'com.github.fangkeweiyou1:libutils:1.1.1'
     api 'com.github.fangkeweiyou1:meinv:1.0.0'

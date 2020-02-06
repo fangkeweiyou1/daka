@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".config.DakaApplication"
@@ -48,6 +52,10 @@
                 <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </receiver>
+        <provider
+            android:name="cn.bmob.v3.util.BmobContentProvider"
+            android:authorities="${applicationId}.BmobContentProvider">
+        </provider>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"
