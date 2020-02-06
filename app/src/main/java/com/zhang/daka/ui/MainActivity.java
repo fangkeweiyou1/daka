@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RemoteViews;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -35,9 +36,17 @@ import com.zhang.daka.mvp.BaseActivity;
 import com.zhang.daka.ui.adapter.MenuAdapter;
 import com.zhang.daka.ui.fragment.MusicHomeFragment;
 import com.zhang.daka.ui.fragment.MusicListFragment;
+import com.zhang.daka.utils.WTimeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import timber.log.Timber;
 
 /**
  * 音乐播放器主界面
@@ -67,10 +76,15 @@ public class MainActivity extends BaseActivity {
     private ImageView iv_music_play;
     //下一首
     private ImageView iv_music_next;
+    private SeekBar seekbar_main;
+    private TextView tv_main_starttime;
+    private TextView tv_main_endtime;
     private MediaPlayer mediaPlayer;
     public final ArrayList<MusicModel> musicList = new ArrayList<>();
     public int currentPosition = 0;
     public boolean isPlayed = false;
+    private MusicListFragment musicListFragment;
+    private Disposable subscribe;
 
     @Override
     public int getLayoutId() {
@@ -155,7 +169,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        showNotification();
+
         drawerlayout = findViewById(R.id.drawerlayout);
         menuRecyclerView = findViewById(R.id.rv_main_menu);
         mViewPager = findViewById(R.id.vp_main);
@@ -167,6 +181,9 @@ public class MainActivity extends BaseActivity {
         iv_music_pre = findViewById(R.id.iv_music_pre);
         iv_music_play = findViewById(R.id.iv_music_play);
         iv_music_next = findViewById(R.id.iv_music_next);
+        seekbar_main = findViewById(R.id.seekbar_main);
+        tv_main_starttime = findViewById(R.id.tv_main_starttime);
+        tv_main_endtime = findViewById(R.id.tv_main_endtime);
 
         menuModels.add(new MenuModel(R.drawable.ic_daka, "打卡"));
         View headView = View.inflate(this, R.layout.view_menu_head, null);
@@ -176,7 +193,8 @@ public class MainActivity extends BaseActivity {
         menuRecyclerView.setAdapter(menuAdapter);
 
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(MvpExtendsKt.sNewStanceFragment(this, MusicListFragment.class));
+        musicListFragment = MvpExtendsKt.sNewStanceFragment(this, MusicListFragment.class);
+        fragments.add(musicListFragment);
         fragments.add(MvpExtendsKt.sNewStanceFragment(this, MusicHomeFragment.class));
         ArrayList<String> tabTexts = new ArrayList<>();
         tabTexts.add("本地音乐");
@@ -190,25 +208,63 @@ public class MainActivity extends BaseActivity {
         }
 
         initPlayer();
+        showNotification();
     }
 
     private void initPlayer() {
         mediaPlayer = new MediaPlayer();
         mediaPlayer.reset();
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                playMusic(currentPosition + 1);
+            }
+        });
+        mediaPlayer.setOnSeekCompleteListener(new MediaPlayer.OnSeekCompleteListener() {
+            @Override
+            public void onSeekComplete(MediaPlayer mp) {
 
+            }
+        });
     }
 
     private void setPlayIcon() {
         try {
             if (mediaPlayer.isPlaying()) {
                 iv_music_play.setImageResource(R.drawable.playbar_btn_pause);
+                startTimer();
             } else {
                 iv_music_play.setImageResource(R.drawable.playbar_btn_play);
+                endTime();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         showNotification();
+        musicListFragment.notifyCurrent();
+    }
+
+    private void startTimer() {
+        if (mediaPlayer.isPlaying()) {
+            subscribe = Observable.interval(0, 1, TimeUnit.SECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(aLong -> {
+                        seekbar_main.setProgress(mediaPlayer.getCurrentPosition());
+                        String startTime = WTimeUtils.getDateFormatter(new Date(mediaPlayer.getCurrentPosition()), WTimeUtils.text_mm_ss);
+                        Timber.d(String.format("--->>>>>>>>---startTime:" + startTime));
+                        tv_main_starttime.setText(startTime);
+                        Timber.d(String.format("--->>>>>>>>---currentPosition:" + mediaPlayer.getCurrentPosition()));
+                    }, throwable -> {
+                    });
+        } else {
+            endTime();
+        }
+    }
+
+    private void endTime() {
+        if (subscribe != null && !subscribe.isDisposed()) {
+            subscribe.dispose();
+        }
     }
 
 
@@ -233,6 +289,9 @@ public class MainActivity extends BaseActivity {
         });
         iv_music_next.setOnClickListener(v -> {
             playMusic(currentPosition + 1);
+        });
+        iv_music_thum.setOnClickListener(v -> {
+            musicListFragment.notifyCurrent();
         });
     }
 
@@ -263,7 +322,28 @@ public class MainActivity extends BaseActivity {
         setPlayIcon();
         tv_music_name.setText(musicModel.musicName);
         tv_music_author.setText(musicModel.artist);
+        tv_main_starttime.setText("00:00");
+        String endTime = WTimeUtils.getDateFormatter(new Date(mediaPlayer.getDuration()), WTimeUtils.text_mm_ss);
+        tv_main_endtime.setText(endTime);
         isPlayed = true;
+        seekbar_main.setMax(musicModel.duration);
+        seekbar_main.setProgress(0);
+        seekbar_main.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mediaPlayer.seekTo(seekBar.getProgress());
+            }
+        });
     }
 
     public void playAndPause() {
@@ -308,7 +388,24 @@ public class MainActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 789) {
-            System.out.println("---<<<>>>---789");
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startTimer();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        endTime();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        endTime();
     }
 }

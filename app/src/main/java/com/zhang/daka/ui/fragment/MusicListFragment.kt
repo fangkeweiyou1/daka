@@ -9,6 +9,7 @@ import com.zhang.daka.ui.MainActivity
 import com.zhang.daka.ui.adapter.MusicListAdapter
 import com.zhang.daka.utils.MusicUtils
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_musiclist.*
@@ -17,7 +18,8 @@ class MusicListFragment : SimpleFragment() {
     lateinit var mainActivity: MainActivity
     val musicList by lazy { mainActivity.musicList }
     val mRecyclerView by lazy { rv_musiclist }
-    val mAdapter by lazy { MusicListAdapter(musicList) }
+    val mAdapter by lazy { MusicListAdapter(mainActivity, musicList) }
+    val linearLayoutManager by lazy { LinearLayoutManager(mActivity)!! }
     override fun getLayoutId(): Int {
         mainActivity = mActivity as MainActivity
         return R.layout.fragment_musiclist
@@ -30,24 +32,29 @@ class MusicListFragment : SimpleFragment() {
     }
 
     override fun initView() {
-
         mRecyclerView.run {
-            layoutManager = LinearLayoutManager(mActivity)!!
+            layoutManager = linearLayoutManager
             adapter = mAdapter
             addItemDecoration(DividerItemDecoration(mActivity, DividerItemDecoration.VERTICAL))
         }
+
+
         if (musicList.isNullOrEmpty()) {
             Observable.just(1)
                     .map {
                         return@map MusicUtils.queryMusic(mActivity)
                     }
                     .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(Consumer {
                         it.getOrNull(0)?.run {
                             dddBug("model:${this.toString()}")
                         }
                         musicList.addAll(it)
                         mAdapter.notifyDataSetChanged()
+                        dddBug("size1:${mRecyclerView.childCount}")
+                        dddBug("size2:${linearLayoutManager.childCount}")
+                        dddBug("size3:${mRecyclerView.layoutManager!!.childCount}")
                     }, Consumer {
                         it.printStackTrace()
                     })
@@ -55,5 +62,10 @@ class MusicListFragment : SimpleFragment() {
     }
 
     override fun lazyFetchData() {
+    }
+
+    fun notifyCurrent() {
+        mAdapter.notifyDataSetChanged()
+        linearLayoutManager.scrollToPositionWithOffset(mainActivity.currentPosition-5,0)
     }
 }
