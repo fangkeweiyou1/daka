@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center_vertical"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/tv_searchlrc_position"
+        android:text="1"
+        android:layout_marginRight="10dp"
+        android:textSize="20sp"
+        android:textColor="@color/common_text_black"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:id="@+id/tv_searchlrc_musicname"
+        android:text="爱你是我"
+        android:textSize="16sp"
+        android:textColor="@color/common_text_black"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:id="@+id/tv_searchlrc_author"
+        android:text="刀郎"
+        android:textSize="16sp"
+        android:textColor="@color/common_text_black"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:background="@drawable/rec_t_red_0dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="wrap_content"
+        android:id="@+id/tv_searchlrc_download"
+        android:text="下载"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@color/color_red"
+        android:layout_height="30dp" />
+
+    <TextView
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/rec_t_blue_0dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="wrap_content"
+        android:id="@+id/tv_searchlrc_apply"
+        android:text="应用"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:textColor="@color/common_text_blue"
+        android:layout_height="30dp" />
+</LinearLayout>

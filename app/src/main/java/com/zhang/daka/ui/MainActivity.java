@@ -29,13 +29,16 @@ import com.wushiyi.mvp.MvpExtendsKt;
 import com.wushiyi.mvp.base.BaseFragmentPagerAdapter;
 import com.wushiyi.util.AppUtil;
 import com.zhang.daka.R;
+import com.zhang.daka.config.Constans;
 import com.zhang.daka.event.MusicBroadCast;
+import com.zhang.daka.kugou.KuGouApiService;
 import com.zhang.daka.model.MenuModel;
 import com.zhang.daka.model.MusicModel;
 import com.zhang.daka.mvp.BaseActivity;
+import com.zhang.daka.net.NetworkModule;
 import com.zhang.daka.ui.adapter.MenuAdapter;
-import com.zhang.daka.ui.fragment.MusicHomeFragment;
 import com.zhang.daka.ui.fragment.MusicListFragment;
+import com.zhang.daka.ui.fragment.MusicLrcFragment;
 import com.zhang.daka.utils.WTimeUtils;
 
 import java.io.IOException;
@@ -85,10 +88,13 @@ public class MainActivity extends BaseActivity {
     public boolean isPlayed = false;
     private MusicListFragment musicListFragment;
     private Disposable subscribe;
+    private KuGouApiService kuGouApiService;
+    private MusicLrcFragment musicLrcFragment;
 
     @Override
     public int getLayoutId() {
         mainActivity = this;
+        kuGouApiService= NetworkModule.getRetrofit(Constans.BASE_KUGOU_URL).create(KuGouApiService.class);
         return R.layout.activity_main;
     }
 
@@ -195,7 +201,8 @@ public class MainActivity extends BaseActivity {
         ArrayList<Fragment> fragments = new ArrayList<>();
         musicListFragment = MvpExtendsKt.sNewStanceFragment(this, MusicListFragment.class);
         fragments.add(musicListFragment);
-        fragments.add(MvpExtendsKt.sNewStanceFragment(this, MusicHomeFragment.class));
+        musicLrcFragment = MvpExtendsKt.sNewStanceFragment(this, MusicLrcFragment.class);
+        fragments.add(musicLrcFragment);
         ArrayList<String> tabTexts = new ArrayList<>();
         tabTexts.add("本地音乐");
         tabTexts.add("歌词");
@@ -250,10 +257,13 @@ public class MainActivity extends BaseActivity {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(aLong -> {
                         seekbar_main.setProgress(mediaPlayer.getCurrentPosition());
+                        musicLrcFragment.setCurrentTimeMillis(mediaPlayer.getCurrentPosition());
                         String startTime = WTimeUtils.getDateFormatter(new Date(mediaPlayer.getCurrentPosition()), WTimeUtils.text_mm_ss);
-                        Timber.d(String.format("--->>>>>>>>---startTime:" + startTime));
                         tv_main_starttime.setText(startTime);
                         Timber.d(String.format("--->>>>>>>>---currentPosition:" + mediaPlayer.getCurrentPosition()));
+                        if (!mediaPlayer.isPlaying()) {
+                            endTime();
+                        }
                     }, throwable -> {
                     });
         } else {
@@ -344,6 +354,8 @@ public class MainActivity extends BaseActivity {
                 mediaPlayer.seekTo(seekBar.getProgress());
             }
         });
+        musicLrcFragment.searchLyric();
+
     }
 
     public void playAndPause() {

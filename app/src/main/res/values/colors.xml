@@ -10,7 +10,7 @@
     <color name="control_background">#cc4285f4</color>
 
 
-
+    <color name="color_red">#ea3a3d</color>
     <color name="white">#ffffff</color>
     <color name="common_text_black">#323232</color>
     <color name="common_text_gray">#999999</color>
@@ -28,4 +28,5 @@
     <color name="common_bg_999">#999999</color><!--常用于标题栏背景色-->
     <color name="common_bg_orange2">#fea475</color>
     <color name="common_bg_orange3">#ff6f24</color>
+    <color name="amber">#ffc107</color>
 </resources>

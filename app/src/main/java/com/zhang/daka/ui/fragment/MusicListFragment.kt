@@ -52,9 +52,6 @@ class MusicListFragment : SimpleFragment() {
                         }
                         musicList.addAll(it)
                         mAdapter.notifyDataSetChanged()
-                        dddBug("size1:${mRecyclerView.childCount}")
-                        dddBug("size2:${linearLayoutManager.childCount}")
-                        dddBug("size3:${mRecyclerView.layoutManager!!.childCount}")
                     }, Consumer {
                         it.printStackTrace()
                     })
