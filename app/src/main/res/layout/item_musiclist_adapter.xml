@@ -1,26 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
-    android:padding="10dp"
-    android:layout_height="wrap_content">
+    android:orientation="horizontal"
+    android:padding="10dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        tools:text="爱是你我"
-        android:id="@+id/tv_musiclist_name"
-        android:textSize="16sp"
-        android:textColor="@drawable/sel_musiclist_txcolor"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/tv_musiclist_author"
-        android:layout_width="match_parent"
-        tools:text="刀郎"
-        android:textSize="12sp"
-        android:layout_marginTop="2dp"
-        android:textColor="@drawable/sel_musiclist_txcolor2"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tv_musiclist_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@drawable/sel_musiclist_txcolor"
+            android:textSize="16sp"
+            tools:text="爱是你我" />
+
+        <TextView
+            android:id="@+id/tv_musiclist_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@drawable/sel_musiclist_txcolor2"
+            android:textSize="12sp"
+            tools:text="刀郎" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:paddingLeft="10dp"
+        android:id="@+id/iv_musiclist_more"
+        android:paddingRight="10dp"
+        android:src="@drawable/ic_more"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
 </LinearLayout>

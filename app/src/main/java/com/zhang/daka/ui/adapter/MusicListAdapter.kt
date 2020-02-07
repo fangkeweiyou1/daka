@@ -17,5 +17,7 @@ BaseQuickAdapter<MusicModel,BaseViewHolder>(R.layout.item_musiclist_adapter,list
         val tv_musiclist_name=helper.getView<TextView>(R.id.tv_musiclist_name)
         tv_musiclist_author.isSelected=position==mainActivity.currentPosition
         tv_musiclist_name.isSelected=position==mainActivity.currentPosition
+
+        helper.addOnClickListener(R.id.iv_musiclist_more)
     }
 }

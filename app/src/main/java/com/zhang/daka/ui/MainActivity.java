@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -16,6 +17,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,12 +33,14 @@ import com.wushiyi.mvp.MvpExtendsKt;
 import com.wushiyi.mvp.base.BaseFragmentPagerAdapter;
 import com.wushiyi.util.AppUtil;
 import com.zhang.daka.R;
+import com.zhang.daka.config.AppExtendsKt;
 import com.zhang.daka.config.Constans;
 import com.zhang.daka.event.MusicBroadCast;
 import com.zhang.daka.kugou.KuGouApiService;
 import com.zhang.daka.model.MenuModel;
 import com.zhang.daka.model.MusicCateModel;
 import com.zhang.daka.model.MusicModel;
+import com.zhang.daka.model.PlayHistoryModel;
 import com.zhang.daka.mvp.BaseActivity;
 import com.zhang.daka.net.NetworkModule;
 import com.zhang.daka.popup.ListPopupWindowHelper;
@@ -50,6 +54,7 @@ import com.zhang.daka.utils.WTimeUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import cn.bmob.v3.BmobQuery;
@@ -93,12 +98,22 @@ public class MainActivity extends BaseActivity {
     private View view_main_tabline;
     private MediaPlayer mediaPlayer;
     public final ArrayList<MusicModel> musicList = new ArrayList<>();
+    public final ArrayList<MusicModel> allMusicList = new ArrayList<>();
     public int currentPosition = 0;
     public boolean isPlayed = false;
     private MusicListFragment musicListFragment;
     private Disposable subscribe;
     private KuGouApiService kuGouApiService;
     private MusicLrcFragment musicLrcFragment;
+    //当前音乐分类
+    private MusicCateModel currentMusicCateModel;
+
+    public MusicCateModel getCurrentMusicCateModel() {
+        if (currentMusicCateModel == null) {
+            currentMusicCateModel = musicCateModels.get(0);
+        }
+        return currentMusicCateModel;
+    }
 
     /**
      * popup
@@ -251,6 +266,7 @@ public class MainActivity extends BaseActivity {
 
 
         updateMusicCateModels();
+
     }
 
     public void loadMusicCates() {
@@ -264,6 +280,25 @@ public class MainActivity extends BaseActivity {
                     updateMusicCateModels();
                     if (musicCateListDialog != null && musicCateListDialog.isShowing()) {
                         musicCateListDialog.notifyList();
+                    }
+                    PlayHistoryModel playHistoryModel = AppExtendsKt.getPlayHistoryModel();
+                    if (TextUtils.isEmpty(playHistoryModel.objectId)) {
+                        currentMusicCateModel = musicCateModels.get(0);
+                    } else {
+                        for (MusicCateModel musicCateModel : musicCateModels) {
+                            if (TextUtils.equals(musicCateModel.getObjectId(), playHistoryModel.objectId)) {
+                                currentMusicCateModel = musicCateModel;
+                                break;
+                            }
+                        }
+                    }
+                    notifyMusicCate();
+                    for (int i = 0; i < musicList.size(); i++) {
+                        MusicModel musicModel = musicList.get(i);
+                        if (TextUtils.equals(musicModel.getDurationSize(), playHistoryModel.durationSize)) {
+                            currentPosition = i;
+                            break;
+                        }
                     }
                 }, throwable -> {
                     throwable.printStackTrace();
@@ -312,7 +347,10 @@ public class MainActivity extends BaseActivity {
     }
 
     private void startTimer() {
-        if (mediaPlayer.isPlaying()) {
+        Lifecycle.State currentState = getLifecycle().getCurrentState();
+        String lifeName = currentState.name();
+        Timber.d(String.format("--->>>>>>>>---currentState:" + lifeName));
+        if (mediaPlayer.isPlaying() && isResume) {
             subscribe = Observable.interval(0, 1, TimeUnit.SECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(aLong -> {
@@ -344,8 +382,31 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 musicCateWindow.dismiss();
+                notifyTab(position);
             }
         });
+    }
+
+    private void notifyTab(int position) {
+        currentMusicCateModel = musicCateModels.get(position);
+        mTabLayout.getTabAt(0).setText(currentMusicCateModel.getText());
+        currentPosition = 0;
+        notifyMusicCate();
+    }
+
+    public void notifyMusicCate() {
+        musicList.clear();
+        if (TextUtils.isEmpty(getCurrentMusicCateModel().getObjectId())) {
+            musicList.addAll(allMusicList);
+        } else {
+            List<String> collect = getCurrentMusicCateModel().getCollect();
+            for (MusicModel musicModel : allMusicList) {
+                if (collect.contains(musicModel.getDurationSize())) {
+                    musicList.add(musicModel);
+                }
+            }
+        }
+        musicListFragment.notifyMusicCate();
     }
 
 
@@ -417,6 +478,9 @@ public class MainActivity extends BaseActivity {
         } else {
             this.currentPosition = position;
         }
+        if (musicList.size() == 0) {
+            return;
+        }
         MusicModel musicModel = musicList.get(currentPosition);
         try {
             mediaPlayer.reset();
@@ -452,13 +516,13 @@ public class MainActivity extends BaseActivity {
             }
         });
         musicLrcFragment.searchLyric();
-
+        AppExtendsKt.setHistoryModel(musicModel.getDurationSize(), getCurrentMusicCateModel().getObjectId());
     }
 
     public void playAndPause() {
         if (!isPlayed) {
-            if (musicList.size() > 0) {
-                playMusic(0);
+            if (musicList.size() > currentPosition) {
+                playMusic(currentPosition);
             }
         } else {
             try {
@@ -500,15 +564,19 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    boolean isResume=false;
+
     @Override
     protected void onResume() {
         super.onResume();
+        isResume=true;
         startTimer();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        isResume=false;
         endTime();
     }
 

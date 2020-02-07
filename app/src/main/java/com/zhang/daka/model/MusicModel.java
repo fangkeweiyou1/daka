@@ -32,6 +32,10 @@ public class MusicModel implements Serializable {
      */
     public int favorite = 0;
 
+    public String getDurationSize() {
+        return duration + "" + size;
+    }
+
     @Override
     public String toString() {
         return "MusicModel{" +

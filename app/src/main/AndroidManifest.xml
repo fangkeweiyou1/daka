@@ -52,6 +52,13 @@
                 <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".event.MediaButtonIntentReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+                <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
             android:authorities="${applicationId}.BmobContentProvider">

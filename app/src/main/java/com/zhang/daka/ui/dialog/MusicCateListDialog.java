@@ -14,8 +14,12 @@ import com.wushiyi.util.ToastUtilKt;
 import com.zhang.daka.R;
 import com.zhang.daka.base.BaseDialog;
 import com.zhang.daka.model.MusicCateModel;
+import com.zhang.daka.model.MusicModel;
 import com.zhang.daka.ui.MainActivity;
 import com.zhang.daka.ui.adapter.MusicCateListAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
@@ -29,6 +33,7 @@ public class MusicCateListDialog extends BaseDialog {
     private TextView tv_addmusiccate_yes;
     private RecyclerView mRecyclerView;
     private MusicCateListAdapter mAdapter;
+    public MusicModel musicModel;
 
     public MusicCateListDialog(MainActivity mainActivity) {
         super(mainActivity);
@@ -93,6 +98,27 @@ public class MusicCateListDialog extends BaseDialog {
                         @Override
                         public void done(BmobException e) {
                             ToastUtilKt.showToast("音乐分类名删除成功");
+                            mainActivity.loadMusicCates();
+                        }
+                    });
+                }
+            }
+        });
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (musicModel != null) {
+                    MusicCateModel model = mAdapter.getItem(position);
+                    List<String> collect = model.getCollect();
+                    if (collect == null) {
+                        collect = new ArrayList<>();
+                    }
+                    collect.add(musicModel.getDurationSize());
+                    model.setCollect(collect);
+                    model.update(new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            ToastUtilKt.showToast("音乐分类名分类成功");
                             mainActivity.loadMusicCates();
                         }
                     });
