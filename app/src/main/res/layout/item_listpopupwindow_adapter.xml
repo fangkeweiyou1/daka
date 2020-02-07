@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_popupitem_text"
+        android:gravity="center_vertical"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dip"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        tools:text="这里是popuptext" />
+
+    <View style="@style/sty_p_line_horizontal"/>
+
+</LinearLayout>

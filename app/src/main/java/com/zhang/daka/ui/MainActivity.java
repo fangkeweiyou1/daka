@@ -18,8 +18,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListPopupWindow;
 import android.widget.RemoteViews;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -33,11 +35,14 @@ import com.zhang.daka.config.Constans;
 import com.zhang.daka.event.MusicBroadCast;
 import com.zhang.daka.kugou.KuGouApiService;
 import com.zhang.daka.model.MenuModel;
+import com.zhang.daka.model.MusicCateModel;
 import com.zhang.daka.model.MusicModel;
-import com.zhang.daka.model.PersonModel;
 import com.zhang.daka.mvp.BaseActivity;
 import com.zhang.daka.net.NetworkModule;
+import com.zhang.daka.popup.ListPopupWindowHelper;
+import com.zhang.daka.popup.PopupListAdapter;
 import com.zhang.daka.ui.adapter.MenuAdapter;
+import com.zhang.daka.ui.dialog.MusicCateListDialog;
 import com.zhang.daka.ui.fragment.MusicListFragment;
 import com.zhang.daka.ui.fragment.MusicLrcFragment;
 import com.zhang.daka.utils.WTimeUtils;
@@ -47,9 +52,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import cn.bmob.v3.BmobQuery;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -83,6 +90,7 @@ public class MainActivity extends BaseActivity {
     private SeekBar seekbar_main;
     private TextView tv_main_starttime;
     private TextView tv_main_endtime;
+    private View view_main_tabline;
     private MediaPlayer mediaPlayer;
     public final ArrayList<MusicModel> musicList = new ArrayList<>();
     public int currentPosition = 0;
@@ -92,12 +100,24 @@ public class MainActivity extends BaseActivity {
     private KuGouApiService kuGouApiService;
     private MusicLrcFragment musicLrcFragment;
 
+    /**
+     * popup
+     */
+    public final ArrayList<MusicCateModel> musicCateModels = new ArrayList<>();
+    private PopupListAdapter<MusicCateModel> musicCateAdapter;
+    private ListPopupWindow musicCateWindow;
+
     @Override
     public int getLayoutId() {
         mainActivity = this;
-        kuGouApiService= NetworkModule.getRetrofit(Constans.BASE_KUGOU_URL).create(KuGouApiService.class);
-        PersonModel personModel=new PersonModel();
-        personModel.setName("china");
+        kuGouApiService = NetworkModule.getRetrofit(Constans.BASE_KUGOU_URL).create(KuGouApiService.class);
+//        PersonModel personModel = new PersonModel();
+//        personModel.setName("china2");
+//        ArrayList<String> strings = new ArrayList<>();
+//        strings.add("1");
+//        strings.add("2");
+//        strings.add("3");
+//        personModel.setTexts(strings);
 //        personModel.saveObservable()
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
@@ -106,6 +126,7 @@ public class MainActivity extends BaseActivity {
 //                },throwable -> {});
         return R.layout.activity_main;
     }
+
 
     private void showNotification() {
 
@@ -199,8 +220,10 @@ public class MainActivity extends BaseActivity {
         seekbar_main = findViewById(R.id.seekbar_main);
         tv_main_starttime = findViewById(R.id.tv_main_starttime);
         tv_main_endtime = findViewById(R.id.tv_main_endtime);
+        view_main_tabline = findViewById(R.id.view_main_tabline);
 
         menuModels.add(new MenuModel(R.drawable.ic_daka, "打卡"));
+        menuModels.add(new MenuModel(R.drawable.ic_daka, "新增音乐分类"));
         View headView = View.inflate(this, R.layout.view_menu_head, null);
         menuAdapter = new MenuAdapter(menuModels);
         menuAdapter.addHeaderView(headView);
@@ -225,6 +248,34 @@ public class MainActivity extends BaseActivity {
 
         initPlayer();
         showNotification();
+
+
+        updateMusicCateModels();
+    }
+
+    public void loadMusicCates() {
+        BmobQuery<MusicCateModel> query = new BmobQuery<>();
+        query.findObjectsObservable(MusicCateModel.class)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                    musicCateModels.clear();
+                    musicCateModels.addAll(s);
+                    updateMusicCateModels();
+                    if (musicCateListDialog != null && musicCateListDialog.isShowing()) {
+                        musicCateListDialog.notifyList();
+                    }
+                }, throwable -> {
+                    throwable.printStackTrace();
+                });
+    }
+
+    private void updateMusicCateModels() {
+        MusicCateModel musicCateModel = new MusicCateModel();
+        musicCateModel.setCateName("本地音乐");
+        musicCateModel.setCateId(-1);
+        musicCateModels.add(0, musicCateModel);
+        initMusicCateWindow();
     }
 
     private void initPlayer() {
@@ -286,16 +337,35 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    private void initMusicCateWindow() {
+        musicCateAdapter = new PopupListAdapter(mActivity, R.layout.item_listpopupwindow_adapter, musicCateModels);
+        musicCateWindow = ListPopupWindowHelper.getListPopupWindow(mActivity, musicCateAdapter, view_main_tabline, ListPopupWindow.WRAP_CONTENT);
+        musicCateWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                musicCateWindow.dismiss();
+            }
+        });
+    }
+
+
+    private MusicCateListDialog musicCateListDialog;
 
     @Override
     public void initEvent() {
         menuAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+
+
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 MenuModel menuModel = menuAdapter.getItem(position);
                 switch (menuModel.getMenuName()) {
                     case "打卡":
                         clickPhoto();
+                        break;
+                    case "新增音乐分类":
+                        musicCateListDialog = new MusicCateListDialog(MainActivity.this);
+                        musicCateListDialog.show();
                         break;
                 }
             }
@@ -311,6 +381,24 @@ public class MainActivity extends BaseActivity {
         });
         iv_music_thum.setOnClickListener(v -> {
             musicListFragment.notifyCurrent();
+        });
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    ListPopupWindowHelper.showPopupWindow(musicCateWindow);
+                }
+            }
         });
     }
 
@@ -388,7 +476,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initData() {
-
+        loadMusicCates();
     }
 
 

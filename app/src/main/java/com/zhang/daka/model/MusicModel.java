@@ -52,4 +52,7 @@ public class MusicModel implements Serializable {
                 ", favorite=" + favorite +
                 '}';
     }
+    /*
+    {songId=497, albumId=1, albumName='音乐', albumData='content://media/external/audio/albumart/1', duration=207412, musicName='¿ìÀÖ³ç°Ý', artist='ÅËçâ°Ø', artistId=216, data='/storage/emulated/0/音乐/张韶涵、潘玮柏 - 快乐崇拜.mp3', folder='/storage/emulated/0/音乐', lrc='null', islocal=true, sort='null', size=8297647, favorite=0}
+     */
 }
