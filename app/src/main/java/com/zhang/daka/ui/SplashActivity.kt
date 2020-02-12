@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.tbruyelle.rxpermissions2.RxPermissions
+import com.wushiyi.mvp.dddBug
 
 /**
  * Created by zhangyuncai on 2020/1/7.
@@ -29,6 +30,11 @@ class SplashActivity:AppCompatActivity() {
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 }
+        val action = intent.action
+        /**
+         * 收到桌面弹窗中的快捷方式
+         */
+        dddBug("action:${action}")
 
     }
 }
